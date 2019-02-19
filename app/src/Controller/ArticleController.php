@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleController
+class ArticleController extends AbstractController
 {
 
     /**
@@ -13,6 +13,6 @@ class ArticleController
      */
     public function articleAction()
     {
-        return new Response('hello word action is good');
+        return $this->render('article/index.html.twig');
     }
 }
