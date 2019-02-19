@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  space:
+    build:
+      context: docker
+      dockerfile: Dockerfile
+    environment:
+      - VIRTUAL_HOST=fo.app.docker
+      - LOGSTREAM_PATH=/tmp/stdoutfifo
+    volumes:
+      - ./app:/srv/app
