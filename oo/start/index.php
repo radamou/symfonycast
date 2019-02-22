@@ -1,7 +1,7 @@
 <?php
-require __DIR__.'/functions.php';
 
-$ships = getShips();
+$shipLoader = new \App\Content\Battle\ShipLoader();
+$ships = $shipLoader->load();
 
 $errorMessage = '';
 if (isset($_GET['error'])) {
@@ -21,25 +21,7 @@ if (isset($_GET['error'])) {
 }
 ?>
 
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OO Battleships</title>
-
-    <!-- Bootstrap -->
-    <link href='css/bootstrap.min.css' rel="stylesheet">
-    <link href='css/style.css' rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
+<?php require __DIR__.'templates/header.html'?>
 
 <?php if ($errorMessage): ?>
     <div>
@@ -50,7 +32,7 @@ if (isset($_GET['error'])) {
 <body>
     <div class="container">
         <div class="page-header">
-            <h1>OO Battleships of Space</h1>
+            <h1>Battleships of Space</h1>
         </div>
         <table class="table table-hover">
             <caption><i class="fa fa-rocket"></i> These ships are ready for their next Mission</caption>
@@ -86,12 +68,21 @@ if (isset($_GET['error'])) {
             <div>
                 <form method="POST" action="./battle.php">
                     <h2 class="text-center">The Mission</h2>
-                    <input class="center-block form-control text-field" type="text" name="ship1_quantity" placeholder="Enter Number of Ships" />
-                    <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle" name="ship1_name">
+                    <input
+                            class="center-block form-control text-field"
+                           type="text" name="ship1_quantity"
+                           placeholder="Enter Number of Ships"
+                    />
+                    <select
+                            class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle"
+                            name="ship1_id"
+                    >
                         <option value="">Choose a Ship</option>
-                        <?php foreach ($ships as $key => $ship): ?>
+                        <?php foreach ($ships as $ship): ?>
                             <?php if ($ship->isFunctional()): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getNameAndSpecs(); ?></option>
+                                <option value="<?php echo $ship->getId(); ?>">
+                                    <?php echo $ship->getNameAndSpecs(); ?>
+                                </option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>
@@ -104,13 +95,16 @@ if (isset($_GET['error'])) {
                             name="ship2_quantity"
                             placeholder="Enter Number of Ships"
                     />
-                    <select class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle"
-                            name="ship2_name"
+                    <select
+                            class="center-block form-control btn drp-dwn-width btn-default dropdown-toggle"
+                            name="ship2_id"
                     >
                         <option value="">Choose a Ship</option>
-                        <?php foreach ($ships as $key => $ship): ?>
+                        <?php foreach ($ships as $ship): ?>
                             <?php if ($ship->isFunctional()): ?>
-                                <option value="<?php echo $key; ?>"><?php echo $ship->getNameAndSpecs(); ?></option>
+                                <option value="<?php echo $ship->getId(); ?>">
+                                    <?php echo $ship->getNameAndSpecs(); ?>
+                                </option>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </select>

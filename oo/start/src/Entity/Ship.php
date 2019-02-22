@@ -1,8 +1,10 @@
 <?php
 
+namespace  App\Entity;
 
 class Ship
 {
+    private $id;
     private $name;
     private $weaponPower = 0;
     private $jediFactor = 0;
@@ -10,11 +12,29 @@ class Ship
     private $underRepair;
 
     public function __construct(
-        string $name
+        string $name,
+        int $weaponPower,
+        int $strength,
+        int $jediFactor
     )
     {
         $this->name = $name;
+        $this->weaponPower = $weaponPower;
+        $this->strength = $strength;
+        $this->jediFactor = $jediFactor;
         $this->underRepair = mt_rand(1, 100) < 30;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function isFunctional(): bool
