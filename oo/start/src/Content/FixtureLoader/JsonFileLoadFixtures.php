@@ -22,7 +22,7 @@ class JsonFileLoadFixtures implements LoaderInterface
 
     public function fetchSingleData(int $id)
     {
-        $ships = $this->fetchAllShipsData();
+        $ships = $this->fetchAllData();
 
         foreach ($ships as $ship) {
             if ($ship['id'] == $id) {
@@ -31,10 +31,5 @@ class JsonFileLoadFixtures implements LoaderInterface
         }
 
         return null;
-    }
-
-    public function createFromData()
-    {
-
     }
 }

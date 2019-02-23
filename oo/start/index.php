@@ -1,10 +1,10 @@
 <?php
 
+require_once __DIR__.'/config/Bootstrap.php';
+
 $container = new \App\Internal\DependencyInjection\Container([]);
 $shipsLoader = $container->getShipLoader();
 $ships = $shipsLoader->load();
-
-$rebelShip = new \App\Entity\RebelShip('My new rebel ship');
 
 $errorMessage = '';
 if (isset($_GET['error'])) {
@@ -24,12 +24,10 @@ if (isset($_GET['error'])) {
 }
 ?>
 
-<?php require __DIR__.'templates/header.html'?>
+<?php require __DIR__.'/templates/header.html'?>
 
 <?php if ($errorMessage): ?>
-    <div>
-        <?php echo $errorMessage; ?>
-    </div>
+    <div><?php echo $errorMessage; ?></div>
 <?php endif; ?>
 
 <body>
@@ -69,7 +67,7 @@ if (isset($_GET['error'])) {
 
         <div class="battle-box center-block border">
             <div>
-                <form method="POST" action="./battle.php">
+                <form method="POST" action="/battle.php">
                     <h2 class="text-center">The Mission</h2>
                     <input
                             class="center-block form-control text-field"
@@ -112,6 +110,15 @@ if (isset($_GET['error'])) {
                         <?php endforeach; ?>
                     </select>
                     <br>
+                    <div class="text-center">
+                        <label for="battle_type">Battle Type</label>
+                        <select name="battle_type" id="battle_type" class="form-control drp-dwn-width center-block">
+                            <option value="normal">Normal</option>
+                            <option value="no_jedi">No Jedi Powers</option>
+                            <option value="only_jedi">Only Jedi Powers</option>
+                        </select>
+                    </div>
+                    <br/>
                     <button class="btn btn-md btn-danger center-block" type="submit">Engage</button>
                     </form>
                 </div>

@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/config/Bootstrap.php';
+
 $container = new \App\Internal\DependencyInjection\Container([]);
 $shipsLoader = $container->getShipLoader();
 $ships = $shipsLoader->load();
@@ -31,7 +33,9 @@ $battleManager = new \App\Content\Battle\BattleManager();
 $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
 
 ?>
-<?php require __DIR__.'templates/header.html'?>
+
+<?php require __DIR__.'/templates/header.html'?>
+
 <body>
 <div class="container">
     <div class="page-header">
@@ -41,9 +45,13 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
         <h2 class="text-center">The Matchup:</h2>
         <p class="text-center">
             <br>
-            <?php echo $ship1Quantity; ?> <?php echo $ship1->getName(); ?><?php echo $ship1Quantity > 1 ? 's': ''; ?>
+            <?php echo $ship1Quantity; ?>
+            <?php echo $ship1->getName(); ?>
+            <?php echo $ship1Quantity > 1 ? 's': ''; ?>
             VS.
-            <?php echo $ship2Quantity; ?> <?php echo $ship2->getName(); ?><?php echo $ship2Quantity > 1 ? 's': ''; ?>
+            <?php echo $ship2Quantity; ?>
+            <?php echo $ship2->getName(); ?>
+            <?php echo $ship2Quantity > 1 ? 's': ''; ?>
         </p>
     </div>
     <div class="result-box center-block">
@@ -68,7 +76,7 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
             <?php endif; ?>
         </p>
     </div>
-    <a href="/index.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
+    <a href="./index.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="public/js/bootstrap.min.js"></script>

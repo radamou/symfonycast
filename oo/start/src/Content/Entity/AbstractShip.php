@@ -15,11 +15,6 @@ abstract class AbstractShip
     abstract public function isFunctional();
     abstract public function getType();
 
-    public function __construct($name)
-    {
-        $this->name = $name;
-    }
-
     public function getId(): int
     {
         return $this->id;

@@ -41,6 +41,8 @@ class Container
                 __DIR__.'/../../../config/Fixtures/ships.json'
             );
         }
+
+        return $this->jsonFixtureLoader;
     }
 
     public function getShipLoader(): ShipLoader
