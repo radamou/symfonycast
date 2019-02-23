@@ -2,7 +2,9 @@
 
 namespace App\Content\Battle;
 
+use App\Content\Collection\ShipCollection;
 use App\Content\Entity\AbstractShip;
+use App\Content\Entity\BountyHunterShip;
 use App\Content\Entity\BrokenShip;
 use App\Content\Entity\RebelShip;
 use App\Content\Entity\Ship;
@@ -18,7 +20,7 @@ class ShipLoader
     }
 
     /**
-     * @return  AbstractShip[]
+     * @return  ShipCollection
      */
     public function load() {
 
@@ -29,7 +31,7 @@ class ShipLoader
             $ships[] = $this->createFromData($ship);
         }
 
-        return $ships;
+        return (new ShipCollection($ships))->removeBrokenShips();
     }
 
     public function loadOne(int $shipId): AbstractShip
@@ -41,12 +43,14 @@ class ShipLoader
 
     public function createFromData(array $data): ?AbstractShip
     {
-
         if (!isset($data['team'])){
             return null;
         }
 
-        $ship = new Ship();
+        if('empire' === $data['team']) {
+            $ship = (new Ship())
+                ->setJediFactor($data['jedi_factor']);
+        }
 
         if('rebel' === $data['team']) {
             $ship = new RebelShip();
@@ -56,10 +60,13 @@ class ShipLoader
             $ship = new BrokenShip();
         }
 
+        if('bounty hunter' === $data['team']) {
+            $ship = new BountyHunterShip();
+        }
+
         return $ship->setId($data['id'])
             ->setName($data['name'])
             ->setWeaponPower($data['weapon_power'])
-            ->setJediFactor($data['jedi_factor'])
             ->setStrength($data['strength']);
     }
 }

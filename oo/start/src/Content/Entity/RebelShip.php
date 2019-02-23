@@ -22,7 +22,7 @@ class RebelShip extends AbstractShip
         return true;
     }
 
-    public function getJediFactor()
+    public function getJediFactor(): int
     {
         return 500;
     }

@@ -1,10 +1,12 @@
 <?php
 
+namespace App;
+
 require_once __DIR__.'/config/Bootstrap.php';
 
-$container = new \App\Internal\DependencyInjection\Container([]);
+use App\Internal\DependencyInjection\Container;
+$container = new Container([]);
 $shipsLoader = $container->getShipLoader();
-$ships = $shipsLoader->load();
 
 $ship1Id = isset($_POST['ship1_id']) ?? null;
 $ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
@@ -30,7 +32,7 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
     die;
 }
 
-$battleManager = new \App\Content\Battle\BattleManager();
+$battleManager = $container->getBattleManager();
 $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity, $battleType);
 
 ?>

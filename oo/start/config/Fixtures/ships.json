@@ -30,5 +30,21 @@
         "jedi_factor": "4",
         "strength": "50",
         "team": "empire"
+    },
+    {
+        "id": "5",
+        "name": "Broken RZ-1 A-wing",
+        "weapon_power": "0",
+        "jedi_factor": "0",
+        "strength": "10",
+        "team": "broken"
+    },
+    {
+        "id": "6",
+        "name": "Broken RZ-1 A-wing (Bounty)",
+        "weapon_power": "0",
+        "jedi_factor": "12",
+        "strength": "10",
+        "team": "bounty hunter"
     }
 ]

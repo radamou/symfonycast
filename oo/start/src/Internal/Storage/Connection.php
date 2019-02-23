@@ -18,15 +18,15 @@ class Connection
         $this->dbPassword = $dbConfiguration['dbPassword'];
     }
 
-    public function getPdo(): PDO
+    public function getPdo(): \PDO
     {
         if ($this->pdo === null) {
-            $this->pdo = new PDO(
+            $this->pdo = new \PDO(
                 $this->dbDns.$this->dbName,
                 $this->dbUser,
                 $this->dbPassword
             );
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
 
         return $this->pdo;

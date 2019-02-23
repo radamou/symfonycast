@@ -1,8 +1,11 @@
 <?php
 
+namespace App;
+
 require_once __DIR__.'/config/Bootstrap.php';
 
-$container = new \App\Internal\DependencyInjection\Container([]);
+use App\Internal\DependencyInjection\Container;
+$container = new Container([]);
 $shipsLoader = $container->getShipLoader();
 $ships = $shipsLoader->load();
 
@@ -36,7 +39,8 @@ if (isset($_GET['error'])) {
             <h1>Battleships of Space</h1>
         </div>
         <table class="table table-hover">
-            <caption><i class="fa fa-rocket"></i> These ships are ready for their next Mission</caption>
+            <caption><i class="fa fa-rocket">
+                </i> These ships are ready for their next Mission</caption>
             <thead>
             <tr>
                 <th>Ship</th>

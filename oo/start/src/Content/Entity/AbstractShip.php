@@ -9,11 +9,10 @@ abstract class AbstractShip
     private $name;
     private $weaponPower = 0;
     private $strength = 0;
-    private $jediFactor = 0;
 
-    abstract public function getJediFactor();
-    abstract public function isFunctional();
-    abstract public function getType();
+    abstract public function getJediFactor(): ?int ;
+    abstract public function isFunctional(): bool ;
+    abstract public function getType(): string ;
 
     public function getId(): int
     {
@@ -59,13 +58,6 @@ abstract class AbstractShip
     public function setStrength(int $number): self
     {
         $this->strength = $number;
-
-        return $this;
-    }
-
-    public function setJediFactor(int $jediFactor): self
-    {
-        $this->jediFactor = $jediFactor;
 
         return $this;
     }

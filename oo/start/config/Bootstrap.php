@@ -1,13 +1,9 @@
 <?php
 
-spl_autoload_register(function($className) {
-    $className = str_replace('App\\', '', $className);
-    $path = __DIR__.'/../src/'.str_replace('\\', '/', $className).'.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-    if (file_exists($path)) {
-        require_once $path;
-    }
-});
+use App\Internal\DependencyInjection\Container;
+$container = new Container([]);
 
 $dbConfiguration = [
     'dbDns' => 'mysql:host=localhost;dbname=',

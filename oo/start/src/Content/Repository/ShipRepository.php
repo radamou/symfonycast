@@ -14,11 +14,11 @@ class ShipRepository extends AbstractRepository
     public function fetchAllData()
     {
         return [
-            'starfighter' => new Ship('Jedi Starfighter'),
-            'cloakshape_fighter' => new Ship('cloakshape fighter'),
-            'super_star_destroyer' => new Ship('super star destroyer'),
-            'rz1_a_wing_interceptor' => new Ship('rz1 a wing interceptor'),
-            'broken ship' => new BrokenShip('Just a hunk of metal')
+            'starfighter' => (new Ship())->setName('Jedi Starfighter'),
+            'cloakshape_fighter' => (new Ship())->setName('cloakshape fighter'),
+            'super_star_destroyer' => (new Ship())->setName('super star destroyer'),
+            'rz1_a_wing_interceptor' => (new Ship())->setName('rz1 a wing interceptor'),
+            'broken ship' => (new BrokenShip())->setName('Just a hunk of metal')
         ];
     }
 

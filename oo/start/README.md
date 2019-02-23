@@ -23,4 +23,17 @@ when you're done later).
 Pull up the new site by going to:
 
     http://localhost:8000
+    
+Example of creating autoader in PHP
 
+```php
+spl_autoload_register(function($className) {
+    $className = str_replace('App\\', '', $className);
+    $path = __DIR__.'/../src/'.str_replace('\\', '/', $className).'.php';
+
+    if (file_exists($path)) {
+        require_once $path;
+    }
+});
+
+```
