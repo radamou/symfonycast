@@ -20,3 +20,13 @@ services:
       - LOGSTREAM_PATH=/tmp/stdoutfifo
     volumes:
       - ./symfon4Beginner/start:/srv/app
+
+  symfony-react:
+    build:
+      context: symfonyReact/docker
+      dockerfile: Dockerfile
+    environment:
+      - VIRTUAL_HOST=symfony-learning-beginner.app.docker
+      - LOGSTREAM_PATH=/tmp/stdoutfifo
+    volumes:
+      - ./symfonyReact:/srv/app
