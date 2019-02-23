@@ -3,7 +3,9 @@
 namespace App\Internal\DependencyInjection;
 
 use App\Content\Battle\BattleManager;
+use App\Content\Battle\LoggableShipLoader;
 use App\Content\Battle\ShipLoader;
+use App\Content\Battle\ShipLoaderInterface;
 use App\Content\FixtureLoader\JsonFileLoadFixtures;
 use App\Internal\Storage\Connection;
 use App\Internal\Storage\LoaderInterface;
@@ -47,10 +49,11 @@ class Container
         return $this->jsonFixtureLoader;
     }
 
-    public function getShipLoader(): ShipLoader
+    public function getShipLoader(): ShipLoaderInterface
     {
         if(null === $this->shipLoader) {
             $this->shipLoader = new ShipLoader($this->getJsonFixtureLoader());
+            $this->shipLoader = new LoggableShipLoader($this->shipLoader);
         }
 
         return $this->shipLoader;

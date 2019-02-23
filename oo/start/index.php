@@ -7,7 +7,7 @@ require_once __DIR__.'/config/Bootstrap.php';
 use App\Internal\DependencyInjection\Container;
 $container = new Container([]);
 $shipsLoader = $container->getShipLoader();
-$ships = $shipsLoader->load();
+$ships = $shipsLoader->fetchAll();
 
 $errorMessage = '';
 if (isset($_GET['error'])) {

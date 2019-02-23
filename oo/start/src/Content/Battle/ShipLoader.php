@@ -10,7 +10,7 @@ use App\Content\Entity\RebelShip;
 use App\Content\Entity\Ship;
 use App\Internal\Storage\LoaderInterface;
 
-class ShipLoader
+class ShipLoader implements ShipLoaderInterface
 {
     private $jsonFixturesLoader;
 
@@ -19,10 +19,8 @@ class ShipLoader
         $this->jsonFixturesLoader = $jsonFixturesLoader;
     }
 
-    /**
-     * @return  ShipCollection
-     */
-    public function load() {
+    public function fetchAll(): ShipCollection
+    {
 
         $result = $this->jsonFixturesLoader->fetchAllData();
         $ships = [];
@@ -34,7 +32,7 @@ class ShipLoader
         return (new ShipCollection($ships))->removeBrokenShips();
     }
 
-    public function loadOne(int $shipId): AbstractShip
+    public function fetchOne(int $shipId): AbstractShip
     {
         $ship =  $this->jsonFixturesLoader->fetchSingleData($shipId);
 
