@@ -1,7 +1,8 @@
 <?php
 
-$shipLoader = new \App\Content\Battle\ShipLoader();
-$ships = $shipLoader->load();
+$container = new \App\Internal\DependencyInjection\Container([]);
+$shipsLoader = $container->getShipLoader();
+$ships = $shipsLoader->load();
 
 $ship1Id = isset($_POST['ship1_id']) ?? null;
 $ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
@@ -13,8 +14,8 @@ if (!$ship1Id || !$ship2Id) {
     die;
 }
 
-$ship1 = $shipLoader->loadOne($ship1Id);
-$ship2 = $shipLoader->loadOne($ship2Id);
+$ship1 = $shipsLoader->loadOne($ship1Id);
+$ship2 = $shipsLoader->loadOne($ship2Id);
 
 if (!$ship1 || !$ship2) {
     header('Location: /index.php?error=bad_ships');

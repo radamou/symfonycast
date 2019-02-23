@@ -2,23 +2,29 @@
 
 namespace App\Content\Battle;
 
-use App\Entity\Ship;
-use App\Repository\ShipRepository;
+use App\Entity\AbstractShip;
+use App\Internal\Storage\LoaderInterface;
 
 class ShipLoader
 {
-    /**
-     * @return  Ship[]
-     */
-    public function load() {
-        $shipRepository = new ShipRepository();
+    private $jsonFixturesLoader;
 
-        return $shipRepository->findAll();
+    public function __construct(LoaderInterface $jsonFixturesLoader)
+    {
+        $this->jsonFixturesLoader = $jsonFixturesLoader;
     }
 
-    public function loadOne(int $shipId) {
-        $shipRepository = new ShipRepository();
+    /**
+     * @return  AbstractShip[]
+     */
+    public function load() {
 
-        return $shipRepository->findOne($shipId);
+        return $this->jsonFixturesLoader->fetchAllData();
+    }
+
+    public function loadOne(int $shipId): AbstractShip
+    {
+
+        return $this->jsonFixturesLoader->fetchSingleData($shipId);
     }
 }

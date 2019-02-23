@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Internal\Db;
+namespace App\Internal\Storage;
 
-class Connection implements ConnectionInterface
+class Connection
 {
     private $dbDns;
     private $dbName;
@@ -32,12 +32,10 @@ class Connection implements ConnectionInterface
         return $this->pdo;
     }
 
-
     public function getDbName(): string
     {
         return $this->dbName;
     }
-
 
     public function setDbName(string $dbName): self
     {

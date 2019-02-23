@@ -1,7 +1,10 @@
 <?php
 
-$shipLoader = new \App\Content\Battle\ShipLoader();
-$ships = $shipLoader->load();
+$container = new \App\Internal\DependencyInjection\Container([]);
+$shipsLoader = $container->getShipLoader();
+$ships = $shipsLoader->load();
+
+$rebelShip = new \App\Entity\RebelShip('My new rebel ship');
 
 $errorMessage = '';
 if (isset($_GET['error'])) {

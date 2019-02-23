@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
-use App\Internal\Db\Connection;
+use App\Internal\Storage\Connection;
+use App\Internal\Storage\LoaderInterface;
 
-abstract class AbstractRepository
+abstract class AbstractRepository implements LoaderInterface
 {
     protected $connection;
 
@@ -12,5 +13,4 @@ abstract class AbstractRepository
     {
         $this->connection = $connection;
     }
-
 }

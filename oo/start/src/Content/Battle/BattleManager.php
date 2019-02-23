@@ -2,12 +2,12 @@
 
 namespace App\Content\Battle;
 
+use App\Entity\AbstractShip;
 use App\Entity\BattleResult;
-use App\Entity\Ship;
 
 class BattleManager
 {
-    public function battle(Ship $ship1, int $ship1Quantity, Ship $ship2, int $ship2Quantity): BattleResult
+    public function battle(AbstractShip $ship1, int $ship1Quantity, AbstractShip $ship2, int $ship2Quantity): BattleResult
     {
         $ship1Health = $ship1->getStrength() * $ship1Quantity;
         $ship2Health = $ship2->getStrength() * $ship2Quantity;
@@ -53,7 +53,7 @@ class BattleManager
         );
     }
 
-    public function didJediDestroyShipUsingTheForce(Ship $ship)
+    public function didJediDestroyShipUsingTheForce(AbstractShip $ship)
     {
         $jediHeroProbability = $ship->getJediFactor() / 100;
 

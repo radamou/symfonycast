@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Internal\Db;
+namespace App\Internal\Storage;
 
 interface ConnectionInterface
 {

@@ -3,7 +3,10 @@
 namespace App\Internal\DependencyInjection;
 
 use App\Content\Battle\ShipLoader;
-use App\Internal\Db\Connection;
+use App\Content\FixtureLoader\JsonFileLoadFixtures;
+use App\Internal\Storage\Connection;
+use App\Internal\Storage\LoaderInterface;
+use App\Repository\AbstractRepository;
 
 class Container
 {
@@ -11,6 +14,7 @@ class Container
     public $connection;
     public $repository;
     public $shipLoader;
+    public $jsonFixtureLoader;
 
     public function __construct(array $configuration)
     {
@@ -26,14 +30,23 @@ class Container
         return $this->connection;
     }
 
-    public function getRepository(Connection $connection)
+    public function getRepository(Connection $connection): AbstractRepository
     {
+    }
+
+    public function getJsonFixtureLoader(): LoaderInterface
+    {
+        if ($this->jsonFixtureLoader === null) {
+            $this->jsonFixtureLoader = new JsonFileLoadFixtures(
+                __DIR__.'/../../../config/Fixtures/ships.json'
+            );
+        }
     }
 
     public function getShipLoader(): ShipLoader
     {
         if(null === $this->shipLoader) {
-            $this->shipLoader = new ShipLoader();
+            $this->shipLoader = new ShipLoader($this->getJsonFixtureLoader());
         }
 
         return $this->shipLoader;
