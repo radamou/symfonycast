@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -e
+
+# empty the queue
+cat "${LOGSTREAM_PATH}" 2>/dev/null || true
+tmppipe=$(mktemp -u)
+mkfifo -m 0666 "$tmppipe" && mv "$tmppipe" "${LOGSTREAM_PATH}"
+
+cat 0<> "${LOGSTREAM_PATH}"

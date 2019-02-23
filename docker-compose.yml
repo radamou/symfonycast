@@ -3,10 +3,20 @@ version: '3.2'
 services:
   space:
     build:
-      context: docker
+      context: advancedPhpObject/docker
       dockerfile: Dockerfile
     environment:
-      - VIRTUAL_HOST=fo.app.docker
+      - VIRTUAL_HOST=space-ship.app.docker
       - LOGSTREAM_PATH=/tmp/stdoutfifo
     volumes:
       - ./advancedPhpObject/start:/srv/app
+
+  symfony-begin:
+    build:
+      context: symfon4Beginner/docker
+      dockerfile: Dockerfile
+    environment:
+      - VIRTUAL_HOST=symfony-learning-beginner.app.docker
+      - LOGSTREAM_PATH=/tmp/stdoutfifo
+    volumes:
+      - ./symfon4Beginner/start:/srv/app

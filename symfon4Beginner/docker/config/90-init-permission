@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+set -e
+
+FOLDER=${FOLDER:-/srv/app}
+FOLDERS=${FOLDERS:-${FOLDER}}
+PERMITTED_USERS=${PERMITTED_USERS:-www-data}
+PERMITTED_NAME=host
+USER_ID=${PERMITTED_UID:-$(stat -c %u ${FOLDER})}
+GROUP_ID=${PERMITTED_GID:-$(stat -c %g ${FOLDER})}
+
+if [ ! $(getent group ${GROUP_ID}) ]; then
+  groupadd -g ${GROUP_ID} ${PERMITTED_NAME}
+fi
+
+if [ ! $(getent passwd ${USER_ID}) ]; then
+  useradd -u ${USER_ID} -g ${GROUP_ID} -r ${PERMITTED_NAME} -K UID_MAX=9999999999
+fi
+
+for folder in ${FOLDERS}; do
+  chown -R ${USER_ID}:${GROUP_ID} ${folder}
+done
+
+for folder in ${FOLDERS}; do
+  chmod -R g+ws ${folder}
+done
+
+for user in ${PERMITTED_USERS}; do
+  usermod -aG ${GROUP_ID} ${user}
+done

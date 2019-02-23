@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -e
+
+umask ${ENTRYPOINT_UMASK:-022}
+
+if [ -d /etc/environment.d ]; then
+  files=$(find "/etc/environment.d" -type f -maxdepth 1 -mindepth 1|sort -nr)
+  for file in $files; do
+      eval $(cat "$file"|sed '/^#/d'|sed 's/^/export /')
+  done
+fi
+
+if [ -d /usr/share/docker/init.d ]; then
+  user=$(find "/usr/share/docker/init.d" -type d -maxdepth 1  -mindepth 1)
+  for userPath in $user; do
+      user=$(basename "${userPath}")
+      files=$(find "/usr/share/docker/init.d/${user}" -type f -maxdepth 1  -mindepth 1|sort -nr)
+      if [ "${user}" == "$(whoami)" ]; then
+        for file in $files; do
+            . "${file}"
+        done
+      else
+        for file in $files; do
+            su-exec "${user}" "${file}"
+        done
+      fi
+  done
+fi
+
+if [ "${ENTRYPOINT_USER:-root}" == "$(whoami)" ]; then
+    exec "$@"
+else
+    echo "su-exec \"${ENTRYPOINT_USER:-root}\" \"$@\" # no signal handler"
+    su-exec "${ENTRYPOINT_USER:-root}" "$@"
+fi
