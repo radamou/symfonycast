@@ -2,10 +2,10 @@
 
 namespace App\Content\Battle;
 
-use App\Entity\AbstractShip;
-use App\Entity\BrokenShip;
-use App\Entity\RebelShip;
-use App\Entity\Ship;
+use App\Content\Entity\AbstractShip;
+use App\Content\Entity\BrokenShip;
+use App\Content\Entity\RebelShip;
+use App\Content\Entity\Ship;
 use App\Internal\Storage\LoaderInterface;
 
 class ShipLoader

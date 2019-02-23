@@ -110,15 +110,7 @@ if (isset($_GET['error'])) {
                         <?php endforeach; ?>
                     </select>
                     <br>
-                    <div class="text-center">
-                        <label for="battle_type">Battle Type</label>
-                        <select name="battle_type" id="battle_type" class="form-control drp-dwn-width center-block">
-                            <option value="normal">Normal</option>
-                            <option value="no_jedi">No Jedi Powers</option>
-                            <option value="only_jedi">Only Jedi Powers</option>
-                        </select>
-                    </div>
-                    <br/>
+                    <?php require_once __DIR__ . '/templates/battle/battle-type.php'; ?>
                     <button class="btn btn-md btn-danger center-block" type="submit">Engage</button>
                     </form>
                 </div>

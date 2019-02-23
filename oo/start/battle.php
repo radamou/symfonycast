@@ -10,6 +10,7 @@ $ship1Id = isset($_POST['ship1_id']) ?? null;
 $ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
 $ship2Id = isset($_POST['ship2_id']) ?? null;
 $ship2Quantity = isset($_POST['ship2_quantity']) ? $_POST['ship2_quantity'] : 1;
+$battleType = isset($_POST['battle_tyype']) ?? null;
 
 if (!$ship1Id || !$ship2Id) {
     header('Location: /index.php?error=missing_data');
@@ -30,7 +31,7 @@ if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
 }
 
 $battleManager = new \App\Content\Battle\BattleManager();
-$battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity);
+$battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Quantity, $battleType);
 
 ?>
 

@@ -2,12 +2,22 @@
 
 namespace App\Content\Battle;
 
-use App\Entity\AbstractShip;
-use App\Entity\BattleResult;
+use App\Content\Entity\AbstractShip;
+use App\Content\Entity\BattleResult;
 
 class BattleManager
 {
-    public function battle(AbstractShip $ship1, int $ship1Quantity, AbstractShip $ship2, int $ship2Quantity): BattleResult
+    const TYPE_NORMAL = 'normal';
+    const TYPE_NO_JEDI = 'no_jedi';
+    const TYPE_ONLY_JEDI = 'only_jedi';
+
+    public function battle(
+        ?AbstractShip $ship1,
+        int $ship1Quantity,
+        ?AbstractShip $ship2,
+        int $ship2Quantity,
+        ?string $battleType
+    ): BattleResult
     {
         $ship1Health = $ship1->getStrength() * $ship1Quantity;
         $ship2Health = $ship2->getStrength() * $ship2Quantity;
@@ -16,13 +26,13 @@ class BattleManager
         $ship2UsedJediPowers = false;
 
         while ($ship1Health > 0 && $ship2Health > 0) {
-            if ($this->didJediDestroyShipUsingTheForce($ship1)) {
+            if (self::TYPE_NO_JEDI !== $battleType && $this->didJediDestroyShipUsingTheForce($ship1)) {
                 $ship2Health = 0;
                 $ship1UsedJediPowers = true;
 
                 break;
             }
-            if ($this->didJediDestroyShipUsingTheForce($ship2)) {
+            if (self::TYPE_NO_JEDI !== $battleType && $this->didJediDestroyShipUsingTheForce($ship2)) {
                 $ship1Health = 0;
                 $ship2UsedJediPowers = true;
 
@@ -59,4 +69,14 @@ class BattleManager
 
         return \mt_rand(1, 100) <= ($jediHeroProbability*100);
     }
+
+    public static function getAllBattleTypesWithDescriptions(): array
+    {
+        return array(
+            self::TYPE_NORMAL => 'Normal',
+            self::TYPE_NO_JEDI => 'No Jedi Powers',
+            self::TYPE_ONLY_JEDI => 'Only Jedi Powers'
+        );
+    }
+
 }

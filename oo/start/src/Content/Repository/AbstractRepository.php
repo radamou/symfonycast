@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Content\Repository;
 
 use App\Internal\Storage\Connection;
 use App\Internal\Storage\LoaderInterface;

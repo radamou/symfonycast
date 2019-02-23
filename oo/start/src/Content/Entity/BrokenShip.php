@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Content\Entity;
 
 class BrokenShip extends  AbstractShip
 {

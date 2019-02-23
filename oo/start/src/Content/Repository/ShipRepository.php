@@ -1,10 +1,10 @@
 <?php
 
-namespace  App\Repository;
+namespace  App\Content\Repository;
 
-use App\Entity\AbstractShip;
-use App\Entity\Ship;
-use App\Entity\BrokenShip;
+use App\Content\Entity\AbstractShip;
+use App\Content\Entity\Ship;
+use App\Content\Entity\BrokenShip;
 
 class ShipRepository extends AbstractRepository
 {

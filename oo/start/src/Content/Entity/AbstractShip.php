@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Entity;
+namespace App\Content\Entity;
 
 abstract class AbstractShip
 {
