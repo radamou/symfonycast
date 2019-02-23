@@ -1,3 +1,5 @@
-oo/start/var/*
+/.idea/
+/vendor/
+/var/*
 
 
