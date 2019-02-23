@@ -9,4 +9,4 @@ services:
       - VIRTUAL_HOST=fo.app.docker
       - LOGSTREAM_PATH=/tmp/stdoutfifo
     volumes:
-      - ./oo/start:/srv/app
+      - ./advancedPhpObject/start:/srv/app
