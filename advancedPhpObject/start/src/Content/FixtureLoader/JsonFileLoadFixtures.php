@@ -13,14 +13,14 @@ class JsonFileLoadFixtures implements LoaderInterface
         $this->filename = $jsonFilePath;
     }
 
-    public function fetchAllData()
+    public function fetchAllData(): array
     {
         $jsonContents = file_get_contents($this->filename);
 
         return json_decode($jsonContents, true);
     }
 
-    public function fetchSingleData(int $id)
+    public function fetchSingleData(int $id): array
     {
         $ships = $this->fetchAllData();
 
@@ -30,6 +30,6 @@ class JsonFileLoadFixtures implements LoaderInterface
             }
         }
 
-        return null;
+        return [];
     }
 }

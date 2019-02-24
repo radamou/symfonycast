@@ -44,21 +44,24 @@ class ShipLoader implements ShipLoaderInterface
             return null;
         }
 
-        if ('empire' === $data['team']) {
-            $ship = (new Ship())
-                ->setJediFactor($data['jedi_factor']);
-        }
+        switch ($data['team']) {
+            case 'empire':
+                $ship = (new Ship())
+                    ->setJediFactor($data['jedi_factor']);
+                break;
+            case 'rebel':
+                $ship = new RebelShip();
+                break;
+            case 'broken':
+                $ship = new BrokenShip();
+                break;
+            case 'bounty hunter':
+                $ship = new BountyHunterShip();
+                break;
+            default:
+                $ship = (new Ship())
+                    ->setJediFactor($data['jedi_factor']);
 
-        if ('rebel' === $data['team']) {
-            $ship = new RebelShip();
-        }
-
-        if ('broken' === $data['team']) {
-            $ship = new BrokenShip();
-        }
-
-        if ('bounty hunter' === $data['team']) {
-            $ship = new BountyHunterShip();
         }
 
         return $ship->setId($data['id'])

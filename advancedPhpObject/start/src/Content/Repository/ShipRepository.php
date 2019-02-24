@@ -2,16 +2,12 @@
 
 namespace  App\Content\Repository;
 
-use App\Content\Entity\AbstractShip;
 use App\Content\Entity\Ship;
 use App\Content\Entity\BrokenShip;
 
 class ShipRepository extends AbstractRepository
 {
-    /**
-     * @return AbstractShip[]
-     */
-    public function fetchAllData()
+    public function fetchAllData(): array
     {
         return [
             'starfighter' => (new Ship())->setName('Jedi Starfighter'),
@@ -22,7 +18,7 @@ class ShipRepository extends AbstractRepository
         ];
     }
 
-    public function fetchSingleData(int $id): Ship
+    public function fetchSingleData(int $id): array
     {
         $pdo = $this->connection->getPdo();
         $pdo->prepare('SELECT * FROM ship WHERE id = :id');
