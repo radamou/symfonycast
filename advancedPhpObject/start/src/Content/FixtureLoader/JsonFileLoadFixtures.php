@@ -2,7 +2,9 @@
 
 namespace App\Content\FixtureLoader;
 
+use App\Content\FixtureLoader\Exception\ReadFileException;
 use App\Internal\Storage\LoaderInterface;
+use Safe\Exceptions\FilesystemException;
 
 class JsonFileLoadFixtures implements LoaderInterface
 {
@@ -15,9 +17,16 @@ class JsonFileLoadFixtures implements LoaderInterface
 
     public function fetchAllData(): array
     {
-        $jsonContents = file_get_contents($this->filename);
+        try {
+            $jsonContents = \Safe\file_get_contents($this->filename);
 
-        return json_decode($jsonContents, true);
+            return json_decode($jsonContents, true);
+        } catch (FilesystemException $e) {
+            throw new ReadFileException(sprintf(
+                'Impossible to read this file %s',
+                $e->getMessage()
+            ));
+        }
     }
 
     public function fetchSingleData(int $id): array
