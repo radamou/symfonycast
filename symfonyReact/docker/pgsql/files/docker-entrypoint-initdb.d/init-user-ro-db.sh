@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+if [ "$POSTGRES_RO_USER" != "" ]; then
+    psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" -c "
+        CREATE USER $POSTGRES_RO_USER WITH PASSWORD '$POSTGRES_RO_PASSWORD';
+        ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO $POSTGRES_RO_USER;
+    "
+fi

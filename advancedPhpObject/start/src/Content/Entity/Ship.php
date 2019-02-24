@@ -4,7 +4,7 @@ namespace  App\Content\Entity;
 
 class Ship extends AbstractShip
 {
-   use SettableJediFactorTrait;
+    use SettableJediFactorTrait;
 
     public function isFunctional(): bool
     {

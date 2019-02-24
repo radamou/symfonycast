@@ -2,7 +2,7 @@
 
 namespace App\Content\Entity;
 
-class BrokenShip extends  AbstractShip
+class BrokenShip extends AbstractShip
 {
     public function getJediFactor(): int
     {

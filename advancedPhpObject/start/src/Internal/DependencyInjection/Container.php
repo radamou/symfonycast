@@ -22,12 +22,12 @@ class Container
 
     public function __construct(array $configuration)
     {
-       $this->configuration = $configuration;
+        $this->configuration = $configuration;
     }
 
     public function getConnection(): Connection
     {
-        if(null === $this->connection) {
+        if (null === $this->connection) {
             $this->connection =  new Connection($this->configuration['db']);
         }
 
@@ -51,7 +51,7 @@ class Container
 
     public function getShipLoader(): ShipLoaderInterface
     {
-        if(null === $this->shipLoader) {
+        if (null === $this->shipLoader) {
             $this->shipLoader = new ShipLoader($this->getJsonFixtureLoader());
             $this->shipLoader = new LoggableShipLoader($this->shipLoader);
         }
@@ -61,7 +61,7 @@ class Container
 
     public function getBattleManager(): BattleManager
     {
-        if(null === $this->battleManager) {
+        if (null === $this->battleManager) {
             $this->battleManager = new BattleManager();
         }
 

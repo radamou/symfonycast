@@ -12,8 +12,7 @@ class BattleResult
         AbstractShip $winningShip,
         AbstractShip $losingShip,
         bool $useJediPowers
-    )
-    {
+    ) {
         $this->winningShip = $winningShip;
         $this->losingShip = $losingShip;
         $this->useJediPowers = $useJediPowers;

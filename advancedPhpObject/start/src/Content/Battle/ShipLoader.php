@@ -21,7 +21,6 @@ class ShipLoader implements ShipLoaderInterface
 
     public function fetchAll(): ShipCollection
     {
-
         $result = $this->jsonFixturesLoader->fetchAllData();
         $ships = [];
 
@@ -41,24 +40,24 @@ class ShipLoader implements ShipLoaderInterface
 
     public function createFromData(array $data): ?AbstractShip
     {
-        if (!isset($data['team'])){
+        if (!isset($data['team'])) {
             return null;
         }
 
-        if('empire' === $data['team']) {
+        if ('empire' === $data['team']) {
             $ship = (new Ship())
                 ->setJediFactor($data['jedi_factor']);
         }
 
-        if('rebel' === $data['team']) {
+        if ('rebel' === $data['team']) {
             $ship = new RebelShip();
         }
 
-        if('broken' === $data['team']) {
+        if ('broken' === $data['team']) {
             $ship = new BrokenShip();
         }
 
-        if('bounty hunter' === $data['team']) {
+        if ('bounty hunter' === $data['team']) {
             $ship = new BountyHunterShip();
         }
 

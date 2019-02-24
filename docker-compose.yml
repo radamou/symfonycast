@@ -8,6 +8,7 @@ services:
     environment:
       - VIRTUAL_HOST=space-ship.app.docker
       - LOGSTREAM_PATH=/tmp/stdoutfifo
+      - PGSQL_SYMFONY_REACT_HOST=symfony-react_pgsql
     volumes:
       - ./advancedPhpObject/start:/srv/app
 
@@ -21,12 +22,27 @@ services:
     volumes:
       - ./symfon4Beginner/start:/srv/app
 
-  symfony-react:
+  #symfony-react:
+    #build:
+      #context: symfonyReact/docker/front
+      #dockerfile: Dockerfile
+    #environment:
+      #- VIRTUAL_HOST=symfony-learning-beginner.app.docker
+      #- PGSQL_SYMFONY_REACT_HOST=symfony-react_pgsql
+      #- LOGSTREAM_PATH=/tmp/stdoutfifo
+    #volumes:
+     # - ./symfonyReact/start:/srv/app
+
+  symfony-react_pgsql:
     build:
-      context: symfonyReact/docker
+      context: symfonyReact/docker/pgsql
       dockerfile: Dockerfile
     environment:
-      - VIRTUAL_HOST=symfony-learning-beginner.app.docker
-      - LOGSTREAM_PATH=/tmp/stdoutfifo
-    volumes:
-      - ./symfonyReact:/srv/app
+      - POSTGRES_DB=lift_database
+      - POSTGRES_USER=lift_user
+      - POSTGRES_PASSWORD=winners
+      - POSTGRES_RO_USER=lift_user_ro
+      - POSTGRES_RO_PASSWORD=winners
+      - POSTGRES_EXTRA_DATABASE=delay
+      - POSTGRES_EXTRA_USER=delay
+      - POSTGRES_EXTRA_PASSWORD=delay

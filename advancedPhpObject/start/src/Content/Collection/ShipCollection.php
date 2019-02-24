@@ -7,7 +7,7 @@ use App\Content\Entity\AbstractShip;
 class ShipCollection implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     /**
-     * @var AbstractShip
+     * @var AbstractShip[]
      */
     private $ships;
 

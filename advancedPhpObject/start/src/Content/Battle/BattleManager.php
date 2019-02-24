@@ -17,8 +17,7 @@ class BattleManager
         ?AbstractShip $ship2,
         int $ship2Quantity,
         ?string $battleType
-    ): BattleResult
-    {
+    ): BattleResult {
         $ship1Health = $ship1->getStrength() * $ship1Quantity;
         $ship2Health = $ship2->getStrength() * $ship2Quantity;
 
@@ -59,7 +58,9 @@ class BattleManager
         }
 
         return new BattleResult(
-            $winningShip, $losingShip, $usedJediPowers
+            $winningShip,
+            $losingShip,
+            $usedJediPowers
         );
     }
 
@@ -78,5 +79,4 @@ class BattleManager
             self::TYPE_ONLY_JEDI => 'Only Jedi Powers'
         );
     }
-
 }

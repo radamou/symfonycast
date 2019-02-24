@@ -30,7 +30,7 @@ RUN apk add --no-cache \
         php7-opcache \
         php7-apcu
 
-COPY config/cache.ini /etc/php7/conf.d/cache.ini
+COPY config /etc/php7/conf.d/cache.ini
 
 
 ENV PROJECT_DIR="/srv/app"
@@ -41,11 +41,11 @@ RUN apk add --no-cache \
     coreutils \
     su-exec
 
-COPY config/entrypoint-init /bin/entrypoint-init
+COPY config /bin/entrypoint-init
 
 ENTRYPOINT ["/bin/entrypoint-init"]
 
-COPY config/entrypoint-exec /bin/entrypoint-exec
+COPY config /bin/entrypoint-exec
 
 # MySQL
 
@@ -64,11 +64,11 @@ RUN apk add --no-cache \
         nginx \
         php7-fpm
 
-COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config /etc/nginx/nginx.conf
 
-COPY config/php-fpm.conf /etc/php7/php-fpm.conf
+COPY config /etc/php7/php-fpm.conf
 
-COPY config/supervisord_fpm.conf /etc/supervisor/conf_enabled/fpm.conf
+COPY config /etc/supervisor/conf_enabled/fpm.conf
 
 EXPOSE 80
 
@@ -87,7 +87,7 @@ RUN id -u nginx || adduser -D nginx
 RUN apk add --no-cache \
     shadow
 
-COPY config/90-init-permission /usr/share/docker/init.d/root/
+COPY config /usr/share/docker/init.d/root/
 
 ENV ENTRYPOINT_UMASK=002
 
@@ -97,15 +97,15 @@ ENV ENTRYPOINT_UMASK=002
 RUN apk add --no-cache \
         supervisor
 
-COPY config/supervisor.conf /etc/supervisor/supervisord.conf
+COPY config /etc/supervisor/supervisord.conf
 
 CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
 
 ENV LOGSTREAM_PATH=/tmp/stdoutfifo
 
-COPY config/logstream /usr/bin/logstream
+COPY config /usr/bin/logstream
 
-COPY config/supervisord_logstream.conf /etc/supervisor/conf_enabled/logstream.conf
+COPY config /etc/supervisor/conf_enabled/logstream.conf
 
 RUN apk add --no-cache \
         curl
@@ -128,6 +128,11 @@ RUN apk add --no-cache \
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+
+#php cs-fix-fixer installation
+RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
+RUN chmod a+x php-cs-fixer
+RUN mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
 
 ENV PROJECT_ENV="dev" \
