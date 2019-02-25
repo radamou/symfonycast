@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import RepLogs from "./RepLogs";
 import PropTypes from "prop-types"
 import uuid from 'uuid/v4';
+import { getRepLogs, deleteRepLog , createRepLog } from '../Api/rep_log'
 
 export class RepLogApp extends Component {
     constructor(props) {
@@ -9,51 +10,78 @@ export class RepLogApp extends Component {
 
         this.state = {
             highlightedRowId: null,
-            repLogs: [
-                { id: uuid(), reps: 25, itemLabel: 'My Laptop', totalWeightLifted: 112.5 },
-                { id: uuid(), reps: 10, itemLabel: 'Big Fat Cat', totalWeightLifted: 180 },
-                { id: uuid(), reps: 4, itemLabel: 'Big Fat Cat', totalWeightLifted: 72 }
-            ]
+            repLogs: [],
+            numberOfHearts: 1,
+            isLoaded: false
         };
 
         this.handleRowClick = this.handleRowClick.bind(this);
         this.handleAddRepLog = this.handleAddRepLog.bind(this);
+        this.handleHeartChange = this.handleHeartChange.bind(this);
+        this.handleDeleteRepLog = this.handleDeleteRepLog.bind(this);
+    }
+
+    componentDidMount() {
+        getRepLogs()
+            .then((data) => {
+                this.setState({
+                    repLogs: data,
+                    isLoaded: true
+                })
+            });
     }
 
     handleRowClick(repLogId) {
         this.setState({highlightedRowId: repLogId})
     }
 
-    handleAddRepLog(itemLabel, quantity) {
+    handleHeartChange(heartAccount) {
+        this.setState({numberOfHearts: heartAccount})
+    }
+
+    handleAddRepLog(item, quantity) {
+        const newRepLog = {
+            reps: quantity,
+            item: item,
+        };
+
+        createRepLog(newRepLog).then(repLog => {
+            this.setState(prevState => {
+                const newRepLogs = [...prevState.repLogs, repLog];
+
+                return {repLogs: newRepLogs};
+            });
+        });
+    }
+
+    handleDeleteRepLog(id) {
+        deleteRepLog(id);
+
         this.setState(prevState => {
-            const newRepLog = {
-                id: uuid(),
-                reps: quantity,
-                itemLabel: itemLabel,
-                totalWeightLifted: Math.floor(Math.random()*50)
-            };
-
-            const newRepLogs = [...prevState.repLogs, newRepLog];
-
-            return {repLogs: newRepLogs};
+            return {repLogs:  prevState.repLogs.filter(repLog => repLog.id !== id)}
         });
     }
 
     render() {
 
         return <RepLogs
-            {...this.state}
             {...this.props}
+            {...this.state}
             handleRowClick={this.handleRowClick}
             handleAddRepLog={this.handleAddRepLog}
+            OnHeartChange={this.handleHeartChange}
+            handleDeleteRepLog={this.handleDeleteRepLog}
         />
     }
 }
 
 RepLogs.propTypes = {
-    highlightedRowId: PropTypes.number,
+    highlightedRowId: PropTypes.any,
     handleRowClick: PropTypes.func.isRequired,
     handleAddRepLog: PropTypes.func.isRequired,
+    handleDeleteRepLog:PropTypes.func.isRequired,
     withHeart: PropTypes.bool,
-    repLogs: PropTypes.array.isRequired
+    repLogs: PropTypes.array.isRequired,
+    numberOfHearts: PropTypes.number.isRequired,
+    isLoaded: PropTypes.bool.isRequired
 };

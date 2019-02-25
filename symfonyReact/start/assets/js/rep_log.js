@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 render(
     <RepLogApp
-        withHart={true}
+        withHart={"true"}
     />,
     document.getElementById('lift-stuff-app')
 );

@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 export default class RepLogCreator extends Component {
     constructor(props) {
         super(props);
+        this.state = {quantityInputError: ''};
         this.quantity = React.createRef();
         this.selectedItem = React.createRef();
         this.itemOptions = [
@@ -21,13 +22,25 @@ export default class RepLogCreator extends Component {
         const quantity = this.quantity.current;
         const item = this.selectedItem.current;
 
+        if (quantity.value < 0) {
+            this.setState({ quantityInputError: 'Please enter a value greater than 0'})
+
+            return;
+        }
+
         handleAddRepLog(item.options[item.selectedIndex].value, quantity.value);
+        quantity.value = '';
+        item.selectedIndex = 0;
+
+        this.setState({quantityInputError: ''});
     }
 
     render() {
+        const { quantityInputError } = this.state;
+
         return (
-            <form className="form-inline" onSubmit={this.handleFormSubmit}>
-                <div className="form-group">
+            <form onSubmit={this.handleFormSubmit}>
+                <div className={`form-group ${quantityInputError ? 'has-error' : ''}`}>
                     <label className="sr-only control-label required" htmlFor="rep_log_item">
                         What did you lift?
                     </label>
@@ -56,6 +69,7 @@ export default class RepLogCreator extends Component {
                            placeholder="How many times?"
                            className="form-control"
                     />
+                    {quantityInputError && <span className="help-block">{quantityInputError}</span>}
                 </div>
                 {' '}
                 <button type="submit" className="btn btn-primary">I Lifted it!</button>

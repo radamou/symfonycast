@@ -9,18 +9,25 @@ export default function RepLogs(props) {
     const {
         highlightedRowId,
         repLogs,
-        withHeart,
         handleRowClick,
-        handleAddRepLog
+        handleAddRepLog,
+        handleDeleteRepLog,
+        numberOfHearts,
+        OnHeartChange,
+        isLoaded
     } = props;
 
-    let heart = withHeart === true ? <span>:D</span> : '';
+    const heart = <span>{'❤️'.repeat(numberOfHearts)}</span>;
 
     return (
         <div className="col-md-7">
             <h2>
                 Lift History {heart}
             </h2>
+
+            <input type="range" value={numberOfHearts} onChange={(e) => {
+                OnHeartChange(+e.target.value)
+            }}/>
 
             <table className="table table-striped">
                 <thead>
@@ -34,7 +41,9 @@ export default function RepLogs(props) {
                 <RepLogList
                     highlightedRowId={highlightedRowId}
                     handleRowClick={handleRowClick}
+                    handleDeleteRepLog={handleDeleteRepLog}
                     repLogs={repLogs}
+                    isLoaded={isLoaded}
                 />
                 <tfoot>
                 <tr>
@@ -45,15 +54,25 @@ export default function RepLogs(props) {
                 </tr>
                 </tfoot>
             </table>
-            <RepLogCreator handleAddRepLog={handleAddRepLog}/>
+            <div className="row">
+                <div className="col-md-6">
+                    <RepLogCreator
+                        handleAddRepLog={handleAddRepLog}
+                    />
+                </div>
+            </div>
         </div>
     );
 }
 
 RepLogs.propTypes = {
-    highlightedRowId: PropTypes.number,
+    highlightedRowId: PropTypes.any,
     handleRowClick: PropTypes.func.isRequired,
     handleAddRepLog: PropTypes.func.isRequired,
+    handleDeleteRepLog:PropTypes.func.isRequired,
+    OnHeartChange: PropTypes.func.isRequired,
     withHeart: PropTypes.bool,
-    repLogs: PropTypes.array.isRequired
+    repLogs: PropTypes.array.isRequired,
+    numberOfHearts: PropTypes.number.isRequired,
+    isLoaded: PropTypes.bool.isRequired
 };
