@@ -2,41 +2,15 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-7 js-rep-log-table">
-            <h2>
-                Lift History
-            </h2>
+        <div id="lift-stuff-app"></div>
+    </div>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>What</th>
-                    <th>How many times?</th>
-                    <th>Weight</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <th>Total</th>
-                        <th class="js-total-weight"></th>
-                        <td>&nbsp;</td>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <div class="js-new-rep-log-form-wrapper">
-                {{ include('lift/_form.html.twig') }}
-            </div>
-        </div>
+    <div class="row">
         <div class="col-md-5">
             <div class="leaderboard">
                 <h2 class="text-center">
                     {#
-                    <img class="dumbbell" src="{{ asset('build/static/dumbbell.png') }}" />
+                   <img class="dumbbell" src="{{ asset('build/static/dumbbell.png') }}" />
                     #}
                     Leaderboard
                 </h2>

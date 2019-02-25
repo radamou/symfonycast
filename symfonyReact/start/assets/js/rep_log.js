@@ -1,9 +1,16 @@
-'use strict';
+import React from 'react'
+import { render } from 'react-dom'
+import { RepLogApp } from './RepLog/RepLogApp'
+import RepLogs from "./RepLog/RepLogs";
+import PropTypes from "prop-types";
 
-import $ from 'jquery';
-import RepLogApp from './Components/RepLogApp';
+render(
+    <RepLogApp
+        withHart={true}
+    />,
+    document.getElementById('lift-stuff-app')
+);
 
-$(document).ready(function() {
-    var $wrapper = $('.js-rep-log-table');
-    var repLogApp = new RepLogApp($wrapper);
-});
+RepLogs.propTypes = {
+    withHeart: PropTypes.bool,
+};
