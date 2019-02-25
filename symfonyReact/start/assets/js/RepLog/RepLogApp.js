@@ -17,27 +17,26 @@ export class RepLogApp extends Component {
         };
 
         this.handleRowClick = this.handleRowClick.bind(this);
-        this.handleNewItemSubmit = this.handleNewItemSubmit.bind(this);
+        this.handleAddRepLog = this.handleAddRepLog.bind(this);
     }
 
     handleRowClick(repLogId) {
         this.setState({highlightedRowId: repLogId})
     }
 
-    handleNewItemSubmit(itemLabel, quantity) {
-        let { repLogs } = this.state;
-
-        repLogs.push(
-            {
+    handleAddRepLog(itemLabel, quantity) {
+        this.setState(prevState => {
+            const newRepLog = {
                 id: uuid(),
                 reps: quantity,
                 itemLabel: itemLabel,
                 totalWeightLifted: Math.floor(Math.random()*50)
-            }
-        );
+            };
 
-        this.setState({repLogs: repLogs});
+            const newRepLogs = [...prevState.repLogs, newRepLog];
 
+            return {repLogs: newRepLogs};
+        });
     }
 
     render() {
@@ -46,7 +45,7 @@ export class RepLogApp extends Component {
             {...this.state}
             {...this.props}
             handleRowClick={this.handleRowClick}
-            onNewItemSubmit={this.handleNewItemSubmit}
+            handleAddRepLog={this.handleAddRepLog}
         />
     }
 }
@@ -54,7 +53,7 @@ export class RepLogApp extends Component {
 RepLogs.propTypes = {
     highlightedRowId: PropTypes.number,
     handleRowClick: PropTypes.func.isRequired,
-    onNewItemSubmit: PropTypes.func.isRequired,
+    handleAddRepLog: PropTypes.func.isRequired,
     withHeart: PropTypes.bool,
     repLogs: PropTypes.array.isRequired
 };
