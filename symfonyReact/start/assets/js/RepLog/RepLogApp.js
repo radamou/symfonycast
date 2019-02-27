@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import RepLogs from "./RepLogs";
 import PropTypes from "prop-types"
-import uuid from 'uuid/v4';
 import { getRepLogs, deleteRepLog , createRepLog } from '../Api/rep_log'
 
 export class RepLogApp extends Component {
@@ -12,7 +11,8 @@ export class RepLogApp extends Component {
             highlightedRowId: null,
             repLogs: [],
             numberOfHearts: 1,
-            isLoaded: false
+            isLoaded: false,
+            isSavingNewRepLog: false
         };
 
         this.handleRowClick = this.handleRowClick.bind(this);
@@ -30,7 +30,7 @@ export class RepLogApp extends Component {
                 })
             });
     }
-
+    
     handleRowClick(repLogId) {
         this.setState({highlightedRowId: repLogId})
     }
@@ -45,21 +45,28 @@ export class RepLogApp extends Component {
             item: item,
         };
 
+        this.setState({
+            isSavingNewRepLog: true
+        });
+
         createRepLog(newRepLog).then(repLog => {
             this.setState(prevState => {
                 const newRepLogs = [...prevState.repLogs, repLog];
 
-                return {repLogs: newRepLogs};
+                return {
+                    repLogs: newRepLogs,
+                    isSavingNewRepLog: false
+                };
             });
         });
     }
 
     handleDeleteRepLog(id) {
-        deleteRepLog(id);
-
-        this.setState(prevState => {
-            return {repLogs:  prevState.repLogs.filter(repLog => repLog.id !== id)}
-        });
+        deleteRepLog(id).then(
+            this.setState(prevState => {
+                return {repLogs:  prevState.repLogs.filter(repLog => repLog.id !== id)}
+            })
+        );
     }
 
     render() {
@@ -71,6 +78,7 @@ export class RepLogApp extends Component {
             handleAddRepLog={this.handleAddRepLog}
             OnHeartChange={this.handleHeartChange}
             handleDeleteRepLog={this.handleDeleteRepLog}
+
         />
     }
 }
@@ -83,5 +91,6 @@ RepLogs.propTypes = {
     withHeart: PropTypes.bool,
     repLogs: PropTypes.array.isRequired,
     numberOfHearts: PropTypes.number.isRequired,
-    isLoaded: PropTypes.bool.isRequired
+    isLoaded: PropTypes.bool.isRequired,
+    isSavingNewRepLog: PropTypes.bool.isRequired
 };

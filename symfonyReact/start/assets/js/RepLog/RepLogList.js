@@ -45,14 +45,15 @@ export default function RepLogList(props)
                 </tr>
             ))}
         </tbody>
+        
     )
 }
-
 
 RepLogList.propTypes = {
     highlightedRowId: PropTypes.any,
     handleRowClick: PropTypes.func.isRequired,
     handleDeleteRepLog: PropTypes.func.isRequired,
     repLogs: PropTypes.array.isRequired,
-    isLoaded: PropTypes.bool.isRequired
+    isLoaded: PropTypes.bool.isRequired,
+    isSavingNewRepLog: PropTypes.bool.isRequired
 };

@@ -14,7 +14,8 @@ export default function RepLogs(props) {
         handleDeleteRepLog,
         numberOfHearts,
         OnHeartChange,
-        isLoaded
+        isLoaded,
+        isSavingNewRepLog
     } = props;
 
     const heart = <span>{'❤️'.repeat(numberOfHearts)}</span>;
@@ -44,6 +45,7 @@ export default function RepLogs(props) {
                     handleDeleteRepLog={handleDeleteRepLog}
                     repLogs={repLogs}
                     isLoaded={isLoaded}
+                    isSavingNewRepLog={isSavingNewRepLog}
                 />
                 <tfoot>
                 <tr>
@@ -74,5 +76,6 @@ RepLogs.propTypes = {
     withHeart: PropTypes.bool,
     repLogs: PropTypes.array.isRequired,
     numberOfHearts: PropTypes.number.isRequired,
-    isLoaded: PropTypes.bool.isRequired
+    isLoaded: PropTypes.bool.isRequired,
+    isSavingNewRepLog: PropTypes.bool.isRequired
 };
