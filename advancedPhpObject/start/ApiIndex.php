@@ -1,7 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: radamou
- * Date: 2/28/19
- * Time: 8:55 PM
- */
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use App\Api\CollectEggs;
+
+$collectEggs = new CollectEggs();
+
+echo $collectEggs->postEggs();
+

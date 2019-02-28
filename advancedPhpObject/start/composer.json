@@ -9,6 +9,7 @@
     "thecodingmachine/phpstan-safe-rule": "^0.1.2"
   },
   "require": {
-    "thecodingmachine/safe": "^0.1.13"
+    "thecodingmachine/safe": "^0.1.13",
+    "guzzlehttp/guzzle": "^6.3"
   }
 }
