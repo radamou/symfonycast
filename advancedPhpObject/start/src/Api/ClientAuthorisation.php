@@ -7,7 +7,7 @@ class ClientAuthorisation
     const CLIENT_SECRET= '6043f0a0367324cd8ab3f0ae9044abc6';
     const CLIENT_ID='oauthTest';
 
-    public function redirectToAuthorization()
+    public function redirectToAuthorization(): string
     {
         $url = 'http://coop.apps.knpuniversity.com/authorize?'.http_build_query(
             [
@@ -18,6 +18,6 @@ class ClientAuthorisation
 
             ]);
 
-        var_dump($url);die;
+        return $url;
     }
 }
