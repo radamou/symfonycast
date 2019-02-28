@@ -30,7 +30,7 @@ export class RepLogApp extends Component {
                 })
             });
     }
-    
+
     handleRowClick(repLogId) {
         this.setState({highlightedRowId: repLogId})
     }
