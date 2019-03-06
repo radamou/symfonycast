@@ -131,6 +131,9 @@
     "ralouphie/getallheaders": {
         "version": "2.0.5"
     },
+    "ramazaki/lorem-ipsum-bundle": {
+        "version": "dev-master"
+    },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
         "recipe": {

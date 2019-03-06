@@ -1,0 +1,3 @@
+_lorem_ipsum:
+  resource: '@KnpULoremIpsumBundle/Resources/config/routes.xml'
+  prefix: /api/ipsum

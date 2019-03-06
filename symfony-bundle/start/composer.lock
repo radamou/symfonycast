@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6502082573cf227099845b53788e6c4c",
+    "content-hash": "96a332934ea139af76ce70bf9a5c8cc4",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2063,6 +2063,34 @@
             ],
             "description": "A polyfill for getallheaders.",
             "time": "2016-02-11T07:05:27+00:00"
+        },
+        {
+            "name": "ramazaki/lorem-ipsum-bundle",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../LoremIpsumBundle",
+                "reference": "93eba6cfadff530938a5f2611bdf562506b9cab8"
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "KnpU\\LoremIpsumBundle\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ramatou Adamou",
+                    "email": "ramatou.adamou@aptushealth.com"
+                }
+            ],
+            "description": "lorem ipsum bundle test"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -4825,6 +4853,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "ramazaki/lorem-ipsum-bundle": 20,
         "symfony/lts": 20
     },
     "prefer-stable": false,

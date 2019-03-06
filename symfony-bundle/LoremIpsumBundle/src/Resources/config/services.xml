@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="knpu_lorem_ipsum.controller.ipsum_api_controller"
+                 class="KnpU\LoremIpsumBundle\Controller\IpsumApiController"
+                 public="true"
+        >
+            <argument type="service" id="knpu_lorem_ipsum.knpu_ipsum" />
+            <argument type="service" id="event_dispatcher" on-invalid="null"/>
+        </service>
+        <service
+                id="knpu_ipsum.word_provider"
+                class="KnpU\LoremIpsumBundle\Provider\KnpUWordProvider"
+                public="false"
+        >
+            <tag name="knpu_ipsum_word_provider" />
+        </service>
+        <service
+                id="KnpU\LoremIpsumBundle\Provider\KnpUWordProviderInterface"
+                alias="knpu_ipsum.word_provider"
+                public="false"
+        />
+        <service
+                id="knpu_lorem_ipsum.knpu_ipsum"
+                class="KnpU\LoremIpsumBundle\KnpUIpsum"
+                public="true"
+        >
+            <argument type="tagged" tag="knpu_ipsum_word_provider" />
+        </service>
+
+        <service
+                id="KnpU\LoremIpsumBundle\KnpUIpsum"
+                alias="knpu_lorem_ipsum.knpu_ipsum"
+                public="false"
+        />
+
+    </services>
+</container>
