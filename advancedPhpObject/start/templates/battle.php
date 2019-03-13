@@ -2,20 +2,22 @@
 
 namespace App;
 
-require_once __DIR__.'/config/Bootstrap.php';
-
 use App\Internal\DependencyInjection\Container;
 $container = new Container([]);
 $shipsLoader = $container->getShipLoader();
 
-$ship1Id = isset($_POST['ship1_id']) ?? null;
-$ship1Quantity = isset($_POST['ship1_quantity']) ? $_POST['ship1_quantity'] : 1;
-$ship2Id = isset($_POST['ship2_id']) ?? null;
-$ship2Quantity = isset($_POST['ship2_quantity']) ? $_POST['ship2_quantity'] : 1;
-$battleType = isset($_POST['battle_tyype']) ?? null;
+use Symfony\Component\HttpFoundation\Request;
+
+$request = Request::createFromGlobals();
+
+$ship1Id = $request->query->get('ship1_id', null);
+$ship1Quantity = $request->query->get('ship1_quantity',1);
+$ship2Id = $request->query->get('ship2_id', null);
+$ship2Quantity = $request->query->get('ship2_quantity',1);
+$battleType = $request->query->get('battle_tyype', null);
 
 if (!$ship1Id || !$ship2Id) {
-    header('Location: /index.php?error=missing_data');
+    header('Location: /home.php?error=missing_data');
     die;
 }
 
@@ -23,12 +25,12 @@ $ship1 = $shipsLoader->fetchOne($ship1Id);
 $ship2 = $shipsLoader->fetchOne($ship2Id);
 
 if (!$ship1 || !$ship2) {
-    header('Location: /index.php?error=bad_ships');
+    header('Location: /home.php?error=bad_ships');
     die;
 }
 
 if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
-    header('Location: /index.php?error=bad_quantities');
+    header('Location: /home.php?error=bad_quantities');
     die;
 }
 
@@ -37,7 +39,7 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
 
 ?>
 
-<?php require __DIR__.'/templates/header.html'?>
+<?php require __DIR__ . './header.html' ?>
 
 <body>
 <div class="container">
@@ -79,10 +81,10 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
             <?php endif; ?>
         </p>
     </div>
-    <a href="./index.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
+    <a href="home.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="public/js/bootstrap.min.js"></script>
+    <script src="../public/js/bootstrap.min.js"></script>
 </div>
 </body>
 </html>

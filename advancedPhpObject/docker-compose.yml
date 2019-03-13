@@ -1,0 +1,39 @@
+version: '3'
+services:
+  web:
+    build:
+      context: docker/front/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file: .env.dist
+    volumes:
+      - ./start:/srv/app
+    depends_on:
+      - redis
+      - db
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379"
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  db:
+    build:
+      context: docker/pgsql
+      dockerfile: Dockerfile
+    volumes:
+      - ./var/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_RO_USER: www_data
+      POSTGRES_RO_PASSWORD: winners
+      POSTGRES_DB: porfolio
+    deploy:
+      placement:
+        constraints: [node.role == manager]

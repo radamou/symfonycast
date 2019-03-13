@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-class StarShipAction
+use Symfony\Component\HttpFoundation\Request;
+
+class StarShipAction extends AbstractController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        echo "hello word";
+        $this->render($request);
     }
 }
