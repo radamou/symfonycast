@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 
-$ship1Id = $request->query->get('ship1_id', null);
+$ship1Id = $request->query->get('ship1_id', 1);
 $ship1Quantity = $request->query->get('ship1_quantity',1);
-$ship2Id = $request->query->get('ship2_id', null);
+$ship2Id = $request->query->get('ship2_id', 2);
 $ship2Quantity = $request->query->get('ship2_quantity',1);
-$battleType = $request->query->get('battle_tyype', null);
+$battleType = $request->query->get('battle_type', 1);
 
 if (!$ship1Id || !$ship2Id) {
     header('Location: /home.php?error=missing_data');
@@ -23,6 +23,7 @@ if (!$ship1Id || !$ship2Id) {
 
 $ship1 = $shipsLoader->fetchOne($ship1Id);
 $ship2 = $shipsLoader->fetchOne($ship2Id);
+
 
 if (!$ship1 || !$ship2) {
     header('Location: /home.php?error=bad_ships');
@@ -39,7 +40,7 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
 
 ?>
 
-<?php require __DIR__ . './header.html' ?>
+<?php require __DIR__ . '/header.html' ?>
 
 <body>
 <div class="container">

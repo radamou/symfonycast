@@ -2,8 +2,6 @@
 
 namespace App;
 
-require_once __DIR__ . '/../config/Bootstrap.php';
-
 use App\Internal\DependencyInjection\Container;
 $container = new Container([]);
 $shipsLoader = $container->getShipLoader();
@@ -27,7 +25,7 @@ if (isset($_GET['error'])) {
 }
 ?>
 
-<?php require __DIR__ . './header.html' ?>
+<?php require __DIR__ . '/header.html' ?>
 
 <?php if ($errorMessage): ?>
     <div><?php echo $errorMessage; ?></div>

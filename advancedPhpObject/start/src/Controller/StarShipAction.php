@@ -8,6 +8,6 @@ class StarShipAction extends AbstractController
 {
     public function indexAction(Request $request)
     {
-        $this->render($request);
+        return $this->render($request);
     }
 }
