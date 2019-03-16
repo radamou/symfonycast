@@ -12,9 +12,9 @@ class BattleManager
     const TYPE_ONLY_JEDI = 'only_jedi';
 
     public function battle(
-        ?AbstractShip $ship1,
+        AbstractShip $ship1,
         int $ship1Quantity,
-        ?AbstractShip $ship2,
+        AbstractShip $ship2,
         int $ship2Quantity,
         ?string $battleType
     ): BattleResult {

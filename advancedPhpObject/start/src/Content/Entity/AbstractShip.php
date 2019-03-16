@@ -70,7 +70,7 @@ abstract class AbstractShip
     public function getNameAndSpecs(bool $useShortFormat = false): string
     {
         if ($useShortFormat) {
-            return sprintf(
+            return \Safe\sprintf(
                 '%s: %s/%s/%s',
                 $this->name,
                 $this->weaponPower,
@@ -79,7 +79,7 @@ abstract class AbstractShip
             );
         }
 
-        return sprintf(
+        return \Safe\sprintf(
             '%s: w:%s, j:%s, s:%s',
             $this->name,
             $this->weaponPower,

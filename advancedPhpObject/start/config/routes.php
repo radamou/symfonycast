@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 try {
     $routeCollection = new RouteCollection();
     $routeCollection->add('battle', new Route(
-        '/home',
+        '/',
         ['_controller' => '\App\Controller\StarShipAction::indexAction', 'method' => 'GET']
     ));
 

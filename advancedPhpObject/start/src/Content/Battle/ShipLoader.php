@@ -31,9 +31,9 @@ class ShipLoader implements ShipLoaderInterface
         return (new ShipCollection($ships))->removeBrokenShips();
     }
 
-    public function fetchOne(int $shipId): AbstractShip
+    public function fetchOne(int $shipId): ?AbstractShip
     {
-        $ship =  $this->jsonFixturesLoader->fetchSingleData($shipId);
+        $ship = $this->jsonFixturesLoader->fetchSingleData($shipId);
 
         return $this->createFromData($ship);
     }

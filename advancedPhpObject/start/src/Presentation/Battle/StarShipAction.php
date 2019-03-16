@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Presentation\Battle;
 
 use Symfony\Component\HttpFoundation\Request;
+use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class StarShipAction extends AbstractController
 {
