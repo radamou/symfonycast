@@ -8,6 +8,7 @@ Encore
     .createSharedEntry('layout', './assets/js/layout.js')
     .addEntry('rep_log', './assets/js/rep_log.js')
     .addEntry('login', './assets/js/login.js')
+    .enableSingleRuntimeChunk()
 
     .enableBuildNotifications()
     .autoProvidejQuery()
