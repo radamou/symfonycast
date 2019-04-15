@@ -8,10 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AbstractController
 {
     public function render(Request $request) {
-         \extract($request->attributes->all(), EXTR_SKIP);
+        $attributes = $request->attributes->all();
+         \extract($attributes, EXTR_SKIP);
          \ob_start();
 
-         include  \sprintf(__DIR__.'/../../templates/%s.php',  $_route);
+         include  \Safe\sprintf(__DIR__.'/../../templates/%s.php',  $request->get('_route'));
 
         return new Response(ob_get_clean());
     }

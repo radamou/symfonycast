@@ -9,8 +9,8 @@ class BattleResult
     private $useJediPowers;
 
     public function __construct(
-        AbstractShip $winningShip,
-        AbstractShip $losingShip,
+        ?AbstractShip $winningShip,
+        ?AbstractShip $losingShip,
         bool $useJediPowers
     ) {
         $this->winningShip = $winningShip;
@@ -18,7 +18,7 @@ class BattleResult
         $this->useJediPowers = $useJediPowers;
     }
 
-    public function getWinningShip(): AbstractShip
+    public function getWinningShip(): ?AbstractShip
     {
         return $this->winningShip;
     }
@@ -30,7 +30,7 @@ class BattleResult
         return $this;
     }
 
-    public function getLosingShip(): AbstractShip
+    public function getLosingShip(): ?AbstractShip
     {
         return $this->losingShip;
     }

@@ -8,5 +8,5 @@ use App\Content\Entity\AbstractShip;
 interface ShipLoaderInterface
 {
     public function fetchAll(): ShipCollection;
-    public function fetchOne(int $shipId): AbstractShip;
+    public function fetchOne(int $shipId): ?AbstractShip;
 }

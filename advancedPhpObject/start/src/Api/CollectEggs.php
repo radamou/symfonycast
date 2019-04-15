@@ -30,7 +30,7 @@ class CollectEggs
             ]
         );
 
-        $response = json_decode($request->getBody()->getContents(), true);
+        $response = \Safe\json_decode($request->getBody()->getContents(), true);
 
         return $response['access_token'] ?? null;
 
