@@ -114,3 +114,14 @@ And as always, thanks so much for your support and letting
 us do what we love!
 
 <3 Your friends at SymfonyCasts
+
+
+Usefull Commands:
+
+```
+php bin/console config:dump framework messenger
+php bin/console debug:config framework messenger
+php bin/console debug:container --show-arguments messenger.bus.default.inner
+```
+
+Allow to see all the options that can be used for messenger configuration

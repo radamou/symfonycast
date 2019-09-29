@@ -2,9 +2,7 @@
 
 namespace App\Message;
 
-use App\Entity\ImagePost;
-
-class DeleteImagePost
+class DeleteImagePost implements AsyncMessageInterface
 {
     private $imagePostId;
 

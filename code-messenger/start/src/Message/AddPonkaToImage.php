@@ -4,7 +4,7 @@ namespace App\Message;
 
 use App\Entity\ImagePost;
 
-class AddPonkaToImage
+class AddPonkaToImage implements  AsyncMessageInterface
 {
     private $imagePostId;
 
