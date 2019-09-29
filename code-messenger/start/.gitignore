@@ -1,0 +1,30 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+../../.idea/../../.idea/
+../../.idea/
+../.idea/code-messenger.iml
+../.idea/encodings.xml
+../.idea/misc.xml
+../.idea/modules.xml
+../.idea/php.xml
+../.idea/vcs.xml
+../.idea/workspace.xml
+
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+###> CUSTOM ###
+public/uploads/images
+###< CUSTOM ###
