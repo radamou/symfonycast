@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Message;
+namespace App\Message\Event;
 
-
-class DeletePhotoFile
+class ImagePostDeletedEvent
 {
     private $fileName;
 
@@ -12,7 +11,7 @@ class DeletePhotoFile
         $this->fileName = $fileName;
     }
 
-    public function getFileName(): string
+    public function getFileName()
     {
         return $this->fileName;
     }

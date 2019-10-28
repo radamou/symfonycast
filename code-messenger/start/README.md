@@ -125,3 +125,70 @@ php bin/console debug:container --show-arguments messenger.bus.default.inner
 ```
 
 Allow to see all the options that can be used for messenger configuration
+
+
+Install and Enable Supervisor (mac)
+
+```
+brew install supervisor
+```
+
+Enable consumer conf
+
+```
+ln -s ~/personalProj/symfonycast/code-messenger/start/supervisor/config.ini /usr/local/etc/supervisor.d/
+```
+
+Run Supervisor (to take in account init files)
+
+```
+supervisorctl -c /usr/local/etc/supervisord.ini reread (reread conf file)
+
+```
+
+Restart any process with the config file
+
+```
+supervisorctl -c /usr/local/etc/supervisord.ini update
+
+```
+
+To start configure consumers
+
+```
+supervisorctl -c /usr/local/etc/supervisord.ini start messenger-consume:*
+```
+
+display messenger log
+
+```
+tail -f var/log/messenger.log
+```
+
+
+see all processes associated to messenger:consume
+
+```
+ps -A | grep messenger:consume
+
+```
+
+Symfony Messenger console commands
+
+display help command:
+
+```
+php bin/console messenger:consume --help
+```
+
+Stop worker gracefully 
+
+```
+php bin/console messenger:stop-workers
+```
+
+stop worker 
+
+```
+supervisorctl -c /usr/local/etc/supervisord.ini stop messenger-consume:*
+```

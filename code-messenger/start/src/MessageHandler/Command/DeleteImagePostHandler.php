@@ -1,9 +1,9 @@
 <?php
 
-namespace App\MessageHandler;
+namespace App\MessageHandler\Command;
 
-use App\Message\DeleteImagePost;
-use App\Message\DeletePhotoFile;
+use App\Message\Command\DeleteImagePost;
+use App\Message\Event\ImagePostDeletedEvent;
 use App\Repository\ImagePostRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\NullLogger;
@@ -19,17 +19,17 @@ class DeleteImagePostHandler implements MessageHandlerInterface, LoggerAwareInte
 
     private $entityManager;
     private $imagePostRepository;
-    private $messageBus;
+    private $eventBus;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ImagePostRepository $imagePostRepository,
-        MessageBusInterface $messageBus
+        MessageBusInterface $eventBus
     ) {
         $this->entityManager = $entityManager;
         $this->imagePostRepository = $imagePostRepository;
         $this->logger = $this->logger ?? new NullLogger();
-        $this->messageBus = $messageBus;
+        $this->eventBus = $eventBus;
     }
 
     public function __invoke(DeleteImagePost $deleteImagePost)
@@ -45,7 +45,7 @@ class DeleteImagePostHandler implements MessageHandlerInterface, LoggerAwareInte
         $this->entityManager->remove($imagePost);
         $this->entityManager->flush();
 
-        $this->messageBus->dispatch(new DeletePhotoFile($imagePost->getFilename()));
+        $this->eventBus->dispatch(new ImagePostDeletedEvent($imagePost->getFilename()));
     }
 
     public function setLogger(LoggerInterface $logger)

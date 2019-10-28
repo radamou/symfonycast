@@ -1,0 +1,5 @@
+#see doc here https://sergeyzhuk.me/2019/10/18/php-watcher/
+watch:
+  - src
+  - config
+executable: php7.4

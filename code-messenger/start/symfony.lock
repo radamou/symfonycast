@@ -151,6 +151,9 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "react/event-loop": {
+        "version": "v1.1.0"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -162,6 +165,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "seregazhuk/php-watcher": {
+        "version": "v0.2.0"
     },
     "symfony/asset": {
         "version": "4.3-dev"
@@ -326,6 +332,9 @@
     "symfony/polyfill-php73": {
         "version": "1.11-dev"
     },
+    "symfony/process": {
+        "version": "v4.3.5"
+    },
     "symfony/profiler-pack": {
         "version": "dev-master"
     },
@@ -441,6 +450,9 @@
     },
     "webmozart/assert": {
         "version": "1.4.0"
+    },
+    "yosymfony/resource-watcher": {
+        "version": "v2.0.0"
     },
     "zendframework/zend-code": {
         "version": "3.3-dev"

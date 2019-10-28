@@ -2,10 +2,13 @@ framework:
     messenger:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
+        default_bus: messenger.bus.default
         buses:
             messenger.bus.default:
                 middleware:
                     - App\Messenger\AuditMiddleware
+            event.bus:
+                default_middleware: allow_no_handlers
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
@@ -18,5 +21,6 @@ framework:
 
         routing:
             # Route your messages to the transports
-            'App\Message\AsyncMessageInterface': async
+            'App\Message\Command\AsyncMessageInterface': async
+            'App\Message\Event\ImagePostDeletedEvent': async
             #'App\Message\DeleteImagePost': async

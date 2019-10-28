@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Message;
+namespace App\Message\Command;
 
-class DeleteImagePost implements AsyncMessageInterface
+class AddPonkaToImage implements  AsyncMessageInterface
 {
     private $imagePostId;
 
-    public function __construct(int $imagePostId)
-    {
+    public function __construct(int $imagePostId) {
         $this->imagePostId = $imagePostId;
     }
 
