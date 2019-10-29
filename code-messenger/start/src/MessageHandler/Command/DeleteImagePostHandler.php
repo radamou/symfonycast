@@ -7,13 +7,13 @@ use App\Message\Event\ImagePostDeletedEvent;
 use App\Repository\ImagePostRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\NullLogger;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class DeleteImagePostHandler implements MessageHandlerInterface, LoggerAwareInterface
+class DeleteImagePostHandler implements MessageSubscriberInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -51,5 +51,18 @@ class DeleteImagePostHandler implements MessageHandlerInterface, LoggerAwareInte
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getHandledMessages(): iterable
+    {
+             yield DeleteImagePost::class => [
+              'method' => '__invoke',
+              'priority' => 10,
+              //'bus' => 'my_bus_name',
+              //'from_transport' => 'async',
+         ];
     }
 }

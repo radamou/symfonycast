@@ -33,6 +33,7 @@ class ImagePostController extends AbstractController
         return $this->toJson([
             'items' => $posts
         ]);
+
     }
 
     /**
@@ -68,7 +69,7 @@ class ImagePostController extends AbstractController
         $envelop = new Envelope(
             new AddPonkaToImage($imagePost->getId()),
             [
-                new DelayStamp(5000)
+               new DelayStamp(5000)
             ]
         );
 

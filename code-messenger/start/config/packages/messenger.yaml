@@ -9,6 +9,7 @@ framework:
                     - App\Messenger\AuditMiddleware
             event.bus:
                 default_middleware: allow_no_handlers
+            query.bus: ~
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
@@ -16,6 +17,13 @@ framework:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 retry_strategy:
                     delay: 2000
+            async_priority_high:
+                dns: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: messages_high_priority
+                    queues:
+                        messages_high: ~
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -23,4 +31,4 @@ framework:
             # Route your messages to the transports
             'App\Message\Command\AsyncMessageInterface': async
             'App\Message\Event\ImagePostDeletedEvent': async
-            #'App\Message\DeleteImagePost': async
+            #'App\Message\Command\DeleteImagePost': [async, async_priority_high]

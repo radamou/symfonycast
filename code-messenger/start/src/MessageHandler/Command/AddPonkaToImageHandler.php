@@ -17,9 +17,13 @@ class AddPonkaToImageHandler implements MessageHandlerInterface, LoggerAwareInte
 {
     use LoggerAwareTrait;
 
+    /** @var PhotoFileManager */
     private $photoManager;
+    /** @var EntityManagerInterface */
     private $entityManager;
+    /** @var PhotoPonkaficator*/
     private $ponkaficator;
+    /** @var ImagePostRepository */
     private $imagePostRepository;
 
     public function __construct(

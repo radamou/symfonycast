@@ -6,7 +6,8 @@ class AddPonkaToImage implements  AsyncMessageInterface
 {
     private $imagePostId;
 
-    public function __construct(int $imagePostId) {
+    public function __construct(int $imagePostId)
+    {
         $this->imagePostId = $imagePostId;
     }
 

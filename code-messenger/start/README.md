@@ -192,3 +192,35 @@ stop worker
 ```
 supervisorctl -c /usr/local/etc/supervisord.ini stop messenger-consume:*
 ```
+
+
+Run rabbit consumer
+
+```
+php bin/console messenger:consume -vv async_priority_high async
+
+```
+
+Mysql issu using mac
+
+Connect to the database
+
+```
+mysql -uUser -pPassword (as root)
+```
+
+Then Run
+
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password
+BY 'password';  
+
+```
+
+Install amqp Mac
+
+```
+brew install rabbitmq-c
+BY 'password';  
+
+```

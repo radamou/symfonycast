@@ -4,6 +4,7 @@ namespace App\Message\Command;
 
 class DeleteImagePost implements AsyncMessageInterface
 {
+    /** @var int */
     private $imagePostId;
 
     public function __construct(int $imagePostId)
