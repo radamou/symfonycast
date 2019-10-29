@@ -1,0 +1,12 @@
+suites:
+  default:
+    namespace: App
+    psr4_prefix: App
+
+matchers:
+  - spec\Matcher\BeGreaterMatcher
+extensions:
+  PhpSpec\NyanFormattersExtension\Extension: ~
+
+formatter.name: nyan.dino
+#formatter.name: pretty
