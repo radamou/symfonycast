@@ -167,7 +167,8 @@ abstract class BaseRepository
     {
         $datas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $objects = array();
+        $objects = [];
+
         foreach ($datas as $data) {
             $object = $this->createObjectFromData($data);
             $this->finishHydrateObject($object);
@@ -196,6 +197,7 @@ abstract class BaseRepository
         }
 
         $object = $this->createObject($class, $data);
+
         foreach ($data as $key => $val) {
             $columnName = $key;
 
