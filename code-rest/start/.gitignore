@@ -4,7 +4,5 @@
 /behat.yml
 /logs/*
 /.sass-cache
-../.DS_Store
-../code-messenger/start/.idea/
-../code-phpspec/start/.idea/
-/finish/
+/cache/*
+.idea/*
