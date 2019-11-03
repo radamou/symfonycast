@@ -36,22 +36,21 @@ class ApiTokenProvider implements AuthenticationProviderInterface
      */
     public function authenticate(TokenInterface $token)
     {
-        // the actual token string value from the header - e.g. ABCDEFG
-        $tokenString = $token->getCredentials();
-
-        return;
         // find the ApiToken object in the database based on the TokenString
-        // $apiToken = // todo
+         $apiToken = $this->apiTokenRepository->findOneByToken(
+             $token->getCredentials()
+         );
 
-        if (!$apiToken) {
+         if (!$apiToken) {
             throw new BadCredentialsException('Invalid token');
-        }
+         }
 
-        // look up the user based on the ApiToken.userId value
-        // $user = // todo
-        if (!$user) {
+         // look up the user based on the ApiToken.userId value
+         $user = $this->userRepository->find($apiToken->userId);
+
+         if (!$user) {
             throw new \Exception('A token without a user? Some crazy things are happening');
-        }
+         }
 
         $authenticatedToken = new ApiAuthToken($user->getRoles());
         $authenticatedToken->setUser($user);

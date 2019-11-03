@@ -44,6 +44,7 @@ class ProgrammerController extends BaseController
 
     public function newAction(Request $request)
     {
+        $this->enforceUserSecurity();
         $programmer = new Programmer();
         $this->handleRequest($request, $programmer);
         $errors = $this->validate($programmer);
@@ -65,6 +66,8 @@ class ProgrammerController extends BaseController
     {
         $programmer = $this->getProgrammerRepository()->findOneByNickname($nickname);
 
+        $this->enforceProgrammerOwnershipSecurity($programmer);
+
         if (!$programmer) {
             $this->throw404();
         }
@@ -84,6 +87,7 @@ class ProgrammerController extends BaseController
     public function deleteAction($nickname)
     {
         $programmer = $this->getProgrammerRepository()->findOneByNickname($nickname);
+        $this->enforceProgrammerOwnershipSecurity($programmer);
 
         if ($programmer) {
             $this->delete($programmer);
@@ -114,7 +118,7 @@ class ProgrammerController extends BaseController
             $programmer->$property = $data[$property] ?? null;;
         }
 
-        $programmer->userId = $this->findUserByUsername('weaverryan')->id;
+        $programmer->userId = $this->getLoggedInUser()->id;
     }
 
     //https://tools.ietf.org/html/draft-nottingham-http-problem-07

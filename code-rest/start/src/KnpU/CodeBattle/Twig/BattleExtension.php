@@ -17,8 +17,11 @@ class BattleExtension extends \Twig_Extension
 
     private $projectRepository;
 
-    public function __construct(RequestStack $requestStack, ProgrammerRepository $programmerRepository, ProjectRepository $projectRepository)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        ProgrammerRepository $programmerRepository,
+        ProjectRepository $projectRepository
+    ) {
         $this->requestStack = $requestStack;
         $this->programmerRepository = $programmerRepository;
         $this->projectRepository = $projectRepository;
@@ -53,6 +56,7 @@ class BattleExtension extends \Twig_Extension
     public function getPowerLevelClass(Programmer $programmer)
     {
         $powerLevel = $programmer->powerLevel;
+
         switch (true) {
             case ($powerLevel <= 3):
                 return 'danger';
@@ -69,6 +73,4 @@ class BattleExtension extends \Twig_Extension
     {
         return 'code_battle';
     }
-
-
 }

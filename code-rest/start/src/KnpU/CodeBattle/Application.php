@@ -7,6 +7,7 @@ use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
 use KnpU\CodeBattle\Api\ApiProblem;
 use KnpU\CodeBattle\Api\ApiProblemException;
+use KnpU\CodeBattle\Api\ApiProblemResponseFactory;
 use KnpU\CodeBattle\Battle\PowerManager;
 use KnpU\CodeBattle\Repository\BattleRepository;
 use KnpU\CodeBattle\Repository\ProjectRepository;
@@ -313,32 +314,17 @@ class Application extends SilexApplication
             }
 
             // only do something special if we have an ApiProblemException!
+            $apiProblem = new ApiProblem($statusCode);
+
             if ($e instanceof ApiProblemException) {
-                $apiProblem = $e->getApiProblem();;
-            }else {
-                $apiProblem = new ApiProblem($statusCode);
-
-
-                if ($e instanceof HttpException) {
-                    $apiProblem->set('detail', $e->getMessage());
-                }
+                $apiProblem = $e->getApiProblem();
             }
 
-            $data = $apiProblem->toArray();
-
-            if ($data['type'] !== 'about:blank') {
-                $data['type'] = 'http://localhost:8000/api/docs/errors#'.$data['type'];
+            if ($e instanceof HttpException) {
+                $apiProblem->set('detail', $e->getMessage());
             }
 
-            $response = new JsonResponse(
-                $data,
-                $statusCode
-            );
-
-
-            $response->headers->set('Content-Type', 'application/problem+json');
-
-            return $response;
+            return ApiProblemResponseFactory::createResponse($apiProblem);
         });
     }
 } 

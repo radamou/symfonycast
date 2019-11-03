@@ -44,18 +44,17 @@ class ApiTokenListener implements ListenerInterface
             return;
         }
 
-        return;
-        // format should be "Authorization: token ABCDEFG"
-        $tokenString = 'HARDCODED';
-
-        if (!$tokenString) {
+        $authorisation = $this->parseAuthorizationHeader(
+            $request->headers->get('Authorization')
+        );
+        if (!$authorisation) {
             // there's no authentication info for us to process
             return;
         }
 
         // create an object that just exists to hold onto the token string for us
         $token = new ApiAuthToken();
-        $token->setAuthToken($tokenString);
+        $token->setAuthToken($authorisation);
 
         $returnValue = $this->authenticationManager->authenticate($token);
 
