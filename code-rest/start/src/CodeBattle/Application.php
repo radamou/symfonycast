@@ -25,7 +25,6 @@ use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Symfony\Component\Finder\Finder;
@@ -60,7 +59,7 @@ class Application extends SilexApplication
      */
     public function mountControllers()
     {
-        $controllerPath = 'src/KnpU/CodeBattle/Controller';
+        $controllerPath = 'src/CodeBattle/Controller';
         $finder = new Finder();
         $finder->in($this['root_dir'].'/'.$controllerPath)
             ->name('*Controller.php')
@@ -143,7 +142,7 @@ class Application extends SilexApplication
 
     private function configureParameters()
     {
-        $this['root_dir'] = __DIR__.'/../../..';
+        $this['root_dir'] = __DIR__ . '/../..';
         $this['sqlite_path'] = $this['root_dir'].'/data/code_battles.sqlite';
     }
 
