@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  nginx:
+    build:
+      context: docker/nginx
+      target: base
+    hostname: "code-rest.start.io"
+    volumes:
+      - ./start/:/var/www/
+    depends_on:
+      - php
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: base
+      args:
+        - IS_MAC=${IS_MAC}
+        - UID=1000
+        - GID=1000
+    depends_on:
+      - db
+    volumes:
+      - ./start/:/var/www/
+  db:
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./start/:/var/www/

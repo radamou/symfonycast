@@ -1,0 +1,2 @@
+phan:
+    vendor/
