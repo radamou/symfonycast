@@ -5,11 +5,13 @@ services:
     build:
       context: docker/nginx
       target: base
-    hostname: "code-rest.start.io"
+    hostname: "www.code-battle.com"
     volumes:
       - ./start/:/var/www/
     depends_on:
       - php
+    ports:
+      - 8000:80
   php:
     build:
       context: .

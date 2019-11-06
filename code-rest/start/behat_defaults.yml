@@ -10,12 +10,12 @@ default:
         # from my WebFeatureContext, which you don't need to worry about :)
         class: ApiFeatureContext
         parameters:
-            base_url: http://localhost:8000
+            base_url: code-rest_nginx_1
 
 web:
     extensions:
         Behat\MinkExtension\Extension:
-            base_url: http://localhost:8000
+            base_url: code-rest_nginx_1
             goutte: ~
             selenium2: ~
     paths:

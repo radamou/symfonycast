@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     make \
+    iputils-ping \
     # Upgrade pip and install sphinx
     && pip3 install --upgrade pip \
     && pecl install xdebug amqp \
@@ -70,7 +71,7 @@ RUN apt-get update && apt-get install -y \
     && echo "#!/usr/bin/env bash\nxvfb-run -a -s \"-screen 0 {{ wkhtmltopdf_xvfb_size }}\" wkhtmltopdf \"$@\"" >> /usr/local/bin/wkhtmltopdf.sh \
 # Customize PS1 and a welcome message
     && echo "PS1='\[\e[1;32m\]\u@\H:\[\e[m\] \[\e[1;37m\]\w\[\e[m\]\n\[\e[1;33m\]hist:\! \[\e[0;33m\] \[\e[1;31m\]jobs:\j \$\[\e[m\] '" >> /root/.bashrc \
-    && echo "echo '\033[42m WELCOME TO ZOLA ORDERS DOCKER \033[0m'" >> /root/.bashrc \
+    && echo "echo '\033[42m WELCOME DOCKER \033[0m'" >> /root/.bashrc \
 # Blackfire
     && version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/$current_os/amd64/$version \

@@ -5,9 +5,9 @@ imports:
 default:
     context:
         parameters:
-            base_url: http://localhost:8000
+            base_url: http://code-rest_nginx_1
 
 web:
     extensions:
         Behat\MinkExtension\Extension:
-            base_url: http://localhost:8000
+            base_url: http://code-rest_nginx_1
