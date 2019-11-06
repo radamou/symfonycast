@@ -11,7 +11,6 @@ default:
         class: ApiFeatureContext
         parameters:
             base_url: code-rest_nginx_1
-
 web:
     extensions:
         Behat\MinkExtension\Extension:
