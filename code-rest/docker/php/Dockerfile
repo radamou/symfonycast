@@ -38,8 +38,8 @@ RUN apt-get update && apt-get install -y \
 
 # PHP ext
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql calendar bcmath soap intl zip opcache \
-    && docker-php-ext-enable xdebug amqp \
+    && docker-php-ext-install pdo pdo_pgsql pgsql calendar bcmath soap intl zip opcache sockets \
+    && docker-php-ext-enable xdebug sockets opcache amqp \
 
 # Config home dir
     && usermod -u $UID www-data -d /home/www-data --shell /bin/bash && \
@@ -96,5 +96,6 @@ RUN wget -O phive.phar https://phar.io/releases/phive.phar \
 
 COPY docker/php/custom.ini $PHP_INI_DIR/conf.d/custom.ini
 COPY docker/php/docker-php-ext-xdebug.ini $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+COPY docker/php/10-opcache.ini $PHP_INI_DIR/conf.d/10-opcache.ini
 
 CMD ["php-fpm", "-F"]
