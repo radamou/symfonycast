@@ -18,12 +18,12 @@ class ProjectRepository extends BaseRepository
 
     public function findOneByName($name)
     {
-        return $this->findOneBy(array('name' => $name));
+        return $this->findOneBy(['name' => $name]);
     }
-
 
     /**
      * @param $limit
+     *
      * @return Project[]
      */
     public function findRandom($limit)
@@ -34,8 +34,8 @@ class ProjectRepository extends BaseRepository
         ;
 
         $projects = $this->fetchAllToObject($stmt);
-        shuffle($projects);
+        \shuffle($projects);
 
-        return array_slice($projects, 0, $limit);
+        return \array_slice($projects, 0, $limit);
     }
 }

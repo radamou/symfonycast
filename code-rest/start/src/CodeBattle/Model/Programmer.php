@@ -2,15 +2,14 @@
 
 namespace KnpU\CodeBattle\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Serializer\ExclusionPolicy("all")
  */
 class Programmer
 {
-
     /* All public properties are persisted */
     public $id;
 
@@ -18,21 +17,21 @@ class Programmer
      * @var string
      *
      * @Assert\NotBlank(message="Please enter a clever nickname")
-     * @Serializer\Expose()
+     * @Serializer\Expose
      */
     public $nickname;
 
     /**
-     * Number of an avatar, from 1-6
+     * Number of an avatar, from 1-6.
      *
-     * @var integer
-     * @Serializer\Expose()
+     * @var int
+     * @Serializer\Expose
      */
     public $avatarNumber;
 
     /**
      * @var self
-     * @Serializer\Expose()
+     * @Serializer\Expose
      */
     public $tagLine;
 
@@ -40,7 +39,7 @@ class Programmer
 
     /**
      * @var int
-     * @Serializer\Expose()
+     * @Serializer\Expose
      */
     public $powerLevel = 0;
 
@@ -49,6 +48,4 @@ class Programmer
         $this->nickname = $nickname;
         $this->avatarNumber = $avatarNumber;
     }
-
-
 }

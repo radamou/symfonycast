@@ -26,5 +26,4 @@ class ApiAuthToken extends AbstractToken
     {
         return $this->token;
     }
-
 }

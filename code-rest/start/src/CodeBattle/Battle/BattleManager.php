@@ -21,10 +21,8 @@ class BattleManager
     }
 
     /**
-     * Creates and wages an epic battle
+     * Creates and wages an epic battle.
      *
-     * @param Programmer $programmer
-     * @param Project $project
      * @return Battle
      */
     public function battle(Programmer $programmer, Project $project)
@@ -39,7 +37,7 @@ class BattleManager
             $battle->didProgrammerWin = false;
             $battle->notes = 'You don\'t have the skills to even start this project. Read the documentation (i.e. power up) and try again!';
         } else {
-            if (rand(0, 2) != 2) {
+            if (2 != \rand(0, 2)) {
                 $battle->didProgrammerWin = true;
                 $battle->notes = 'You battled heroically, asked great questions, worked pragmatically and finished on time. You\'re a hero!';
             } else {
@@ -55,4 +53,4 @@ class BattleManager
 
         return $battle;
     }
-} 
+}

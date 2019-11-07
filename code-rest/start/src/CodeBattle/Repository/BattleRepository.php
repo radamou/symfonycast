@@ -2,9 +2,6 @@
 
 namespace KnpU\CodeBattle\Repository;
 
-use Doctrine\DBAL\Driver\ResultStatement;
-use KnpU\CodeBattle\Model\Battle;
-
 class BattleRepository extends BaseRepository
 {
     protected function getClassName()
@@ -25,5 +22,4 @@ class BattleRepository extends BaseRepository
         // cast into a boolean
         $obj->didProgrammerWin = (bool) $obj->didProgrammerWin;
     }
-
 }

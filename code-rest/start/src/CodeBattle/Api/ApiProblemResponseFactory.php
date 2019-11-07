@@ -1,6 +1,5 @@
 <?php
 
-
 namespace KnpU\CodeBattle\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,7 +10,7 @@ class ApiProblemResponseFactory
     {
         $data = $problem->toArray();
 
-        if ($data['type'] !== 'about:blank') {
+        if ('about:blank' !== $data['type']) {
             $data['type'] = 'http://localhost:8000/api/docs/errors#'.$data['type'];
         }
 

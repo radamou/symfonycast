@@ -19,21 +19,22 @@ abstract class BaseRepository
     }
 
     /**
-     * Saves the object (the public properties are persisted)
+     * Saves the object (the public properties are persisted).
      *
      * @param $obj
+     *
      * @throws \Exception
      */
     public function save($obj)
     {
-        if (!is_object($obj)) {
-            throw new \Exception('Expected object, got '.gettype($obj));
+        if (!\is_object($obj)) {
+            throw new \Exception('Expected object, got '.\gettype($obj));
         }
 
         $reflect = new \ReflectionClass($obj);
-        $persistedProperties   = $reflect->getProperties(\ReflectionProperty::IS_PUBLIC);
+        $persistedProperties = $reflect->getProperties(\ReflectionProperty::IS_PUBLIC);
 
-        $data = array();
+        $data = [];
         foreach ($persistedProperties as $prop) {
             $val = $prop->getValue($obj);
             $columnName = $prop->name;
@@ -41,13 +42,10 @@ abstract class BaseRepository
             // normalize DateTime objects to string
             if ($val instanceof \DateTime) {
                 $val = $val->format('Y-m-d H:i:s');
-            } elseif (is_object($val)) {
+            } elseif (\is_object($val)) {
                 // process a relationship
-                if (!property_exists(get_class($val), 'id')) {
-                    throw new \Exception(sprintf(
-                        'Property "%s" is an object, but it doesn\'t look like a relationship',
-                        $prop->name
-                    ));
+                if (!\property_exists(\get_class($val), 'id')) {
+                    throw new \Exception(\sprintf('Property "%s" is an object, but it doesn\'t look like a relationship', $prop->name));
                 }
 
                 // programmer becomes programmerId in the database
@@ -59,11 +57,10 @@ abstract class BaseRepository
         }
 
         if ($obj->id) {
-
             $this->connection->update(
                 $this->getTableName(),
                 $data,
-                array('id' => $obj->id)
+                ['id' => $obj->id]
             );
         } else {
             $this->connection->insert(
@@ -77,11 +74,10 @@ abstract class BaseRepository
 
     public function delete($obj)
     {
-        $this->connection->delete($this->getTableName(), array('id' => $obj->id));
+        $this->connection->delete($this->getTableName(), ['id' => $obj->id]);
     }
 
     /**
-     * @param array $criteria
      * @return object
      */
     public function findOneBy(array $criteria)
@@ -113,12 +109,12 @@ abstract class BaseRepository
 
     public function find($id)
     {
-        return $this->findOneBy(array('id' => $id));
+        return $this->findOneBy(['id' => $id]);
     }
 
     public function findAll()
     {
-        return $this->findAllBy(array());
+        return $this->findAllBy([]);
     }
 
     public function findAllLike(array $criteria, $limit = null)
@@ -135,7 +131,7 @@ abstract class BaseRepository
             ;
         }
 
-        if ($limit !== null) {
+        if (null !== $limit) {
             $qb->setMaxResults($limit);
         }
 
@@ -145,6 +141,7 @@ abstract class BaseRepository
     }
 
     abstract protected function getClassName();
+
     abstract protected function getTableName();
 
     protected function fetchToObject(ResultStatement $stmt)
@@ -186,14 +183,13 @@ abstract class BaseRepository
      * This is the heart of our crappy ORM: all properties must be public
      * and they all must have the same name as the column in the database.
      *
-     * @param array $data
      * @return object
      */
     private function createObjectFromData(array $data)
     {
         $class = $this->getClassName();
-        if (!class_exists($class)) {
-            throw new \Exception(sprintf('Repository class %s is returning a bad getClassName: "%s"', get_class($this), $this->getClassName()));
+        if (!\class_exists($class)) {
+            throw new \Exception(\sprintf('Repository class %s is returning a bad getClassName: "%s"', \get_class($this), $this->getClassName()));
         }
 
         $object = $this->createObject($class, $data);
@@ -201,18 +197,14 @@ abstract class BaseRepository
         foreach ($data as $key => $val) {
             $columnName = $key;
 
-            if (substr($columnName, -2) == 'Id' && !property_exists($class, $columnName)) {
+            if ('Id' == \substr($columnName, -2) && !\property_exists($class, $columnName)) {
                 // does it end in Id, like programmerId? (and that property doesn't exist)
 
                 // make programmerId -> programmer
-                $columnName = substr($columnName, 0, -2);
+                $columnName = \substr($columnName, 0, -2);
                 $obj = $this->repoContainer->get($columnName)->find($val);
                 if (!$obj) {
-                    throw new \Exception(sprintf(
-                        'Could not query for foreign key object %s with id %s',
-                        $key,
-                        $val
-                    ));
+                    throw new \Exception(\sprintf('Could not query for foreign key object %s with id %s', $key, $val));
                 }
 
                 $val = $obj;
@@ -243,7 +235,7 @@ abstract class BaseRepository
     }
 
     /**
-     * Can be called in finishHydrateObject to normalize a date to a DateTime object
+     * Can be called in finishHydrateObject to normalize a date to a DateTime object.
      *
      * @param $propertyName
      * @param $obj

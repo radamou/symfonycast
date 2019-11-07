@@ -6,7 +6,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
-
     /* All public properties are persisted */
     public $id;
 
@@ -20,24 +19,28 @@ class User implements UserInterface
     private $plainPassword;
 
     /**
-     * Start: Security-related stuff
+     * Start: Security-related stuff.
      */
     public function getUsername()
     {
         return $this->email;
     }
+
     public function eraseCredentials()
     {
         $this->password = null;
     }
+
     public function getPassword()
     {
         return $this->password;
     }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
+
     public function getSalt()
     {
         return null;
@@ -47,6 +50,7 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
     }
+
     public function getPlainPassword()
     {
         return $this->plainPassword;

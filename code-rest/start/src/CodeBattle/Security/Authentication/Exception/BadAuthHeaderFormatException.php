@@ -10,5 +10,4 @@ class BadAuthHeaderFormatException extends AuthenticationException
     {
         return 'Malformed Authorization header format';
     }
-
 }

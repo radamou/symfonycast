@@ -2,8 +2,8 @@
 
 namespace KnpU\CodeBattle\Security\Token;
 
-use KnpU\CodeBattle\Repository\BaseRepository;
 use KnpU\CodeBattle\Model\User;
+use KnpU\CodeBattle\Repository\BaseRepository;
 
 class ApiTokenRepository extends BaseRepository
 {
@@ -21,16 +21,17 @@ class ApiTokenRepository extends BaseRepository
 
     /**
      * @param $token
+     *
      * @return ApiToken
      */
     public function findOneByToken($token)
     {
-        return $this->findOneBy(array('token' => $token));
+        return $this->findOneBy(['token' => $token]);
     }
 
     public function findAllForUser(User $user)
     {
-        return $this->findAllBy(array('userId' => $user->id));
+        return $this->findAllBy(['userId' => $user->id]);
     }
 
     protected function finishHydrateObject($obj)
@@ -39,14 +40,14 @@ class ApiTokenRepository extends BaseRepository
     }
 
     /**
-     * Overridden to create our ApiToken even though it has a constructor arg
+     * Overridden to create our ApiToken even though it has a constructor arg.
      *
      * @param string $class
-     * @param array $data
+     *
      * @return ApiToken
      */
     protected function createObject($class, array $data)
     {
         return new $class($data['userId']);
     }
-} 
+}

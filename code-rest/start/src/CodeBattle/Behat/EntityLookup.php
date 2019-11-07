@@ -5,7 +5,7 @@ namespace KnpU\CodeBattle\Behat;
 use KnpU\CodeBattle\Repository\BaseRepository;
 
 /**
- * Class used in ApiFeatureContext::processReplacements to lookup entity ids
+ * Class used in ApiFeatureContext::processReplacements to lookup entity ids.
  */
 class EntityLookup
 {
@@ -21,26 +21,18 @@ class EntityLookup
 
     public function get($value)
     {
-        if ($value == 'last') {
+        if ('last' == $value) {
             // "last" is a special word you can use
             $obj = $this->repository->findLast();
 
             if (!$obj) {
-                throw new \Exception(sprintf(
-                    'Cannot find any %s entities',
-                    get_class($this->repository)
-                ));
+                throw new \Exception(\sprintf('Cannot find any %s entities', \get_class($this->repository)));
             }
         } else {
-            $obj = $this->repository->findOneBy(array($this->field => $value));
+            $obj = $this->repository->findOneBy([$this->field => $value]);
 
             if (!$obj) {
-                throw new \Exception(sprintf(
-                    'Cannot find %s=%s via %s',
-                    $this->field,
-                    $value,
-                    get_class($this->repository)
-                ));
+                throw new \Exception(\sprintf('Cannot find %s=%s via %s', $this->field, $value, \get_class($this->repository)));
             }
         }
 
@@ -51,4 +43,4 @@ class EntityLookup
     {
         return $this->get($value);
     }
-} 
+}

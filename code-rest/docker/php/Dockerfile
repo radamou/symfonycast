@@ -89,6 +89,11 @@ RUN docker-php-ext-install pcntl \
     && echo "extension=$(find /usr/local/lib/php/extensions/ -name ast.so)" > $PHP_INI_DIR/conf.d/ast.ini \
     && cd .. && rm -rf php-ast
 
+#Install php cs
+RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer \
+    && chmod a+x php-cs-fixer \
+    && mv php-cs-fixer /usr/local/bin/php-cs-fixer
+
 COPY docker/php/custom.ini $PHP_INI_DIR/conf.d/custom.ini
 
 CMD ["php-fpm", "-F"]

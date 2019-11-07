@@ -4,7 +4,6 @@ namespace KnpU\CodeBattle\Security\Authentication;
 
 use KnpU\CodeBattle\Api\ApiProblem;
 use KnpU\CodeBattle\Api\ApiProblemResponseFactory;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -12,7 +11,7 @@ use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface
 use Symfony\Component\Translation\Translator;
 
 /**
- * Determines the Response that should be back if:
+ * Determines the Response that should be back if:.
  *
  *  A) There is an authentication error
  *  B) The request requires authentication, but none was provided
@@ -29,7 +28,7 @@ class ApiEntryPoint implements AuthenticationEntryPointInterface
     /**
      * Starts the authentication scheme.
      *
-     * @param Request $request The request that resulted in an AuthenticationException
+     * @param Request                 $request       The request that resulted in an AuthenticationException
      * @param AuthenticationException $authException The exception that started the authentication process
      *
      * @return Response
@@ -50,7 +49,7 @@ class ApiEntryPoint implements AuthenticationEntryPointInterface
     private function getMessage(AuthenticationException $authException = null)
     {
         $key = $authException ? $authException->getMessageKey() : 'authentication_required';
-        $parameters = $authException ? $authException->getMessageData() : array();
+        $parameters = $authException ? $authException->getMessageData() : [];
 
         return $this->translator->trans($key, $parameters);
     }

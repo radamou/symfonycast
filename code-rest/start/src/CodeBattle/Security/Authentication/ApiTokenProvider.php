@@ -2,11 +2,10 @@
 
 namespace KnpU\CodeBattle\Security\Authentication;
 
+use KnpU\CodeBattle\Repository\UserRepository;
 use KnpU\CodeBattle\Security\Token\ApiTokenRepository;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use KnpU\CodeBattle\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 /**
@@ -27,30 +26,30 @@ class ApiTokenProvider implements AuthenticationProviderInterface
     }
 
     /**
-     * Looks up the token and loads the user based on it
+     * Looks up the token and loads the user based on it.
      *
-     * @param TokenInterface $token
-     * @return ApiAuthToken|TokenInterface
      * @throws \Symfony\Component\Security\Core\Exception\AuthenticationException
      * @throws \Exception
+     *
+     * @return ApiAuthToken|TokenInterface
      */
     public function authenticate(TokenInterface $token)
     {
         // find the ApiToken object in the database based on the TokenString
-         $apiToken = $this->apiTokenRepository->findOneByToken(
+        $apiToken = $this->apiTokenRepository->findOneByToken(
              $token->getCredentials()
          );
 
-         if (!$apiToken) {
+        if (!$apiToken) {
             throw new BadCredentialsException('Invalid token');
-         }
+        }
 
-         // look up the user based on the ApiToken.userId value
-         $user = $this->userRepository->find($apiToken->userId);
+        // look up the user based on the ApiToken.userId value
+        $user = $this->userRepository->find($apiToken->userId);
 
-         if (!$user) {
+        if (!$user) {
             throw new \Exception('A token without a user? Some crazy things are happening');
-         }
+        }
 
         $authenticatedToken = new ApiAuthToken($user->getRoles());
         $authenticatedToken->setUser($user);
@@ -64,11 +63,10 @@ class ApiTokenProvider implements AuthenticationProviderInterface
      *
      * @param TokenInterface $token A TokenInterface instance
      *
-     * @return Boolean true if the implementation supports the Token, false otherwise
+     * @return bool true if the implementation supports the Token, false otherwise
      */
     public function supports(TokenInterface $token)
     {
         return $token instanceof ApiAuthToken;
     }
-
-} 
+}

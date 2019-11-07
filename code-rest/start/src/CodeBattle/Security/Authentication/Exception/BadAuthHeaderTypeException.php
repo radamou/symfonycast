@@ -9,10 +9,9 @@ class BadAuthHeaderTypeException extends AuthenticationException
 {
     public function getMessageKey()
     {
-        return sprintf(
+        return \sprintf(
             'Unknown Authorization header type = use "%s"',
             ApiTokenListener::AUTHORIZATION_HEADER_TOKEN_KEY
         );
     }
-
 }

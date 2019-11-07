@@ -6,7 +6,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ApiToken
 {
-
     /* All public properties are persisted */
     public $id;
 
@@ -28,6 +27,6 @@ class ApiToken
     {
         $this->userId = $userId;
         $this->createdAt = new \DateTime();
-        $this->token = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->token = \base_convert(\sha1(\uniqid(\mt_rand(), true)), 16, 36);
     }
 }

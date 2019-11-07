@@ -3,23 +3,21 @@
 namespace KnpU\CodeBattle\Controller;
 
 use KnpU\CodeBattle\Model\Battle;
-use Silex\Application;
 use Silex\ControllerCollection;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class BattleController extends BaseController
 {
     protected function addRoutes(ControllerCollection $controllers)
     {
-        $controllers->post('/battles/new', array($this, 'newAction'))->bind('battle_new');
-        $controllers->get('/battles/{id}', array($this, 'showAction'))->bind('battle_show');
-        $controllers->get('/battles', array($this, 'listAction'))->bind('battle_list');
+        $controllers->post('/battles/new', [$this, 'newAction'])->bind('battle_new');
+        $controllers->get('/battles/{id}', [$this, 'showAction'])->bind('battle_show');
+        $controllers->get('/battles', [$this, 'listAction'])->bind('battle_list');
     }
 
     /**
-     * Create a new programmer
+     * Create a new programmer.
      */
     public function newAction(Request $request)
     {
@@ -34,7 +32,7 @@ class BattleController extends BaseController
 
         $battle = $this->getBattleManager()->battle($programmer, $project);
 
-        return $this->redirect($this->generateUrl('battle_show', array('id' => $battle->id)));
+        return $this->redirect($this->generateUrl('battle_show', ['id' => $battle->id]));
     }
 
     public function showAction($id)
@@ -42,19 +40,19 @@ class BattleController extends BaseController
         /** @var Battle $battle */
         $battle = $this->getBattleRepository()->find($id);
 
-        return $this->render('battle/show.twig', array(
+        return $this->render('battle/show.twig', [
             'battle' => $battle,
             'programmer' => $battle->programmer,
             'project' => $battle->project,
-        ));
+        ]);
     }
 
     public function listAction()
     {
         $battles = $this->getBattleRepository()->findAll();
 
-        return $this->render('battle/list.twig', array(
+        return $this->render('battle/list.twig', [
             'battles' => $battles,
-        ));
+        ]);
     }
 }

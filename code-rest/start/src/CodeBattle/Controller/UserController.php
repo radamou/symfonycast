@@ -11,15 +11,15 @@ class UserController extends BaseController
 {
     protected function addRoutes(ControllerCollection $controllers)
     {
-        $controllers->get('/register', array($this, 'registerAction'))->bind('user_register');
-        $controllers->post('/register', array($this, 'registerHandleAction'))->bind('user_register_handle');
-        $controllers->get('/login', array($this, 'loginAction'))->bind('user_login');
-        $controllers->post('/login_check', array($this, 'loginCheckAction'))->bind('user_login_check');
-        $controllers->get('/logout', array($this, 'logoutAction'))->bind('user_logout');
+        $controllers->get('/register', [$this, 'registerAction'])->bind('user_register');
+        $controllers->post('/register', [$this, 'registerHandleAction'])->bind('user_register_handle');
+        $controllers->get('/login', [$this, 'loginAction'])->bind('user_login');
+        $controllers->post('/login_check', [$this, 'loginCheckAction'])->bind('user_login_check');
+        $controllers->get('/logout', [$this, 'logoutAction'])->bind('user_logout');
     }
 
     /**
-     * Registration page
+     * Registration page.
      */
     public function registerAction()
     {
@@ -27,15 +27,15 @@ class UserController extends BaseController
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        return $this->render('user/register.twig', array('user' => new User()));
+        return $this->render('user/register.twig', ['user' => new User()]);
     }
 
     /**
-     * Processes the registration
+     * Processes the registration.
      */
     public function registerHandleAction(Application $app, Request $request)
     {
-        $errors = array();
+        $errors = [];
 
         if (!$email = $request->request->get('email')) {
             $errors[] = '"email" is required';
@@ -66,8 +66,8 @@ class UserController extends BaseController
         $user->setPlainPassword($plainPassword);
 
         // errors? Show them!
-        if (count($errors) > 0) {
-            return $this->render('user\register.twig', array('errors' => $errors, 'user' => $user));
+        if (\count($errors) > 0) {
+            return $this->render('user\register.twig', ['errors' => $errors, 'user' => $user]);
         }
 
         $userRepository->save($user);
@@ -77,9 +77,7 @@ class UserController extends BaseController
     }
 
     /**
-     * Displays the login form
-     *
-     * @param Application $app
+     * Displays the login form.
      */
     public function loginAction(Application $app, Request $request)
     {
@@ -87,10 +85,10 @@ class UserController extends BaseController
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        return $this->render('user/login.twig', array(
-            'error'         => $app['security.last_error']($request),
+        return $this->render('user/login.twig', [
+            'error' => $app['security.last_error']($request),
             'last_username' => $app['session']->get('_security.last_username'),
-        ));
+        ]);
     }
 
     public function loginCheckAction(Application $app)

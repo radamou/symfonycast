@@ -3,7 +3,6 @@
 namespace KnpU\CodeBattle\Controller;
 
 use KnpU\CodeBattle\Security\Token\ApiToken;
-use Silex\Application;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -12,28 +11,28 @@ class TokenController extends BaseController
 {
     protected function addRoutes(ControllerCollection $controllers)
     {
-        $controllers->get('/tokens', array($this, 'indexAction'))->bind('user_tokens');
-        $controllers->get('/tokens/new', array($this, 'newAction'))->bind('user_tokens_new');
-        $controllers->post('/tokens/new', array($this, 'newAction'))->bind('user_tokens_new_process');
-        $controllers->post('/tokens/{token}/delete', array($this, 'deleteAction'))->bind('user_tokens_delete');
+        $controllers->get('/tokens', [$this, 'indexAction'])->bind('user_tokens');
+        $controllers->get('/tokens/new', [$this, 'newAction'])->bind('user_tokens_new');
+        $controllers->post('/tokens/new', [$this, 'newAction'])->bind('user_tokens_new_process');
+        $controllers->post('/tokens/{token}/delete', [$this, 'deleteAction'])->bind('user_tokens_delete');
     }
 
     /**
-     * Displays all of the user's tokens
+     * Displays all of the user's tokens.
      */
     public function indexAction()
     {
         $tokens = $this->getApiTokenRepository()->findAllForUser($this->getLoggedInUser());
 
-        return $this->render('tokens/index.twig', array(
+        return $this->render('tokens/index.twig', [
             'tokens' => $tokens,
-        ));
+        ]);
     }
 
     public function newAction(Request $request)
     {
         $token = new ApiToken($this->getLoggedInUser()->id);
-        $errors = array();
+        $errors = [];
         if ($request->isMethod('POST')) {
             $token->notes = $request->request->get('notes');
 
@@ -48,10 +47,10 @@ class TokenController extends BaseController
             }
         }
 
-        return $this->render('tokens/new.twig', array(
+        return $this->render('tokens/new.twig', [
             'errors' => $errors,
             'token' => $token,
-        ));
+        ]);
     }
 
     public function deleteAction($token)

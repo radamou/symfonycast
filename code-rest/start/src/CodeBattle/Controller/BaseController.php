@@ -3,25 +3,25 @@
 namespace KnpU\CodeBattle\Controller;
 
 use JMS\Serializer\SerializationContext;
+use KnpU\CodeBattle\Application;
 use KnpU\CodeBattle\Model\Programmer;
 use KnpU\CodeBattle\Model\User;
+use KnpU\CodeBattle\Repository\ProgrammerRepository;
+use KnpU\CodeBattle\Repository\ProjectRepository;
 use KnpU\CodeBattle\Repository\UserRepository;
-use KnpU\CodeBattle\Application;
+use KnpU\CodeBattle\Security\Token\ApiTokenRepository;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\HttpFoundation\Request;
-use KnpU\CodeBattle\Repository\ProgrammerRepository;
-use KnpU\CodeBattle\Repository\ProjectRepository;
-use KnpU\CodeBattle\Security\Token\ApiTokenRepository;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
- * Base controller class to hide Silex-related implementation details
+ * Base controller class to hide Silex-related implementation details.
  */
 abstract class BaseController implements ControllerProviderInterface
 {
@@ -47,13 +47,13 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * Render a twig template
+     * Render a twig template.
      *
-     * @param  string $template  The template filename
-     * @param  array  $variables
+     * @param string $template The template filename
+     *
      * @return string
      */
-    public function render($template, array $variables = array())
+    public function render($template, array $variables = [])
     {
         return $this->container['twig']->render($template, $variables);
     }
@@ -61,7 +61,7 @@ abstract class BaseController implements ControllerProviderInterface
     /**
      * Is the current user logged in?
      *
-     * @return boolean
+     * @return bool
      */
     public function isUserLoggedIn()
     {
@@ -81,12 +81,13 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * @param  string $routeName  The name of the route
-     * @param  array  $parameters Route variables
-     * @param  bool   $absolute
+     * @param string $routeName  The name of the route
+     * @param array  $parameters Route variables
+     * @param bool   $absolute
+     *
      * @return string A URL!
      */
-    public function generateUrl($routeName, array $parameters = array(), $absolute = false)
+    public function generateUrl($routeName, array $parameters = [], $absolute = false)
     {
         return $this->container['url_generator']->generate(
             $routeName,
@@ -96,8 +97,9 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * @param  string           $url
-     * @param  int              $status
+     * @param string $url
+     * @param int    $status
+     *
      * @return RedirectResponse
      */
     public function redirect($url, $status = 302)
@@ -106,9 +108,7 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * Logs this user into the system
-     *
-     * @param User $user
+     * Logs this user into the system.
      */
     public function loginUser(User $user)
     {
@@ -127,9 +127,10 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * Used to find the fixtures user - I use it to cheat in the beginning
+     * Used to find the fixtures user - I use it to cheat in the beginning.
      *
      * @param $username
+     *
      * @return User
      */
     public function findUserByUsername($username)
@@ -138,34 +139,34 @@ abstract class BaseController implements ControllerProviderInterface
     }
 
     /**
-     * Shortcut for saving objects
+     * Shortcut for saving objects.
      *
      * @param $obj
      */
     public function save($obj)
     {
         switch (true) {
-            case ($obj instanceof Programmer):
+            case $obj instanceof Programmer:
                 $this->getProgrammerRepository()->save($obj);
                 break;
             default:
-                throw new \Exception(sprintf('Shortcut for saving "%s" not implemented', get_class($obj)));
+                throw new \Exception(\sprintf('Shortcut for saving "%s" not implemented', \get_class($obj)));
         }
     }
 
     /**
-     * Shortcut for deleting objects
+     * Shortcut for deleting objects.
      *
      * @param $obj
      */
     public function delete($obj)
     {
         switch (true) {
-            case ($obj instanceof Programmer):
+            case $obj instanceof Programmer:
                 $this->getProgrammerRepository()->delete($obj);
                 break;
             default:
-                throw new \Exception(sprintf('Shortcut for saving "%s" not implemented', get_class($obj)));
+                throw new \Exception(\sprintf('Shortcut for saving "%s" not implemented', \get_class($obj)));
         }
     }
 
@@ -176,6 +177,7 @@ abstract class BaseController implements ControllerProviderInterface
 
     /**
      * @param $obj
+     *
      * @return array
      */
     public function validate($obj)
@@ -237,7 +239,7 @@ abstract class BaseController implements ControllerProviderInterface
 
         return new Response($json, $statusCode,
             [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ]
         );
     }

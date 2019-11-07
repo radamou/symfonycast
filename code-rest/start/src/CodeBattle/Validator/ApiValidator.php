@@ -6,7 +6,7 @@ use Symfony\Component\Validator\ValidatorInterface;
 
 /**
  * A class that uses Symfony's validator, but flattens things down to a simpler
- * format
+ * format.
  */
 class ApiValidator
 {
@@ -20,10 +20,10 @@ class ApiValidator
     public function validate($obj)
     {
         $errors = $this->validator->validate($obj);
-        $errorsData = array();
+        $errorsData = [];
 
         foreach ($errors as $error) {
-            /** @var \Symfony\Component\Validator\ConstraintViolation $error */
+            /* @var \Symfony\Component\Validator\ConstraintViolation $error */
 
             // reduces to just one error per field, that's a decision I'm making
             $errorsData[$error->getPropertyPath()] = $error->getMessage();
@@ -31,4 +31,4 @@ class ApiValidator
 
         return $errorsData;
     }
-} 
+}

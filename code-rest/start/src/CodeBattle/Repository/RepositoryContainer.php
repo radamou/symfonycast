@@ -21,17 +21,19 @@ class RepositoryContainer
 
     /**
      * @param $key
-     * @return BaseRepository
+     *
      * @throws \Exception
+     *
+     * @return BaseRepository
      */
     public function get($key)
     {
         if (!isset($this->repositoryMap[$key])) {
-            throw new \Exception(sprintf('Unknown repo name %s', $key));
+            throw new \Exception(\sprintf('Unknown repo name %s', $key));
         }
 
         $serviceId = $this->repositoryMap[$key];
 
         return $this->container[$serviceId];
     }
-} 
+}

@@ -115,7 +115,7 @@ class ProgrammerController extends BaseController
 
         // update the properties
         foreach ($apiProperties as $property) {
-            $programmer->$property = $data[$property] ?? null;;
+            $programmer->$property = $data[$property] ?? null;
         }
 
         $programmer->userId = $this->getLoggedInUser()->id;

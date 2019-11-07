@@ -1,4 +1,18 @@
 {
+    "name":"ramazaki/code-battle",
+    "description":"Silex application for rest api course",
+    "authors": [
+        {
+            "name": "Ramatou Adamou Issa",
+            "email": "radamou@ramazaki.com",
+            "homepage": "https://radamou.github.io/porfolio/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "radamou@ramazaki.com",
+        "irc": "https://radamou.github.io/porfolio/"
+    },
     "require": {
         "php": "^7.3",
         "ext-ast": "*",
@@ -11,6 +25,9 @@
         "symfony/expression-language": "~2.4",
         "jms/serializer": "^1.14"
     },
+    "suggest": {
+        "ext-ast": "php extension required by phan"
+    },
     "require-dev": {
         "behat/mink": "~1.5",
         "behat/mink-goutte-driver": "~1.0.9",
@@ -19,7 +36,7 @@
         "behat/mink-extension": "~1.2.0",
         "phpunit/phpunit": "~5.7.0",
         "guzzle/guzzle": "~3.7",
-        "phan/phan": "2.x"
+        "symfony/console":"~2.0 "
     },
     "autoload" : {
         "psr-4": {

@@ -2,12 +2,10 @@
 
 namespace KnpU\CodeBattle\Twig;
 
-use KnpU\CodeBattle\Model\Battle;
 use KnpU\CodeBattle\Model\Programmer;
 use KnpU\CodeBattle\Repository\ProgrammerRepository;
 use KnpU\CodeBattle\Repository\ProjectRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Twig_SimpleFunction;
 
 class BattleExtension extends \Twig_Extension
 {
@@ -25,22 +23,21 @@ class BattleExtension extends \Twig_Extension
         $this->requestStack = $requestStack;
         $this->programmerRepository = $programmerRepository;
         $this->projectRepository = $projectRepository;
-
     }
 
     public function getFunctions()
     {
-        return array(
-            new \Twig_SimpleFunction('asset', array($this, 'getAssetPath')),
-        );
+        return [
+            new \Twig_SimpleFunction('asset', [$this, 'getAssetPath']),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('powerLevelClass', array($this, 'getPowerLevelClass')),
-            new \Twig_SimpleFilter('avatar_path', array($this, 'getAvatarPath')),
-        );
+        return [
+            new \Twig_SimpleFilter('powerLevelClass', [$this, 'getPowerLevelClass']),
+            new \Twig_SimpleFilter('avatar_path', [$this, 'getAvatarPath']),
+        ];
     }
 
     public function getAssetPath($path)
@@ -50,7 +47,7 @@ class BattleExtension extends \Twig_Extension
 
     public function getAvatarPath($number)
     {
-        return sprintf('img/avatar%s.png', $number);
+        return \sprintf('img/avatar%s.png', $number);
     }
 
     public function getPowerLevelClass(Programmer $programmer)
@@ -58,10 +55,10 @@ class BattleExtension extends \Twig_Extension
         $powerLevel = $programmer->powerLevel;
 
         switch (true) {
-            case ($powerLevel <= 3):
+            case $powerLevel <= 3:
                 return 'danger';
                 break;
-            case ($powerLevel <= 7):
+            case $powerLevel <= 7:
                 return 'warning';
                 break;
             default:
