@@ -4,8 +4,10 @@ namespace KnpU\CodeBattle\Controller;
 
 use JMS\Serializer\SerializationContext;
 use KnpU\CodeBattle\Application;
+use KnpU\CodeBattle\Battle\BattleManager;
 use KnpU\CodeBattle\Model\Programmer;
 use KnpU\CodeBattle\Model\User;
+use KnpU\CodeBattle\Repository\BattleRepository;
 use KnpU\CodeBattle\Repository\ProgrammerRepository;
 use KnpU\CodeBattle\Repository\ProjectRepository;
 use KnpU\CodeBattle\Repository\UserRepository;
@@ -25,9 +27,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 abstract class BaseController implements ControllerProviderInterface
 {
-    /**
-     * @var \KnpU\CodeBattle\Application
-     */
+    /** @var Application */
     protected $container;
 
     public function __construct(Application $app)
@@ -46,24 +46,14 @@ abstract class BaseController implements ControllerProviderInterface
         return $controllers;
     }
 
-    /**
-     * Render a twig template.
-     *
-     * @param string $template The template filename
-     *
-     * @return string
-     */
-    public function render($template, array $variables = [])
+
+    public function render(string $template, array $variables = []): string
     {
         return $this->container['twig']->render($template, $variables);
     }
 
-    /**
-     * Is the current user logged in?
-     *
-     * @return bool
-     */
-    public function isUserLoggedIn()
+
+    public function isUserLoggedIn(): bool
     {
         return $this->container['security']->isGranted('IS_AUTHENTICATED_FULLY');
     }
@@ -80,14 +70,7 @@ abstract class BaseController implements ControllerProviderInterface
         return $this->container['security']->getToken()->getUser();
     }
 
-    /**
-     * @param string $routeName  The name of the route
-     * @param array  $parameters Route variables
-     * @param bool   $absolute
-     *
-     * @return string A URL!
-     */
-    public function generateUrl($routeName, array $parameters = [], $absolute = false)
+    public function generateUrl(string $routeName, array $parameters = [], bool $absolute = false): string
     {
         return $this->container['url_generator']->generate(
             $routeName,
@@ -96,28 +79,20 @@ abstract class BaseController implements ControllerProviderInterface
         );
     }
 
-    /**
-     * @param string $url
-     * @param int    $status
-     *
-     * @return RedirectResponse
-     */
-    public function redirect($url, $status = 302)
+    public function redirect(string $url, int $status = 302): RedirectResponse
     {
         return new RedirectResponse($url, $status);
     }
 
-    /**
-     * Logs this user into the system.
-     */
-    public function loginUser(User $user)
+
+    public function loginUser(User $user): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
 
         $this->container['security']->setToken($token);
     }
 
-    public function setFlash($message, $positiveNotice = true)
+    public function setFlash(string $message, bool $positiveNotice = true): void
     {
         /** @var Request $request */
         $request = $this->container['request_stack']->getCurrentRequest();
@@ -126,24 +101,13 @@ abstract class BaseController implements ControllerProviderInterface
         $request->getSession()->getFlashbag()->add($noticeKey, $message);
     }
 
-    /**
-     * Used to find the fixtures user - I use it to cheat in the beginning.
-     *
-     * @param $username
-     *
-     * @return User
-     */
-    public function findUserByUsername($username)
+
+    public function findUserByUsername(string $username): User
     {
         return $this->getUserRepository()->findUserByUsername($username);
     }
 
-    /**
-     * Shortcut for saving objects.
-     *
-     * @param $obj
-     */
-    public function save($obj)
+    public function save(object $obj)
     {
         switch (true) {
             case $obj instanceof Programmer:
@@ -154,12 +118,8 @@ abstract class BaseController implements ControllerProviderInterface
         }
     }
 
-    /**
-     * Shortcut for deleting objects.
-     *
-     * @param $obj
-     */
-    public function delete($obj)
+
+    public function delete(object $obj)
     {
         switch (true) {
             case $obj instanceof Programmer:
@@ -170,70 +130,47 @@ abstract class BaseController implements ControllerProviderInterface
         }
     }
 
-    public function throw404($message = 'Page not found')
+    public function throw404(string $message = 'Page not found')
     {
         throw new NotFoundHttpException($message);
     }
 
-    /**
-     * @param $obj
-     *
-     * @return array
-     */
-    public function validate($obj)
+    public function validate(object $obj)
     {
         return $this->container['api.validator']->validate($obj);
     }
 
-    /**
-     * @return UserRepository
-     */
-    protected function getUserRepository()
+    protected function getUserRepository(): UserRepository
     {
         return $this->container['repository.user'];
     }
 
-    /**
-     * @return ProgrammerRepository
-     */
-    protected function getProgrammerRepository()
+    protected function getProgrammerRepository(): ProgrammerRepository
     {
         return $this->container['repository.programmer'];
     }
 
-    /**
-     * @return ProjectRepository
-     */
-    protected function getProjectRepository()
+    protected function getProjectRepository(): ProjectRepository
     {
         return $this->container['repository.project'];
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Repository\BattleRepository
-     */
-    protected function getBattleRepository()
+    protected function getBattleRepository(): BattleRepository
     {
         return $this->container['repository.battle'];
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Battle\BattleManager
-     */
-    protected function getBattleManager()
+    protected function getBattleManager(): BattleManager
     {
         return $this->container['battle.battle_manager'];
     }
 
-    /**
-     * @return ApiTokenRepository
-     */
-    protected function getApiTokenRepository()
+    protected function getApiTokenRepository(): ApiTokenRepository
     {
         return $this->container['repository.api_token'];
     }
 
-    protected function createApiResponse($data, $statusCode = 200)
+    protected function createApiResponse($data, int $statusCode = 200): Response
     {
         $json = $this->serialize($data);
 
@@ -244,7 +181,7 @@ abstract class BaseController implements ControllerProviderInterface
         );
     }
 
-    protected function serialize($data)
+    protected function serialize($data): string
     {
         $context = (new SerializationContext())->setSerializeNull(true);
 
