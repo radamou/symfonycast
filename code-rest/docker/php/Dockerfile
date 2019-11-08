@@ -30,48 +30,40 @@ RUN apt-get update && apt-get install -y \
     g++ \
     make \
     iputils-ping \
+    wget \
+    gnupg2 \
     # Upgrade pip and install sphinx
     && pip3 install --upgrade pip \
     && pecl install xdebug amqp \
 
 # PHP ext
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql calendar bcmath soap intl zip opcache \
-    && docker-php-ext-enable xdebug amqp \
+    && docker-php-ext-install pdo pdo_pgsql pgsql calendar bcmath soap intl zip opcache sockets \
+    && docker-php-ext-enable xdebug sockets opcache amqp \
 
 # Config home dir
     && usermod -u $UID www-data -d /home/www-data --shell /bin/bash && \
     mkdir -p /home/www-data && \
     chown www-data:www-data /home/www-data && \
     chown -R www-data:www-data /var/www \
+
 # Configure Timezone
     && ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
     echo "Europe/Paris" > /etc/timezone \
 
-# Enable Xdebug
-    && echo "error_reporting = E_ALL" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "display_startup_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.var_display_max_depth = 10" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.default_enable = 1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && if [ ${IS_MAC} ]; then \
-    echo "xdebug.remote_host = 10.254.254.254" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
-    && echo "xdebug.remote_connect_back = 0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
-    else \
-    echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
-    fi \
 # Install composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+
 # Install wkhtmltopdf
     && curl -L https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz -o /tmp/wkhtmltox.tar.xz \
     && tar -xJf /tmp/wkhtmltox.tar.xz -C /tmp/ \
     && rsync -art /tmp/wkhtmltox/ /usr/local \
     && echo "#!/usr/bin/env bash\nxvfb-run -a -s \"-screen 0 {{ wkhtmltopdf_xvfb_size }}\" wkhtmltopdf \"$@\"" >> /usr/local/bin/wkhtmltopdf.sh \
+
 # Customize PS1 and a welcome message
     && echo "PS1='\[\e[1;32m\]\u@\H:\[\e[m\] \[\e[1;37m\]\w\[\e[m\]\n\[\e[1;33m\]hist:\! \[\e[0;33m\] \[\e[1;31m\]jobs:\j \$\[\e[m\] '" >> /root/.bashrc \
     && echo "echo '\033[42m WELCOME DOCKER \033[0m'" >> /root/.bashrc \
+
 # Blackfire
     && version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/$current_os/amd64/$version \
@@ -94,6 +86,16 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
     && chmod a+x php-cs-fixer \
     && mv php-cs-fixer /usr/local/bin/php-cs-fixer
 
+#Install phive
+RUN wget -O phive.phar https://phar.io/releases/phive.phar \
+    && wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc \
+    && gpg2 --keyserver pool.sks-keyservers.net --recv-keys 0x9D8A98B29B2D5D79 \
+    && gpg2 --verify phive.phar.asc phive.phar \
+    && chmod +x phive.phar \
+    && mv phive.phar /usr/local/bin/phive
+
 COPY docker/php/custom.ini $PHP_INI_DIR/conf.d/custom.ini
+COPY docker/php/docker-php-ext-xdebug.ini $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+COPY docker/php/10-opcache.ini $PHP_INI_DIR/conf.d/10-opcache.ini
 
 CMD ["php-fpm", "-F"]
