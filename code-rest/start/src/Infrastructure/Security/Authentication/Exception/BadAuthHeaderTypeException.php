@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class BadAuthHeaderTypeException extends AuthenticationException
 {
-    public function getMessageKey()
+    public function getMessageKey(): string
     {
         return \sprintf(
             'Unknown Authorization header type = use "%s"',

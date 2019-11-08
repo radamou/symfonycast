@@ -20,12 +20,7 @@ class BattleManager
         $this->programmerRepository = $programmerRepository;
     }
 
-    /**
-     * Creates and wages an epic battle.
-     *
-     * @return Battle
-     */
-    public function battle(Programmer $programmer, Project $project)
+    public function battle(Programmer $programmer, Project $project): Battle
     {
         $battle = new Battle();
         $battle->programmer = $programmer;

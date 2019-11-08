@@ -19,14 +19,8 @@ class RepositoryContainer
         $this->repositoryMap = $repositoryMap;
     }
 
-    /**
-     * @param $key
-     *
-     * @throws \Exception
-     *
-     * @return BaseRepository
-     */
-    public function get($key)
+    /**@throws \Exception */
+    public function get(string $key): BaseRepository
     {
         if (!isset($this->repositoryMap[$key])) {
             throw new \Exception(\sprintf('Unknown repo name %s', $key));

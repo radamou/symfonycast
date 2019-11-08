@@ -50,12 +50,7 @@ class PowerManager
         $this->programmerRepository = $programmerRepository;
     }
 
-    /**
-     * Powers up this programmer.
-     *
-     * @return string A description of what happened
-     */
-    public function powerUp(Programmer $programmer)
+    public function powerUp(Programmer $programmer): array
     {
         // vary the power change between 3 and 7
         $powerChange = \rand(3, 7);

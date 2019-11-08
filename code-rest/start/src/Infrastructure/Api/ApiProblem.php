@@ -10,6 +10,12 @@ class ApiProblem
     const TYPE_INVALID_REQUEST_BODY_FORMAT = 'invalid_body_format';
     const TYPE_AUTHENTICATION_ERROR = 'authentication_error';
 
+    private static $titles = [
+        self::TYPE_VALIDATION_ERROR => 'There was a validation error',
+        self::TYPE_INVALID_REQUEST_BODY_FORMAT => 'Invalid JSON format sent',
+        self::TYPE_AUTHENTICATION_ERROR => 'Invalid or missing authentication!',
+    ];
+
     private $statusCode;
 
     private $type;
@@ -18,13 +24,7 @@ class ApiProblem
 
     private $extraData = [];
 
-    private static $titles = [
-        self::TYPE_VALIDATION_ERROR => 'There was a validation error',
-        self::TYPE_INVALID_REQUEST_BODY_FORMAT => 'Invalid JSON format sent',
-        self::TYPE_AUTHENTICATION_ERROR => 'Invalid or missing authentication!',
-    ];
-
-    public function __construct($statusCode, $type = null)
+    public function __construct(int $statusCode, string $type = null)
     {
         $this->statusCode = $statusCode;
         $this->type = $type;
@@ -43,22 +43,22 @@ class ApiProblem
         }
     }
 
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->statusCode;
     }
 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $this->extraData[$name] = $value;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return \array_merge(
             $this->extraData,

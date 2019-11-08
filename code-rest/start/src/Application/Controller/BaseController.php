@@ -22,9 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Base controller class to hide Silex-related implementation details.
- */
 abstract class BaseController implements ControllerProviderInterface
 {
     /** @var Application */
@@ -58,13 +55,10 @@ abstract class BaseController implements ControllerProviderInterface
         return $this->container['security']->isGranted('IS_AUTHENTICATED_FULLY');
     }
 
-    /**
-     * @return User|null
-     */
-    public function getLoggedInUser()
+    public function getLoggedInUser(): ?User
     {
         if (!$this->isUserLoggedIn()) {
-            return;
+            return null;
         }
 
         return $this->container['security']->getToken()->getUser();

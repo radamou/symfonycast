@@ -19,9 +19,7 @@ use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
  */
 class ProjectContext extends BehatContext
 {
-    /**
-     * @var Application
-     */
+    /** @var Application */
     private static $app;
 
     private $lastBattle;
@@ -127,7 +125,7 @@ class ProjectContext extends BehatContext
         return self::$app[$name];
     }
 
-    public function createUser($email, $plainPassword, $username = null)
+    public function createUser($email, $plainPassword, $username = null): User
     {
         $user = new User();
         $user->email = $email;
@@ -139,7 +137,7 @@ class ProjectContext extends BehatContext
         return $user;
     }
 
-    public function createProgrammer($nickname, User $owner = null, array $data = array())
+    public function createProgrammer($nickname, User $owner = null, array $data = array()): Programmer
     {
         $avatarNumber = isset($data['avatarNumber']) ? $data['avatarNumber'] : rand(1, 6);
         $programmer = new Programmer($nickname, $avatarNumber);
@@ -162,11 +160,10 @@ class ProjectContext extends BehatContext
         return $programmer;
     }
 
-    public function getBattleManager():BattleManager
+    public function getBattleManager(): BattleManager
     {
         return $this->getService('battle.battle_manager');
     }
-
 
     public function getProgrammerRepository(): ProgrammerRepository
     {

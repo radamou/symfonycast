@@ -1,7 +1,8 @@
 <?php
 
-namespace KnpU\Application\Controller;
+namespace KnpU\Application\Controller\Front;
 
+use KnpU\Application\Controller\BaseController;
 use KnpU\Domain\Model\Programmer;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;

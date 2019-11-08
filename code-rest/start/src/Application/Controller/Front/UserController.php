@@ -1,7 +1,8 @@
 <?php
 
-namespace KnpU\Application\Controller;
+namespace KnpU\Application\Controller\Front;
 
+use KnpU\Application\Controller\BaseController;
 use KnpU\Domain\Model\User;
 use KnpU\Domain\Repository\UserRepository;
 use Silex\Application;

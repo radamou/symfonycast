@@ -78,6 +78,7 @@ class Application extends SilexApplication
 
             // don't instantiate the abstract base class
             $refl = new \ReflectionClass($class);
+
             if ($refl->isAbstract()) {
                 continue;
             }
