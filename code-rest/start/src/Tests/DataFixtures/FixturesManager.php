@@ -4,8 +4,8 @@ namespace KnpU\Tests\DataFixtures;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Table;
-use KnpU\Domain\Model\Project;
-use KnpU\Domain\Model\User;
+use KnpU\Domain\Project\Project;
+use KnpU\Domain\User\User;
 use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 use Silex\Application;
 use Symfony\Component\Filesystem\Filesystem;

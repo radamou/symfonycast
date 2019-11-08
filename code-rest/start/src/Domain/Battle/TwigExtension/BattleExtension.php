@@ -1,10 +1,10 @@
 <?php
 
-namespace KnpU\Domain\Twig;
+namespace KnpU\Domain\Battle\TwigExtension;
 
-use KnpU\Domain\Model\Programmer;
-use KnpU\Domain\Repository\ProgrammerRepository;
-use KnpU\Domain\Repository\ProjectRepository;
+use KnpU\Domain\Programmer\Programmer;
+use KnpU\Domain\Programmer\ProgrammerRepository;
+use KnpU\Domain\Project\ProjectRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class BattleExtension extends \Twig_Extension

@@ -2,11 +2,9 @@
 
 namespace KnpU\Domain\Battle;
 
-use KnpU\Domain\Model\Battle;
-use KnpU\Domain\Model\Programmer;
-use KnpU\Domain\Model\Project;
-use KnpU\Domain\Repository\BattleRepository;
-use KnpU\Domain\Repository\ProgrammerRepository;
+use KnpU\Domain\Programmer\Programmer;
+use KnpU\Domain\Programmer\ProgrammerRepository;
+use KnpU\Domain\Project\Project;
 
 class BattleManager
 {

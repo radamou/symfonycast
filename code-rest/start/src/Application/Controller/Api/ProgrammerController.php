@@ -2,10 +2,10 @@
 
 namespace KnpU\Application\Controller\Api;
 
+use KnpU\Domain\Programmer\Programmer;
 use KnpU\Infrastructure\Api\ApiProblem;
 use KnpU\Infrastructure\Api\ApiProblemException;
 use KnpU\Application\Controller\BaseController;
-use KnpU\Domain\Model\Programmer;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -101,9 +101,9 @@ class ProgrammerController extends BaseController
         $data = \json_decode($request->getContent(), true);
 
         if (null === $data) {
-            $problem = new ApiProblem(400, ApiProblem::TYPE_INVALID_REQUEST_BODY_FORMAT);
-
-            throw new ApiProblemException($problem);
+            throw new ApiProblemException(
+                new ApiProblem(400, ApiProblem::TYPE_INVALID_REQUEST_BODY_FORMAT)
+            );
         }
 
         // determine which properties should be changeable on this request

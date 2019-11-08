@@ -1,15 +1,17 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\Battle;
+
+use KnpU\Domain\Common\BaseRepository;
 
 class BattleRepository extends BaseRepository
 {
-    protected function getClassName()
+    protected function getClassName(): string
     {
-        return 'KnpU\Domain\Model\Battle';
+        return 'KnpU\Domain\Battle\Battle';
     }
 
-    protected function getTableName()
+    protected function getTableName(): string
     {
         return 'battle';
     }

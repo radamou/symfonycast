@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\Domain\Model;
+namespace KnpU\Domain\Project;
 
 class Project
 {

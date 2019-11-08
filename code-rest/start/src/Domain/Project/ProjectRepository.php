@@ -1,17 +1,17 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\Project;
 
-use KnpU\Domain\Model\Project;
+use KnpU\Domain\Common\BaseRepository;
 
 class ProjectRepository extends BaseRepository
 {
-    protected function getClassName()
+    protected function getClassName(): string
     {
-        return 'KnpU\Domain\Model\Project';
+        return 'KnpU\Domain\Project\Project';
     }
 
-    protected function getTableName()
+    protected function getTableName(): string
     {
         return 'project';
     }

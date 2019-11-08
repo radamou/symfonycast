@@ -2,7 +2,7 @@
 
 namespace KnpU\Infrastructure\Security\Authentication;
 
-use KnpU\Domain\Repository\UserRepository;
+use KnpU\Domain\User\UserRepository;
 use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

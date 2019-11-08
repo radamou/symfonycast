@@ -10,7 +10,7 @@ class ApiProblem
     const TYPE_INVALID_REQUEST_BODY_FORMAT = 'invalid_body_format';
     const TYPE_AUTHENTICATION_ERROR = 'authentication_error';
 
-    private static $titles = [
+    private const TITLES = [
         self::TYPE_VALIDATION_ERROR => 'There was a validation error',
         self::TYPE_INVALID_REQUEST_BODY_FORMAT => 'Invalid JSON format sent',
         self::TYPE_AUTHENTICATION_ERROR => 'Invalid or missing authentication!',
@@ -31,15 +31,13 @@ class ApiProblem
 
         if (!$type) {
             $this->type = 'about:blank';
-            $this->title = isset(Response::$statusTexts[$statusCode])
-                ? Response::$statusTexts[$statusCode]
-                : 'Unknown HTTP status code :(';
+            $this->title = Response::$statusTexts[$statusCode] ?? 'Unknown HTTP status code :(';
         } else {
-            if (!isset(self::$titles[$type])) {
+            if (!isset(self::TITLES[$type])) {
                 throw new \InvalidArgumentException('No title for type '.$type);
             }
 
-            $this->title = self::$titles[$type];
+            $this->title = self::TITLES[$type];
         }
     }
 

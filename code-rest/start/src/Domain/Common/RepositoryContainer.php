@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\Common;
 
 /**
  * A class that can be used to get any repository from a nickname.

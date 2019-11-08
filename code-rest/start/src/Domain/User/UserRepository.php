@@ -1,8 +1,8 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\User;
 
-use KnpU\Domain\Model\User;
+use KnpU\Domain\Common\BaseRepository;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -18,12 +18,12 @@ class UserRepository extends BaseRepository implements UserProviderInterface
      */
     private $encoderFactory;
 
-    protected function getClassName()
+    protected function getClassName(): string
     {
-        return 'KnpU\Domain\Model\User';
+        return 'KnpU\Domain\User\User';
     }
 
-    protected function getTableName()
+    protected function getTableName(): string
     {
         return 'user';
     }
@@ -110,9 +110,9 @@ class UserRepository extends BaseRepository implements UserProviderInterface
         return $this->loadUserByUsername($user->getUsername());
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
-        return 'KnpU\Domain\Model\User' === $class;
+        return $class instanceof User;
     }
 
     public function setEncoderFactory(EncoderFactoryInterface $encoderFactory)

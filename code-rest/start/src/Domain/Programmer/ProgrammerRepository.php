@@ -1,9 +1,9 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\Programmer;
 
-use KnpU\Domain\Model\Programmer;
-use KnpU\Domain\Model\User;
+use KnpU\Domain\Common\BaseRepository;
+use KnpU\Domain\User\User;
 
 class ProgrammerRepository extends BaseRepository
 {
@@ -22,12 +22,12 @@ class ProgrammerRepository extends BaseRepository
         return $this->findAllBy(['userId' => $user->id]);
     }
 
-    protected function getClassName()
+    protected function getClassName(): string
     {
-        return 'KnpU\Domain\Model\Programmer';
+        return 'KnpU\Domain\Programmer\Programmer';
     }
 
-    protected function getTableName()
+    protected function getTableName(): string
     {
         return 'programmer';
     }

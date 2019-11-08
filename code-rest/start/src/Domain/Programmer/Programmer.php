@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\Domain\Model;
+namespace KnpU\Domain\Programmer;
 
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;

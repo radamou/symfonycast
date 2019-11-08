@@ -2,19 +2,20 @@
 
 namespace KnpU\Infrastructure\Security\Token;
 
-use KnpU\Domain\Model\User;
-use KnpU\Domain\Repository\BaseRepository;
+
+use KnpU\Domain\Common\BaseRepository;
+use KnpU\Domain\User\User;
 
 class ApiTokenRepository extends BaseRepository
 {
     const TABLE_NAME = 'api_token';
 
-    protected function getClassName()
+    protected function getClassName(): string
     {
         return 'KnpU\Infrastructure\Security\Token\ApiToken';
     }
 
-    protected function getTableName()
+    protected function getTableName():  string
     {
         return self::TABLE_NAME;
     }

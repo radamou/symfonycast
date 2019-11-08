@@ -1,6 +1,9 @@
 <?php
 
-namespace KnpU\Domain\Model;
+namespace KnpU\Domain\Battle;
+
+use KnpU\Domain\Programmer\Programmer;
+use KnpU\Domain\Project\Project;
 
 class Battle
 {

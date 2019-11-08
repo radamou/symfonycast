@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\Domain\Repository;
+namespace KnpU\Domain\Common;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\ResultStatement;
@@ -17,6 +17,10 @@ abstract class BaseRepository
         $this->connection = $connection;
         $this->repoContainer = $repoContainer;
     }
+
+    abstract protected function getClassName(): string;
+
+    abstract protected function getTableName(): string ;
 
     /**
      * Saves the object (the public properties are persisted).
@@ -139,10 +143,6 @@ abstract class BaseRepository
 
         return $this->fetchAllToObject($stmt);
     }
-
-    abstract protected function getClassName();
-
-    abstract protected function getTableName();
 
     protected function fetchToObject(ResultStatement $stmt)
     {

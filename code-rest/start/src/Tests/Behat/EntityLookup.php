@@ -2,7 +2,7 @@
 
 namespace KnpU\Tests\Behat;
 
-use KnpU\Domain\Repository\BaseRepository;
+use KnpU\Domain\Common\BaseRepository;
 
 /**
  * Class used in ApiFeatureContext::processReplacements to lookup entity ids.

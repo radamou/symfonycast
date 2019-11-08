@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\Domain\Model;
+namespace KnpU\Domain\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 

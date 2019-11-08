@@ -1,17 +1,17 @@
 <?php
 
 use Behat\Behat\Context\BehatContext;
-use KnpU\Domain\Model\User;
-use KnpU\Domain\Model\Programmer;
 use Behat\Gherkin\Node\TableNode;
 use KnpU\Infrastructure\Security\Token\ApiToken;
 use KnpU\Application\Application;
-use KnpU\Domain\Model\Project;
+use KnpU\Domain\Project\Project;
 use KnpU\Tests\DataFixtures\FixturesManager;
 use KnpU\Domain\Battle\BattleManager;
-use KnpU\Domain\Repository\ProgrammerRepository;
-use KnpU\Domain\Repository\ProjectRepository;
-use KnpU\Domain\Repository\UserRepository;
+use KnpU\Domain\Programmer\ProgrammerRepository;
+use KnpU\Domain\Programmer\Programmer;
+use KnpU\Domain\Project\ProjectRepository;
+use KnpU\Domain\User\UserRepository;
+use KnpU\Domain\User\User;
 use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 
 /**
