@@ -14,7 +14,7 @@ use Behat\Behat\Event\StepEvent;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\ExpressionLanguage\SyntaxError;
-use KnpU\CodeBattle\Behat\EntityLookup;
+use KnpU\Tests\Behat\EntityLookup;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 require_once __DIR__.'/../../vendor/phpunit/phpunit/src/Framework/Assert/Functions.php';

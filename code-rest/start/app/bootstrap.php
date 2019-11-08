@@ -3,7 +3,8 @@
 $loader = require __DIR__.'/../vendor/autoload.php';
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use KnpU\CodeBattle\Application;
+use KnpU\Application\Application;
+use KnpU\Tests\DataFixtures\FixturesManager;
 
 // configure the annotation class loader
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
@@ -26,7 +27,7 @@ $app = new Application([
  */
 
 if (!\file_exists($app['sqlite_path'])) {
-    /** @var \KnpU\CodeBattle\DataFixtures\FixturesManager $fixtures */
+    /** @var FixturesManager $fixtures */
     $fixtures = $app['fixtures_manager'];
     $fixtures->resetDatabase();
     $fixtures->populateData($app);

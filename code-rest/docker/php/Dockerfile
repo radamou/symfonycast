@@ -32,7 +32,6 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     wget \
     gnupg2 \
-    # Upgrade pip and install sphinx
     && pip3 install --upgrade pip \
     && pecl install xdebug amqp \
 
@@ -54,16 +53,6 @@ RUN apt-get update && apt-get install -y \
 # Install composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 
-# Install wkhtmltopdf
-    && curl -L https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.3/wkhtmltox-0.12.3_linux-generic-amd64.tar.xz -o /tmp/wkhtmltox.tar.xz \
-    && tar -xJf /tmp/wkhtmltox.tar.xz -C /tmp/ \
-    && rsync -art /tmp/wkhtmltox/ /usr/local \
-    && echo "#!/usr/bin/env bash\nxvfb-run -a -s \"-screen 0 {{ wkhtmltopdf_xvfb_size }}\" wkhtmltopdf \"$@\"" >> /usr/local/bin/wkhtmltopdf.sh \
-
-# Customize PS1 and a welcome message
-    && echo "PS1='\[\e[1;32m\]\u@\H:\[\e[m\] \[\e[1;37m\]\w\[\e[m\]\n\[\e[1;33m\]hist:\! \[\e[0;33m\] \[\e[1;31m\]jobs:\j \$\[\e[m\] '" >> /root/.bashrc \
-    && echo "echo '\033[42m WELCOME DOCKER \033[0m'" >> /root/.bashrc \
-
 # Blackfire
     && version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
     && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/$current_os/amd64/$version \
@@ -73,6 +62,7 @@ RUN apt-get update && apt-get install -y \
     && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
     && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
+#install ast ext
 RUN docker-php-ext-install pcntl \
     && git clone -q https://github.com/nikic/php-ast.git \
     && cd php-ast \

@@ -1,21 +1,25 @@
 <?php
 
 use Behat\Behat\Context\BehatContext;
-use KnpU\CodeBattle\Model\User;
-use KnpU\CodeBattle\Model\Programmer;
 use Behat\Gherkin\Node\TableNode;
-use KnpU\CodeBattle\Security\Token\ApiToken;
-use KnpU\CodeBattle\Application;
-use KnpU\CodeBattle\Model\Project;
+use KnpU\Infrastructure\Security\Token\ApiToken;
+use KnpU\Application\Application;
+use KnpU\Domain\Project\Project;
+use KnpU\Tests\DataFixtures\FixturesManager;
+use KnpU\Domain\Battle\BattleManager;
+use KnpU\Domain\Programmer\ProgrammerRepository;
+use KnpU\Domain\Programmer\Programmer;
+use KnpU\Domain\Project\ProjectRepository;
+use KnpU\Domain\User\UserRepository;
+use KnpU\Domain\User\User;
+use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 
 /**
  * Sub-context for interacting with our project
  */
 class ProjectContext extends BehatContext
 {
-    /**
-     * @var Application
-     */
+    /** @var Application */
     private static $app;
 
     private $lastBattle;
@@ -102,7 +106,7 @@ class ProjectContext extends BehatContext
      */
     public function reloadDatabase()
     {
-        /** @var \KnpU\CodeBattle\DataFixtures\FixturesManager $fixtures */
+        /** @var FixturesManager $fixtures */
         $fixtures = self::$app['fixtures_manager'];
 
         $fixtures->clearTables();
@@ -121,7 +125,7 @@ class ProjectContext extends BehatContext
         return self::$app[$name];
     }
 
-    public function createUser($email, $plainPassword, $username = null)
+    public function createUser($email, $plainPassword, $username = null): User
     {
         $user = new User();
         $user->email = $email;
@@ -133,7 +137,7 @@ class ProjectContext extends BehatContext
         return $user;
     }
 
-    public function createProgrammer($nickname, User $owner = null, array $data = array())
+    public function createProgrammer($nickname, User $owner = null, array $data = array()): Programmer
     {
         $avatarNumber = isset($data['avatarNumber']) ? $data['avatarNumber'] : rand(1, 6);
         $programmer = new Programmer($nickname, $avatarNumber);
@@ -156,42 +160,27 @@ class ProjectContext extends BehatContext
         return $programmer;
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Battle\BattleManager
-     */
-    public function getBattleManager()
+    public function getBattleManager(): BattleManager
     {
         return $this->getService('battle.battle_manager');
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Repository\ProgrammerRepository
-     */
-    public function getProgrammerRepository()
+    public function getProgrammerRepository(): ProgrammerRepository
     {
         return self::$app['repository.programmer'];
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Repository\ProjectRepository
-     */
-    public function getProjectRepository()
+    public function getProjectRepository(): ProjectRepository
     {
         return self::$app['repository.project'];
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Repository\UserRepository
-     */
-    public function getUserRepository()
+    public function getUserRepository(): UserRepository
     {
         return self::$app['repository.user'];
     }
 
-    /**
-     * @return \KnpU\CodeBattle\Security\Token\ApiTokenRepository
-     */
-    public function getApiTokenRepository()
+    public function getApiTokenRepository(): ApiTokenRepository
     {
         return self::$app['repository.api_token'];
     }
