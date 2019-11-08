@@ -3,7 +3,7 @@
 $loader = require __DIR__.'/../vendor/autoload.php';
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use KnpU\CodeBattle\Application;
+use KnpU\Application\Application;
 
 // configure the annotation class loader
 AnnotationRegistry::registerLoader([$loader, 'loadClass']);
