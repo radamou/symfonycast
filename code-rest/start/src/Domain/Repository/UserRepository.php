@@ -20,7 +20,7 @@ class UserRepository extends BaseRepository implements UserProviderInterface
 
     protected function getClassName()
     {
-        return 'KnpU\CodeBattle\Model\User';
+        return 'KnpU\Domain\Model\User';
     }
 
     protected function getTableName()
@@ -112,13 +112,10 @@ class UserRepository extends BaseRepository implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return 'KnpU\CodeBattle\Model\User' === $class;
+        return 'KnpU\Domain\Model\User' === $class;
     }
 
-    /**
-     * @param \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory
-     */
-    public function setEncoderFactory($encoderFactory)
+    public function setEncoderFactory(EncoderFactoryInterface $encoderFactory)
     {
         $this->encoderFactory = $encoderFactory;
     }

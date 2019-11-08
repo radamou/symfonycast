@@ -11,7 +11,7 @@ class ApiTokenRepository extends BaseRepository
 
     protected function getClassName()
     {
-        return 'KnpU\CodeBattle\Security\Token\ApiToken';
+        return 'KnpU\Infrastructure\Security\Token\ApiToken';
     }
 
     protected function getTableName()

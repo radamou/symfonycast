@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\CodeBattle\Validator;
+namespace KnpU\Infrastructure\Validator;
 
 use Symfony\Component\Validator\ValidatorInterface;
 

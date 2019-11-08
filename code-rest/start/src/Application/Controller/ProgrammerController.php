@@ -2,7 +2,7 @@
 
 namespace KnpU\Application\Controller;
 
-use KnpU\CodeBattle\Model\Programmer;
+use KnpU\Domain\Model\Programmer;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

@@ -6,7 +6,7 @@ class BattleRepository extends BaseRepository
 {
     protected function getClassName()
     {
-        return 'KnpU\CodeBattle\Model\Battle';
+        return 'KnpU\Domain\Model\Battle';
     }
 
     protected function getTableName()

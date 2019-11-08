@@ -1,6 +1,6 @@
 <?php
 
-namespace KnpU\CodeBattle\Security\Authentication\Exception;
+namespace KnpU\Infrastructure\Security\Authentication\Exception;
 
 use KnpU\Infrastructure\Security\Authentication\ApiTokenListener;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

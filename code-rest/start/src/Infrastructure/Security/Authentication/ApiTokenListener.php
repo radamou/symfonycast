@@ -2,8 +2,8 @@
 
 namespace KnpU\Infrastructure\Security\Authentication;
 
-use KnpU\CodeBattle\Security\Authentication\Exception\BadAuthHeaderFormatException;
-use KnpU\CodeBattle\Security\Authentication\Exception\BadAuthHeaderTypeException;
+use KnpU\Infrastructure\Security\Authentication\Exception\BadAuthHeaderFormatException;
+use KnpU\Infrastructure\Security\Authentication\Exception\BadAuthHeaderTypeException;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;

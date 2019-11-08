@@ -12,8 +12,8 @@ use Behat\MinkExtension\Context\MinkContext;
 use Behat\Behat\Context\Step\Given;
 use Behat\Behat\Context\Step\When;
 use Behat\Behat\Context\Step\Then;
-use KnpU\CodeBattle\Model\User;
-use KnpU\CodeBattle\Model\Project;
+use KnpU\Domain\Model\User;
+use KnpU\Domain\Model\Project;
 //
 // Require 3rd-party libraries here:
 //

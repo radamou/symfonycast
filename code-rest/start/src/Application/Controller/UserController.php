@@ -2,7 +2,8 @@
 
 namespace KnpU\Application\Controller;
 
-use KnpU\CodeBattle\Model\User;
+use KnpU\Domain\Model\User;
+use KnpU\Domain\Repository\UserRepository;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,7 +48,7 @@ class UserController extends BaseController
             $errors[] = '"username" is required';
         }
 
-        /** @var \KnpU\CodeBattle\Repository\UserRepository $userRepository */
+        /** @var UserRepository $userRepository */
         $userRepository = $app['repository.user'];
 
         // make sure we don't already have this user!

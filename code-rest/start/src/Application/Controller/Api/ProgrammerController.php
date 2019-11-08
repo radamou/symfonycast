@@ -2,10 +2,10 @@
 
 namespace KnpU\Application\Controller\Api;
 
-use KnpU\CodeBattle\Api\ApiProblem;
-use KnpU\CodeBattle\Api\ApiProblemException;
+use KnpU\Infrastructure\Api\ApiProblem;
+use KnpU\Infrastructure\Api\ApiProblemException;
 use KnpU\Application\Controller\BaseController;
-use KnpU\CodeBattle\Model\Programmer;
+use KnpU\Domain\Model\Programmer;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

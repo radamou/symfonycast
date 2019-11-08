@@ -5,23 +5,23 @@ namespace KnpU\Application;
 use Doctrine\Common\Annotations\AnnotationReader;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
-use KnpU\CodeBattle\Api\ApiProblem;
-use KnpU\CodeBattle\Api\ApiProblemException;
-use KnpU\CodeBattle\Api\ApiProblemResponseFactory;
-use KnpU\CodeBattle\Battle\BattleManager;
-use KnpU\CodeBattle\Battle\PowerManager;
-use KnpU\CodeBattle\DataFixtures\FixturesManager;
-use KnpU\CodeBattle\Repository\BattleRepository;
-use KnpU\CodeBattle\Repository\ProgrammerRepository;
-use KnpU\CodeBattle\Repository\ProjectRepository;
-use KnpU\CodeBattle\Repository\RepositoryContainer;
-use KnpU\CodeBattle\Repository\UserRepository;
-use KnpU\CodeBattle\Security\Authentication\ApiEntryPoint;
-use KnpU\CodeBattle\Security\Authentication\ApiTokenListener;
-use KnpU\CodeBattle\Security\Authentication\ApiTokenProvider;
-use KnpU\CodeBattle\Security\Token\ApiTokenRepository;
-use KnpU\CodeBattle\Twig\BattleExtension;
-use KnpU\CodeBattle\Validator\ApiValidator;
+use KnpU\Infrastructure\Api\ApiProblem;
+use KnpU\Infrastructure\Api\ApiProblemException;
+use KnpU\Infrastructure\Api\ApiProblemResponseFactory;
+use KnpU\Domain\Battle\BattleManager;
+use KnpU\Domain\Battle\PowerManager;
+use KnpU\Tests\DataFixtures\FixturesManager;
+use KnpU\Domain\Repository\BattleRepository;
+use KnpU\Domain\Repository\ProgrammerRepository;
+use KnpU\Domain\Repository\ProjectRepository;
+use KnpU\Domain\Repository\RepositoryContainer;
+use KnpU\Domain\Repository\UserRepository;
+use KnpU\Infrastructure\Security\Authentication\ApiEntryPoint;
+use KnpU\Infrastructure\Security\Authentication\ApiTokenListener;
+use KnpU\Infrastructure\Security\Authentication\ApiTokenProvider;
+use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
+use KnpU\Domain\Twig\BattleExtension;
+use KnpU\Infrastructure\Validator\ApiValidator;
 use Silex\Application as SilexApplication;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\MonologServiceProvider;
@@ -59,7 +59,7 @@ class Application extends SilexApplication
      */
     public function mountControllers()
     {
-        $controllerPath = 'src/CodeBattle/Controller';
+        $controllerPath = 'src/Application/Controller';
         $finder = new Finder();
         $finder->in($this['root_dir'].'/'.$controllerPath)
             ->name('*Controller.php')
@@ -74,7 +74,7 @@ class Application extends SilexApplication
             // e.g. Api\FooController
             $cleanedPathName = \str_replace('.php', '', $cleanedPathName);
 
-            $class = 'KnpU\\CodeBattle\\Controller\\'.$cleanedPathName;
+            $class = 'KnpU\\Application\\Controller\\'.$cleanedPathName;
 
             // don't instantiate the abstract base class
             $refl = new \ReflectionClass($class);
@@ -142,7 +142,7 @@ class Application extends SilexApplication
 
     private function configureParameters()
     {
-        $this['root_dir'] = __DIR__ . '/../start';
+        $this['root_dir'] = __DIR__.'/../../';
         $this['sqlite_path'] = $this['root_dir'].'/data/code_battles.sqlite';
     }
 

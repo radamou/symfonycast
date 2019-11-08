@@ -24,7 +24,7 @@ class ProgrammerRepository extends BaseRepository
 
     protected function getClassName()
     {
-        return 'KnpU\CodeBattle\Model\Programmer';
+        return 'KnpU\Domain\Model\Programmer';
     }
 
     protected function getTableName()

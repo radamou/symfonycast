@@ -2,7 +2,7 @@
 
 namespace KnpU\Domain\Battle;
 
-use KnpU\CodeBattle\Model\Programmer;
+use KnpU\Domain\Model\Programmer;
 use KnpU\Domain\Repository\ProgrammerRepository;
 
 class PowerManager

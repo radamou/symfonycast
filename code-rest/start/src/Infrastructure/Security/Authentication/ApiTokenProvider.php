@@ -3,7 +3,7 @@
 namespace KnpU\Infrastructure\Security\Authentication;
 
 use KnpU\Domain\Repository\UserRepository;
-use KnpU\CodeBattle\Security\Token\ApiTokenRepository;
+use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;

@@ -2,7 +2,7 @@
 
 namespace KnpU\Application\Controller;
 
-use KnpU\CodeBattle\Security\Token\ApiToken;
+use KnpU\Infrastructure\Security\Token\ApiToken;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;

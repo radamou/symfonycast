@@ -8,7 +8,7 @@ class ProjectRepository extends BaseRepository
 {
     protected function getClassName()
     {
-        return 'KnpU\CodeBattle\Model\Project';
+        return 'KnpU\Domain\Model\Project';
     }
 
     protected function getTableName()
