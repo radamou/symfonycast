@@ -3,8 +3,8 @@
 namespace KnpU\Application\Controller\Front;
 
 use KnpU\Application\Controller\BaseController;
-use KnpU\Domain\Model\User;
-use KnpU\Domain\Repository\UserRepository;
+use KnpU\Domain\User\User;
+use KnpU\Domain\User\UserRepository;
 use Silex\Application;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;

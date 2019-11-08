@@ -3,7 +3,7 @@
 namespace KnpU\Application\Controller\Front;
 
 use KnpU\Application\Controller\BaseController;
-use KnpU\Domain\Model\Battle;
+use KnpU\Domain\Battle\Battle;
 use Silex\ControllerCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
