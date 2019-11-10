@@ -115,3 +115,25 @@ Feature: Programmer
     And the "type" property should contain "about:blank"
     And the "title" property should equal "Not Found"
     And the "detail" property should contain "This programmer has deserted! We'll send a search party"
+
+  Scenario: Paginate through the collection of programmers
+    Given the following programmers exist:
+      | nickname    |
+      | Programmer1 |
+      | Programmer2 |
+      | Programmer3 |
+      | Programmer4 |
+      | Programmer5 |
+      | Programmer6 |
+      | Programmer7 |
+      | Programmer8 |
+      | Programmer9 |
+      | Programmer10 |
+      | Programmer11 |
+      | Programmer12 |
+    When I request "GET /api/programmers"
+    And I follow the "next" link
+    And print last response
+    #Then the "_embedded.items" property should contain "Programmer7"
+    #But the "_embedded.items" property should not contain "Programmer2"
+    #But the "_embedded.items" property should not contain "Programmer11"

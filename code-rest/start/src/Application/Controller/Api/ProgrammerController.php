@@ -3,6 +3,7 @@
 namespace KnpU\Application\Controller\Api;
 
 use Hateoas\Representation\CollectionRepresentation;
+use Hateoas\Representation\PaginatedRepresentation;
 use KnpU\Application\Controller\BaseController;
 use KnpU\Domain\Home\Homepage;
 use KnpU\Domain\Programmer\Programmer;
@@ -17,17 +18,16 @@ class ProgrammerController extends BaseController
         $controllers->post('/api/programmers', [$this, 'newAction']);
         $controllers->get('/api/programmers/{nickname}', [$this, 'showAction'])
             ->bind('api_programmers_show');
-        $controllers->get('/api/programmers', [$this, 'listAction'])->bind('api_programmers_list');;
+        $controllers->get('/api/programmers', [$this, 'listAction'])->bind('api_programmers_list');
         $controllers->put('/api/programmers/{nickname}', [$this, 'updateAction']);
         $controllers->delete('/api/programmers/{nickname}', [$this, 'deleteAction']);
         $controllers->get('/api/programmers/{nickname}/battles', [$this, 'listBattlesAction'])
             ->bind('api_programmers_battles_list');
-        $controllers->get('/api', array($this, 'homepageAction'))->bind('api_homepage');
+        $controllers->get('/api', [$this, 'homepageAction'])->bind('api_homepage');
     }
 
     public function homepageAction()
     {
-
         $homepage = new Homepage();
 
         return $this->createApiResponse($homepage);
@@ -46,13 +46,34 @@ class ProgrammerController extends BaseController
         return $response;
     }
 
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $programmers = $this->getProgrammerRepository()->findAll();
+        $limit = $request->query->get('limit', 5);
+        $page = $request->query->get('page', 1);
+        $offset = ($page - 1) * $limit;
 
-        $collection = new CollectionRepresentation($programmers);
+        $nicknameFilter = $request->query->get('nickname');
 
-        return $this->createApiResponse($collection, 200, 'json');
+        if ($nicknameFilter) {
+            $programmers = $this->getProgrammerRepository()
+                ->findAllLike(['nickname' => '%'.$nicknameFilter.'%']);
+        } else {
+            $programmers = $this->getProgrammerRepository()->findAll();
+        }
+
+        $collection = new CollectionRepresentation(\array_slice($programmers, $offset, $limit));
+        $numberOfPages = (int) \ceil(\count($programmers) / $limit);
+
+        $paginated = new PaginatedRepresentation(
+            $collection,
+            'api_programmers_list',
+            [],
+            $page,
+            $limit,
+            $numberOfPages
+        );
+
+        return $this->createApiResponse($paginated, 200, 'json');
     }
 
     public function newAction(Request $request)
