@@ -2,7 +2,6 @@
 
 namespace KnpU\Infrastructure\Security\Token;
 
-
 use KnpU\Domain\Common\BaseRepository;
 use KnpU\Domain\User\User;
 
@@ -15,7 +14,7 @@ class ApiTokenRepository extends BaseRepository
         return 'KnpU\Infrastructure\Security\Token\ApiToken';
     }
 
-    protected function getTableName():  string
+    protected function getTableName(): string
     {
         return self::TABLE_NAME;
     }

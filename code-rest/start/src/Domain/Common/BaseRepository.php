@@ -20,7 +20,7 @@ abstract class BaseRepository
 
     abstract protected function getClassName(): string;
 
-    abstract protected function getTableName(): string ;
+    abstract protected function getTableName(): string;
 
     /**
      * Saves the object (the public properties are persisted).

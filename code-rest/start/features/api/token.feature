@@ -14,5 +14,5 @@ Feature: Token
     And I authenticate with user "weaverryan" and password "test"
     When I request "POST /api/tokens"
     Then the response status code should be 201
-    And the "Location" header should exist
+    #And the "Location" header should exist
     And the "token" property should be a string

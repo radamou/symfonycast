@@ -11,6 +11,8 @@ use KnpU\Domain\Programmer\ProgrammerRepository;
 use KnpU\Domain\Project\ProjectRepository;
 use KnpU\Domain\User\User;
 use KnpU\Domain\User\UserRepository;
+use KnpU\Infrastructure\Api\ApiProblem;
+use KnpU\Infrastructure\Api\ApiProblemException;
 use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
@@ -43,12 +45,10 @@ abstract class BaseController implements ControllerProviderInterface
         return $controllers;
     }
 
-
     public function render(string $template, array $variables = []): string
     {
         return $this->container['twig']->render($template, $variables);
     }
-
 
     public function isUserLoggedIn(): bool
     {
@@ -78,7 +78,6 @@ abstract class BaseController implements ControllerProviderInterface
         return new RedirectResponse($url, $status);
     }
 
-
     public function loginUser(User $user): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
@@ -95,7 +94,6 @@ abstract class BaseController implements ControllerProviderInterface
         $request->getSession()->getFlashbag()->add($noticeKey, $message);
     }
 
-
     public function findUserByUsername(string $username): User
     {
         return $this->getUserRepository()->findUserByUsername($username);
@@ -111,7 +109,6 @@ abstract class BaseController implements ControllerProviderInterface
                 throw new \Exception(\sprintf('Shortcut for saving "%s" not implemented', \get_class($obj)));
         }
     }
-
 
     public function delete(object $obj)
     {
@@ -196,5 +193,20 @@ abstract class BaseController implements ControllerProviderInterface
         if (!$this->isUserLoggedIn()) {
             throw new AccessDeniedException();
         }
+    }
+
+    public function decodeRequestBody(Request $request): array
+    {
+        $data = \json_decode($request->getContent(), true);
+
+        if (!$data) {
+            $problem = new ApiProblem(
+                400,
+                ApiProblem::TYPE_INVALID_REQUEST_BODY_FORMAT
+            );
+            throw new ApiProblemException($problem);
+        }
+
+        return $data;
     }
 }
