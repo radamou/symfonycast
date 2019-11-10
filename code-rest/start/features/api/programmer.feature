@@ -55,6 +55,7 @@ Feature: Programmer
     """
     And the "nickname" property should equal "UnitTester"
     And the "userId" property should not exist
+    And the link "self" should exist and its value should be "/api/programmers/UnitTester"
 
   Scenario: GET a collection of programmers
     Given the following programmers exist:
@@ -63,8 +64,10 @@ Feature: Programmer
       | CowboyCoder | 5            |
     When I request "GET /api/programmers"
     Then the response status code should be 200
-    And the "programmers" property should be an array
-    And the "programmers" property should contain 2 items
+    And print last response
+    And the "_embedded.items" property should be an array
+    And the "_embedded.items" property should contain 2 items
+    And the "_embedded.items.0.nickname" property should equal "UnitTester"
 
 
   Scenario: PUT to update a programmer

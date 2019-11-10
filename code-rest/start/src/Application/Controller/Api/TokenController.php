@@ -21,7 +21,13 @@ class TokenController extends BaseController
         $user = $this->getUserRepository()->findUserByUsername($username);
 
         $token = new ApiToken($user->id);
-        $token->notes = $data['notes'];
+        $token->notes = $data->get('notes');
+
+        $errors = $this->validate($token);
+
+        if (!empty($errors)) {
+            $this->throwApiProblemValidationException($errors);
+        }
 
         $this->getApiTokenRepository()->save($token);
 

@@ -12,6 +12,7 @@ class ApiToken
     public $token;
 
     /**
+     * @Assert\NotNull(message="Please add some notes about this token")
      * @Assert\NotBlank(message="Please add some notes about this token")
      */
     public $notes;

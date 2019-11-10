@@ -2,8 +2,12 @@
 
 namespace KnpU\Domain\User;
 
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @Hateoas\Relation("self", href="expr('/api/users/' ~ object.getId())")
+ */
 class User implements UserInterface
 {
     /* All public properties are persisted */

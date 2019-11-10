@@ -17,6 +17,7 @@ use KnpU\Infrastructure\Security\Token\ApiTokenRepository;
 use Silex\Application as SilexApplication;
 use Silex\ControllerCollection;
 use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -161,13 +162,13 @@ abstract class BaseController implements ControllerProviderInterface
         return $this->container['repository.api_token'];
     }
 
-    protected function createApiResponse($data, int $statusCode = 200): Response
+    protected function createApiResponse($data, int $statusCode = 200, string $format = 'json'): Response
     {
         $json = $this->serialize($data);
 
         return new Response($json, $statusCode,
             [
-                'Content-Type' => 'application/json',
+                'Content-Type' => 'application/hal+json',
             ]
         );
     }
@@ -195,7 +196,7 @@ abstract class BaseController implements ControllerProviderInterface
         }
     }
 
-    public function decodeRequestBody(Request $request): array
+    protected function decodeRequestBody(Request $request): ParameterBag
     {
         $data = \json_decode($request->getContent(), true);
 
@@ -207,6 +208,15 @@ abstract class BaseController implements ControllerProviderInterface
             throw new ApiProblemException($problem);
         }
 
-        return $data;
+        return new ParameterBag($data);
+    }
+
+    //https://tools.ietf.org/html/draft-nottingham-http-problem-07
+    protected function throwApiProblemValidationException(array $errors)
+    {
+        $apiProblem = new ApiProblem(400, ApiProblem::TYPE_VALIDATION_ERROR);
+        $apiProblem->set('errors', $errors);
+
+        throw new ApiProblemException($apiProblem);
     }
 }

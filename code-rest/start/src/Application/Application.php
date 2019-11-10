@@ -3,6 +3,8 @@
 namespace KnpU\Application;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Hateoas\HateoasBuilder;
+use Hateoas\UrlGenerator\SymfonyUrlGenerator;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\SerializerBuilder;
 use KnpU\Domain\Battle\BattleManager;
@@ -290,10 +292,13 @@ class Application extends SilexApplication
         });
 
         $this['serializer'] = $this->share(function () use ($app) {
-            return SerializerBuilder::create()
+            $serializer = SerializerBuilder::create()
                 ->setCacheDir($app['root_dir'].'/cache/serializer')
                 ->setDebug($app['debug'])
-                ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy())
+                ->setPropertyNamingStrategy(new IdenticalPropertyNamingStrategy());
+
+            return HateoasBuilder::create($serializer)
+                ->setUrlGenerator(null, new SymfonyUrlGenerator($app['url_generator']))
                 ->build();
         });
     }

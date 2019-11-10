@@ -7,7 +7,7 @@ install-project:
 	$(PHP_EXEC) sh -c "composer install"
 
 php:
-	$(PHP_EXEC) sh
+	$(PHP_EXEC) bash
 
 start:
 	$(DOCKER_COMPOSE) up -d

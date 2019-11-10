@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiProblemResponseFactory
 {
-    const DEFAULT_VALUE = 'http://localhost:8000/api/docs/errors#';
+    const DEFAULT_VALUE = 'http://www.code-battle.com/api/docs/errors#';
 
     public static function createResponse(ApiProblem $problem): JsonResponse
     {
