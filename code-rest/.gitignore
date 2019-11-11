@@ -1,1 +1,8 @@
 /finish/*
+/start/web/browser/
+.idea/
+/start/.php_cs.cache
+/start/phive.xml
+/start/tools/
+
+
