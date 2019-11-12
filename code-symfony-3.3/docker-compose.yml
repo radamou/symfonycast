@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  nginx:
+    build:
+      context: docker/nginx
+      target: base
+    hostname: "www.code-battle.com"
+    volumes:
+      - ./start/:/var/www/
+    depends_on:
+      - php
+    ports:
+      - 8000:80
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      target: base
+      args:
+        - IS_MAC=${IS_MAC}
+        - UID=1000
+        - GID=1000
+    depends_on:
+      - db
+    volumes:
+      - ./start/:/var/www/
+  db:
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./start/:/var/www/
