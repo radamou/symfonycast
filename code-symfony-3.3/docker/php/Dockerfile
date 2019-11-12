@@ -84,8 +84,8 @@ RUN wget -O phive.phar https://phar.io/releases/phive.phar \
     && chmod +x phive.phar \
     && mv phive.phar /usr/local/bin/phive
 
-COPY docker/php/custom.ini $PHP_INI_DIR/conf.d/custom.ini
-COPY docker/php/docker-php-ext-xdebug.ini $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
-COPY docker/php/10-opcache.ini $PHP_INI_DIR/conf.d/10-opcache.ini
+COPY custom.ini $PHP_INI_DIR/conf.d/custom.ini
+COPY docker-php-ext-xdebug.ini $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+COPY 10-opcache.ini $PHP_INI_DIR/conf.d/10-opcache.ini
 
 CMD ["php-fpm", "-F"]

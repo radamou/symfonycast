@@ -5,7 +5,7 @@ services:
     build:
       context: docker/nginx
       target: base
-    hostname: "www.code-battle.com"
+    hostname: "www.code-symfony33.com"
     volumes:
       - ./start/:/var/www/
     depends_on:
@@ -14,8 +14,7 @@ services:
       - 8000:80
   php:
     build:
-      context: .
-      dockerfile: docker/php/Dockerfile
+      context: docker/php
       target: base
       args:
         - IS_MAC=${IS_MAC}
@@ -26,8 +25,14 @@ services:
     volumes:
       - ./start/:/var/www/
   db:
-    image: nouchka/sqlite3:latest
-    stdin_open: true
-    tty: true
+    image: mysql:latest
     volumes:
-      - ./start/:/var/www/
+      - "./.mysql-data/db:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: symfony
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
