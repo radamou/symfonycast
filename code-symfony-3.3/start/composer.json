@@ -2,6 +2,7 @@
     "name": "knpuniversity/symfony",
     "license": "proprietary",
     "type": "project",
+    "description": "symfony 3.3 migration",
     "autoload": {
         "psr-4": {
             "": "src/"

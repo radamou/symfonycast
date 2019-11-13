@@ -1,19 +1,30 @@
 INCLUDES_DIR=./makefile.d
 include $(INCLUDES_DIR)/base.mk
 
-.PHONY: install-project php test-behat clean vendor cs start
+.PHONY: install-project cli test-behat clean vendor cs start migration kill
 
 install-project:
 	$(PHP_EXEC) sh -c "composer install"
 
-php:
+cli:
 	$(PHP_EXEC) bash
+
+migration:
+	#$(PHP_EXEC) sh -c "php bin/console doctrine:database:create"
+	$(PHP_EXEC) sh -c "php bin/console doctrine:migrations:migrate"
+	$(PHP_EXEC) sh -c "php bin/console doctrine:fixtures:load"
+
+build-up:
+	$(DOCKER_COMPOSE) up -d --build
 
 start:
 	$(DOCKER_COMPOSE) up -d
 
-build-up:
-	$(DOCKER_COMPOSE) up -d --build
+kill:
+	$(DOCKER_COMPOSE) kill
+
+destroy:
+	$(DOCKER_COMPOSE) rm -f
 
 test-behat:
 	$(PHP_EXEC) sh -c "vendor/bin/behat"
