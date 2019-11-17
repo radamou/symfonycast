@@ -25,9 +25,9 @@ class GenusAdminController extends Controller
             ->getRepository('AppBundle:Genus')
             ->findAll();
 
-        return $this->render('admin/genus/list.html.twig', array(
-            'genuses' => $genuses
-        ));
+        return $this->render('admin/genus/list.html.twig', [
+            'genuses' => $genuses,
+        ]);
     }
 
     /**
@@ -48,14 +48,14 @@ class GenusAdminController extends Controller
 
             $this->addFlash(
                 'success',
-                sprintf('Genus created by you: %s!', $this->getUser()->getEmail())
+                \sprintf('Genus created by you: %s!', $this->getUser()->getEmail())
             );
 
             return $this->redirectToRoute('admin_genus_list');
         }
 
         return $this->render('admin/genus/new.html.twig', [
-            'genusForm' => $form->createView()
+            'genusForm' => $form->createView(),
         ]);
     }
 
@@ -81,9 +81,9 @@ class GenusAdminController extends Controller
             );
 
             return $this->redirectToRoute('admin_genus_edit', [
-                'id' => $genus->getId()
+                'id' => $genus->getId(),
             ]);
-        }  elseif ($form->isSubmitted()) {
+        } elseif ($form->isSubmitted()) {
             $this->addFlash(
                 'error',
                 $messageManager->getMessage()
@@ -91,7 +91,7 @@ class GenusAdminController extends Controller
         }
 
         return $this->render('admin/genus/edit.html.twig', [
-            'genusForm' => $form->createView()
+            'genusForm' => $form->createView(),
         ]);
     }
 }

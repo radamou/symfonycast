@@ -17,7 +17,7 @@ class UserRegistrationForm extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class
+                'type' => PasswordType::class,
             ]);
     }
 
@@ -25,7 +25,7 @@ class UserRegistrationForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'validation_groups' => ['Default', 'Registration']
+            'validation_groups' => ['Default', 'Registration'],
         ]);
     }
 }

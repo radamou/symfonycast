@@ -2,7 +2,6 @@
 
 namespace AppBundle\Repository;
 
-use AppBundle\Entity\Genus;
 use AppBundle\Entity\SubFamily;
 use Doctrine\ORM\EntityRepository;
 

@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityRepository;
 class GenusNoteRepository extends EntityRepository
 {
     /**
-     * @param Genus $genus
      * @return GenusNote[]
      */
     public function findAllRecentNotesForGenus(Genus $genus)

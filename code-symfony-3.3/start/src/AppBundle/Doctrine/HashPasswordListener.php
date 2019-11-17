@@ -37,7 +37,7 @@ class HashPasswordListener implements EventSubscriber
 
         // necessary to force the update to see the change
         $em = $args->getEntityManager();
-        $meta = $em->getClassMetadata(get_class($entity));
+        $meta = $em->getClassMetadata(\get_class($entity));
         $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
     }
 
@@ -46,9 +46,6 @@ class HashPasswordListener implements EventSubscriber
         return ['prePersist', 'preUpdate'];
     }
 
-    /**
-     * @param User $entity
-     */
     private function encodePassword(User $entity)
     {
         if (!$entity->getPlainPassword()) {

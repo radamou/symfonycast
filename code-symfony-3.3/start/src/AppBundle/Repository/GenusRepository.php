@@ -35,7 +35,7 @@ class GenusRepository extends EntityRepository
             ->execute();
     }
 
-    static public function createExpertCriteria()
+    public static function createExpertCriteria()
     {
         return Criteria::create()
             ->andWhere(Criteria::expr()->gt('yearsStudied', 20))

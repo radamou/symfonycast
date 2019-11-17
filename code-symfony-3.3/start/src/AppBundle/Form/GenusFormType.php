@@ -3,9 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\SubFamily;
-use AppBundle\Entity\User;
 use AppBundle\Repository\SubFamilyRepository;
-use AppBundle\Repository\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,8 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GenusFormType extends AbstractType
@@ -27,19 +23,19 @@ class GenusFormType extends AbstractType
             ->add('subFamily', EntityType::class, [
                 'placeholder' => 'Choose a Sub Family',
                 'class' => SubFamily::class,
-                'query_builder' => function(SubFamilyRepository $repo) {
+                'query_builder' => function (SubFamilyRepository $repo) {
                     return $repo->createAlphabeticalQueryBuilder();
-                }
+                },
             ])
             ->add('speciesCount')
             ->add('funFact', null, [
-                'help' => 'For example, Leatherback sea turtles can travel more than 10,000 miles every year!'
+                'help' => 'For example, Leatherback sea turtles can travel more than 10,000 miles every year!',
             ])
             ->add('isPublished', ChoiceType::class, [
                 'choices' => [
                     'Yes' => true,
                     'No' => false,
-                ]
+                ],
             ])
             ->add('firstDiscoveredAt', DateType::class, [
                 'widget' => 'single_text',
@@ -54,19 +50,19 @@ class GenusFormType extends AbstractType
             ])
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Genus'
+            'data_class' => 'AppBundle\Entity\Genus',
         ]);
     }
 
     /**
      * This fixes a validation issue with the Collection. Suppose
-     * the following situation:
+     * the following situation:.
      *
      * A) Edit a Genus
      * B) Add 2 new scientists - don't submit & leave all fields blank
@@ -95,13 +91,11 @@ class GenusFormType extends AbstractType
      * previously had index 0, 1 and 3, will now have indexes
      * 0, 1 and 2. And these indexes will match the indexes
      * that they have on the Genus.genusScientists property.
-     *
-     * @param FormEvent $event
      */
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        $data['genusScientists'] = array_values($data['genusScientists']);
+        $data['genusScientists'] = \array_values($data['genusScientists']);
         $event->setData($data);
     }
 }

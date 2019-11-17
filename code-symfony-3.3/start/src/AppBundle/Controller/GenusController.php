@@ -25,9 +25,9 @@ class GenusController extends Controller
             ->findAny();
 
         $genus = new Genus();
-        $genus->setName('Octopus'.rand(1, 10000));
+        $genus->setName('Octopus'.\rand(1, 10000));
         $genus->setSubFamily($subFamily);
-        $genus->setSpeciesCount(rand(100, 99999));
+        $genus->setSpeciesCount(\rand(100, 99999));
         $genus->setFirstDiscoveredAt(new \DateTime('50 years'));
 
         $genusNote = new GenusNote();
@@ -50,7 +50,7 @@ class GenusController extends Controller
         $em->persist($genusNote);
         $em->flush();
 
-        return new Response(sprintf(
+        return new Response(\sprintf(
             '<html><body>Genus created! <a href="%s">%s</a></body></html>',
             $this->generateUrl('genus_show', ['slug' => $genus->getSlug()]),
             $genus->getName()
@@ -68,7 +68,7 @@ class GenusController extends Controller
             ->findAllPublishedOrderedByRecentlyActive();
 
         return $this->render('genus/list.html.twig', [
-            'genuses' => $genuses
+            'genuses' => $genuses,
         ]);
     }
 
@@ -86,11 +86,11 @@ class GenusController extends Controller
         $recentNotes = $em->getRepository('AppBundle:GenusNote')
             ->findAllRecentNotesForGenus($genus);
 
-        return $this->render('genus/show.html.twig', array(
+        return $this->render('genus/show.html.twig', [
             'genus' => $genus,
             'funFact' => $funFact,
-            'recentNoteCount' => count($recentNotes)
-        ));
+            'recentNoteCount' => \count($recentNotes),
+        ]);
     }
 
     /**
@@ -107,12 +107,12 @@ class GenusController extends Controller
                 'username' => $note->getUsername(),
                 'avatarUri' => '/images/'.$note->getUserAvatarFilename(),
                 'note' => $note->getNote(),
-                'date' => $note->getCreatedAt()->format('M d, Y')
+                'date' => $note->getCreatedAt()->format('M d, Y'),
             ];
         }
 
         $data = [
-            'notes' => $notes
+            'notes' => $notes,
         ];
 
         return new JsonResponse($data);
@@ -129,7 +129,7 @@ class GenusController extends Controller
         $genusScientist = $em->getRepository('AppBundle:GenusScientist')
             ->findOneBy([
                 'user' => $userId,
-                'genus' => $genusId
+                'genus' => $genusId,
             ]);
 
         $em->remove($genusScientist);

@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -23,14 +23,14 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank
+     * @Assert\Email
      * @ORM\Column(type="string", unique=true)
      */
     private $email;
 
     /**
-     * The encoded password
+     * The encoded password.
      *
      * @ORM\Column(type="string")
      */
@@ -38,6 +38,7 @@ class User implements UserInterface
 
     /**
      * A non-persisted field that's used to create the encoded password.
+     *
      * @Assert\NotBlank(groups={"Registration"})
      *
      * @var string
@@ -84,7 +85,6 @@ class User implements UserInterface
         $this->studiedGenuses = new ArrayCollection();
     }
 
-
     public function getId()
     {
         return $this->id;
@@ -101,7 +101,7 @@ class User implements UserInterface
         $roles = $this->roles;
 
         // give everyone ROLE_USER!
-        if (!in_array('ROLE_USER', $roles)) {
+        if (!\in_array('ROLE_USER', $roles)) {
             $roles[] = 'ROLE_USER';
         }
 
@@ -208,7 +208,7 @@ class User implements UserInterface
 
     public function getFullName()
     {
-        return trim($this->getFirstName().' '.$this->getLastName());
+        return \trim($this->getFirstName().' '.$this->getLastName());
     }
 
     /**

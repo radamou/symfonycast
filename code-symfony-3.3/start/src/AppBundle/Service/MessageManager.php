@@ -4,8 +4,8 @@ namespace AppBundle\Service;
 
 class MessageManager
 {
-    private $encouragingMessages = array();
-    private $discouragingMessages = array();
+    private $encouragingMessages = [];
+    private $discouragingMessages = [];
 
     public function __construct(array $encouragingMessages, array $discouragingMessages)
     {
@@ -15,11 +15,11 @@ class MessageManager
 
     public function getEncouragingMessage()
     {
-        return $this->encouragingMessages[array_rand($this->encouragingMessages)];
+        return $this->encouragingMessages[\array_rand($this->encouragingMessages)];
     }
 
     public function getDiscouragingMessage()
     {
-        return $this->discouragingMessages[array_rand($this->discouragingMessages)];
+        return $this->discouragingMessages[\array_rand($this->discouragingMessages)];
     }
 }

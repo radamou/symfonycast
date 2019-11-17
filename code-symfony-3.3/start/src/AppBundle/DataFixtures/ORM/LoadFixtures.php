@@ -14,7 +14,7 @@ class LoadFixtures implements FixtureInterface
             __DIR__.'/fixtures.yml',
             $manager,
             [
-                'providers' => [$this]
+                'providers' => [$this],
             ]
         );
     }
@@ -35,10 +35,10 @@ class LoadFixtures implements FixtureInterface
             'Paralithodes',
             'Chelonia',
             'Trichechus',
-            'Eumetopias'
+            'Eumetopias',
         ];
 
-        $key = array_rand($genera);
+        $key = \array_rand($genera);
 
         return $genera[$key];
     }

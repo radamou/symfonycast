@@ -20,14 +20,14 @@ class GenusScientistEmbeddedForm extends AbstractType
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'email',
-                'query_builder' => function(UserRepository $repo) {
+                'query_builder' => function (UserRepository $repo) {
                     return $repo->createIsScientistQueryBuilder();
-                }
+                },
             ])
             ->add('yearsStudied')
             ->addEventListener(
                 FormEvents::POST_SET_DATA,
-                array($this, 'onPostSetData')
+                [$this, 'onPostSetData']
             )
         ;
     }
@@ -43,9 +43,7 @@ class GenusScientistEmbeddedForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => GenusScientist::class
+            'data_class' => GenusScientist::class,
         ]);
     }
-
-
 }

@@ -4,11 +4,9 @@ namespace AppBundle\Entity;
 
 use AppBundle\Repository\GenusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GenusRepository")
@@ -24,7 +22,7 @@ class Genus
     private $id;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @ORM\Column(type="string")
      */
     private $name;
@@ -36,14 +34,14 @@ class Genus
     private $slug;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SubFamily")
      * @ORM\JoinColumn(nullable=false)
      */
     private $subFamily;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Range(min=0, minMessage="Negative species! Come on...")
      * @ORM\Column(type="integer")
      */
@@ -60,14 +58,14 @@ class Genus
     private $isPublished = true;
 
     /**
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @ORM\Column(type="date")
      */
     private $firstDiscoveredAt;
 
     /**
      * @ORM\OneToMany(targetEntity="GenusNote", mappedBy="genus")
-     * @ORM\OrderBy({"createdAt" = "DESC"})
+     * @ORM\OrderBy({"createdAt": "DESC"})
      */
     private $notes;
 
@@ -79,7 +77,7 @@ class Genus
      *     orphanRemoval=true,
      *     cascade={"persist"}
      * )
-     * @Assert\Valid()
+     * @Assert\Valid
      */
     private $genusScientists;
 
@@ -139,7 +137,7 @@ class Genus
 
     public function getUpdatedAt()
     {
-        return new \DateTime('-'.rand(0, 100).' days');
+        return new \DateTime('-'.\rand(0, 100).' days');
     }
 
     public function setIsPublished($isPublished)
