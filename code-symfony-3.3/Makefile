@@ -1,8 +1,9 @@
 INCLUDES_DIR=./makefile.d
 include $(INCLUDES_DIR)/*.mk
 
-.PHONY: all start build install-package migration cli-root test-behat cs clean start kill
+.PHONY: all build start install-package migration cli-root cli-www ps test-behat cs clean start kill
 
+#==================================================Install project======================================================
 all: build start install-package migration
 
 #remove intermediate containers and build without cache
@@ -20,8 +21,14 @@ migration:
 	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:migrations:migrate"
 	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:fixtures:load"
 
+#=========================================================Utils=========================================================
 cli-root:
 	$(PHP_EXEC) bash
+cli-www:
+	$(PHP_EXEC_WWW) bash
+ps:
+	$(DOCKER_COMPOSE) ps
+#================================================Kill/destroy/clean=====================================================
 
 kill:
 	$(DOCKER_COMPOSE) kill
@@ -34,6 +41,7 @@ clean:
 	rm -rf $(CURRENT_DIR)/start/var/cache/* || true
 	rm -rf $(CURRENT_DIR)/start/var/logs/* || true
 
+#===================================================Project testing=====================================================
 test-behat:
 	$(PHP_EXEC) sh -c "vendor/bin/behat"
 
