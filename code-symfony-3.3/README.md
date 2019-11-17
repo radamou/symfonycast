@@ -2,6 +2,7 @@
 To get the code working, follow these steps:
 
 **build containers**
+
 Before running the makefile, make sure you have (Docker, Docker-compose) installed
 
 ```
