@@ -41,10 +41,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable xdebug sockets opcache amqp \
 
 # Config home dir
-    && usermod -u $UID www-data -d /home/www-data --shell /bin/bash && \
-    mkdir -p /home/www-data && \
-    chown www-data:www-data /home/www-data && \
-    chown -R www-data:www-data /var/www \
+    && usermod -u $UID www-data -d /var/www --shell /bin/bash \
+    && chown -R www-data:www-data /var/www \
 
 # Configure Timezone
     && ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime && \
