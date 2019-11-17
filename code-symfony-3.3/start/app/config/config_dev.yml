@@ -11,8 +11,8 @@ framework:
     profiler: { only_exceptions: false }
 
 web_profiler:
-    toolbar: true
-    intercept_redirects: false
+    toolbar: false
+    intercept_redirects: true
 
 monolog:
     handlers:

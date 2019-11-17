@@ -18,8 +18,8 @@ install-package: vendor
 
 migration:
 	#$(PHP_EXEC) sh -c "php bin/console doctrine:database:create"
-	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:migrations:migrate --no-interaction"
-	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction"
+	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:migrations:migrate"
+	$(PHP_EXEC_WWW) sh -c "php bin/console doctrine:fixtures:load"
 
 #=========================================================Utils=========================================================
 cli-root:
