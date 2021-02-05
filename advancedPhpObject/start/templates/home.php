@@ -69,7 +69,7 @@ if (isset($_GET['error'])) {
 
         <div class="battle-box center-block border">
             <div>
-                <form method="POST" action="/battle.php">
+                <form method="POST" action="/battle">
                     <h2 class="text-center">The Mission</h2>
                     <input
                             class="center-block form-control text-field"
@@ -112,7 +112,7 @@ if (isset($_GET['error'])) {
                         <?php endforeach; ?>
                     </select>
                     <br>
-                    <?php require_once __DIR__ . '/templates/battle/battle-type.php'; ?>
+                    <?php require_once __DIR__ . '/battle/battle-type.php'; ?>
                     <button class="btn btn-md btn-danger center-block" type="submit">Engage</button>
                     </form>
                 </div>

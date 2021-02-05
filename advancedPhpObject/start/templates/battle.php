@@ -17,7 +17,7 @@ $ship2Quantity = $request->query->get('ship2_quantity',1);
 $battleType = $request->query->get('battle_type', 1);
 
 if (!$ship1Id || !$ship2Id) {
-    header('Location: /home.php?error=missing_data');
+    header('Location: /home?error=missing_data');
     die;
 }
 
@@ -26,12 +26,12 @@ $ship2 = $shipsLoader->fetchOne($ship2Id);
 
 
 if (!$ship1 || !$ship2) {
-    header('Location: /home.php?error=bad_ships');
+    header('Location: /home?error=bad_ships');
     die;
 }
 
 if ($ship1Quantity <= 0 || $ship2Quantity <= 0) {
-    header('Location: /home.php?error=bad_quantities');
+    header('Location: /home?error=bad_quantities');
     die;
 }
 
@@ -82,7 +82,7 @@ $battleResult = $battleManager->battle($ship1, $ship1Quantity, $ship2, $ship2Qua
             <?php endif; ?>
         </p>
     </div>
-    <a href="home.php"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
+    <a href="/home"><p class="text-center"><i class="fa fa-undo"></i> Battle again</p></a>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../public/js/bootstrap.min.js"></script>

@@ -1,5 +1,8 @@
 <?php
 
+use App\Presentation\Battle\Index as Battle;
+use App\Presentation\Home\Index as Home;
+
 require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Routing\RouteCollection;
@@ -9,21 +12,17 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 try {
     $routeCollection = new RouteCollection();
     $routeCollection->add('battle', new Route(
-        '/',
-        ['_controller' => '\App\Controller\StarShipAction::indexAction', 'method' => 'GET']
+        '/battle',
+        ['_controller' => Battle::class, 'method' => 'GET']
+    ));
+    $routeCollection->add('home', new Route(
+        '/home',
+        ['_controller' => Home::class, 'method' => 'GET']
     ));
 
    return $routeCollection;
 
-}catch (ResourceNotFoundException $e) {
+} catch (ResourceNotFoundException $e) {
     throw  new ResourceNotFoundException($e->getMessage());
 }
 
-
-//This example is for loading routes with annotation
-// (it is not finished, I need to install doctrine cache and doctrine annotation)
-
-/*use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-return function (RoutingConfigurator $routes) {
-    $routes->import(__DIR__.'/../src/Controller', 'annotation');
-};*/
