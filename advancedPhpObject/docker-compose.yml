@@ -5,7 +5,7 @@ services:
       context: docker/front/
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8000:80"
     env_file: .env.dist
     volumes:
       - ./start:/srv/app
@@ -34,6 +34,8 @@ services:
       POSTGRES_RO_USER: nginx
       POSTGRES_RO_PASSWORD: winners
       POSTGRES_DB: porfolio
+      POSTGRES_PASSWORD: root
+
     deploy:
       placement:
         constraints: [node.role == manager]

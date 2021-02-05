@@ -1,37 +1,31 @@
-FROM alpine:3.7
+FROM php:8.0-fpm-alpine
 
 WORKDIR /srv/app
 
-# PHP
 RUN apk add --no-cache \
-        php7
-
-RUN apk add --no-cache \
-        php7-intl \
-        php7-ctype \
-        php7-bcmath \
-        php7-mbstring \
-        php7-iconv \
-        php7-pcntl \
-        php7-json \
-        php7-xml \
-        php7-dom \
-        php7-posix \
-        php7-session \
-        php7-pdo \
-        php7-tokenizer \
-        php7-zip \
-        php7-simplexml \
+        php8-intl \
+        php8-ctype \
+        php8-bcmath \
+        php8-mbstring \
+        php8-iconv \
+        php8-pcntl \
+        php8-json \
+        php8-xml \
+        php8-dom \
+        php8-posix \
+        php8-session \
+        php8-pdo \
+        php8-tokenizer \
+        php8-zip \
+        php8-simplexml \
         file
 
 # OpCache
 
 RUN apk add --no-cache \
-        php7-opcache \
-        php7-apcu
+        php8-opcache
 
-COPY config/cache.ini /etc/php7/conf.d/cache.ini
-
+COPY config/cache.ini /etc/php8/conf.d/cache.ini
 
 ENV PROJECT_DIR="/srv/app"
 
@@ -50,23 +44,22 @@ COPY config/entrypoint-exec /bin/entrypoint-exec
 # MySQL
 
 RUN apk add --no-cache \
-        php7-pdo_mysql \
-        php7-mysqlnd
+        php8-pdo_mysql \
+        php8-mysqlnd
 
 # Api
 
 RUN apk add --no-cache \
-        php7-curl
+        php8-curl
 
 # Nginx
 
 RUN apk add --no-cache \
-        nginx \
-        php7-fpm
+        nginx
 
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
-COPY config/php-fpm.conf /etc/php7/php-fpm.conf
+#COPY config/php-fpm.conf /etc/php8/php-fpm.conf
 
 COPY config/supervisord_fpm.conf /etc/supervisor/conf_enabled/fpm.conf
 
@@ -90,7 +83,6 @@ RUN apk add --no-cache \
 COPY config/90-init-permission /usr/share/docker/init.d/root/
 
 ENV ENTRYPOINT_UMASK=002
-
 
 # Supervisor
 
@@ -117,14 +109,14 @@ STOPSIGNAL SIGQUIT
 # App specific
 
 RUN apk add --no-cache \
-        php7-ftp \
-        php7-fileinfo \
-        php7-exif \
-        php7-xmlreader \
-        php7-xmlwriter \
-        php7-soap \
-        php7-openssl \
-        php7-phar
+        php8-ftp \
+        php8-fileinfo \
+        php8-exif \
+        php8-xmlreader \
+        php8-xmlwriter \
+        php8-soap \
+        php8-openssl \
+        php8-phar
 
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
